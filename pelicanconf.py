@@ -7,7 +7,7 @@ THEME = "/home/tim/pelican-themes/pelican-sundown"
 PLUGIN_PATH = '/home/tim/pelican-plugins/'
 #PLUGINS = ['assets']
 
-DISQUS_SITENAME = 'technicallytim.disqus.com'
+#DISQUS_SITENAME = 'technicallytim.disqus.com'
 
 AUTHOR = u'Tim White'
 SITENAME = u'Technically Tim'

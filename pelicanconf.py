@@ -2,11 +2,35 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+THEME = "/home/tim/pelican-themes/pelican-sundown"
+
+PLUGIN_PATH = '/home/tim/pelican-plugins/'
+PLUGINS = ['assets', 'sitemap']
+
+DISQUS_SITENAME = 'technicallytim.disqus.com'
+
 AUTHOR = u'Tim White'
 SITENAME = u'Technically Tim'
 SITEURL = ''
 
-TIMEZONE = 'Europe/Paris'
+ARTICLE_URL = '{date:%Y}/{date:%m}/{slug}/'
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{slug}/index.html'
+
+PAGE_URL = '{slug}.html'
+PAGE_SAVE_AS = '{slug}.html'
+
+CATEGORY_URL = 'category/{slug}'
+CATEGORY_SAVE_AS = 'category/{slug}.html'
+
+TAG_URL = 'tag/{slug}'
+TAG_SAVE_AS = 'tag/{slug}.html'
+
+
+
+YEAR_ARCHIVE_SAVE_AS = '{date:%Y}/index.html'
+MONTH_ARCHIVE_SAVE_AS = '{date:%Y}/{date:%m}/index.html'
+
+TIMEZONE = 'Australia/Brisbane'
 
 DEFAULT_LANG = u'en'
 
@@ -16,16 +40,17 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS =  (('Pelican', 'http://getpelican.com/'),
-          ('Python.org', 'http://python.org/'),
-          ('Jinja2', 'http://jinja.pocoo.org/'),
-          ('You can modify those links in your config file', '#'),)
+LINKS =  (('Old Blog', 'http://weirdo.purewhite.id.au/'),
+          ('Family Blog', 'http://purewhite.id.au'),)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+#SOCIAL = (('You can add links in your config file', '#'),
+#          ('Another social link', '#'),)
 
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+PIWIK_URL = 'piwik.purewhite.id.au'
+PIWIK_SITE_ID = 4 
+

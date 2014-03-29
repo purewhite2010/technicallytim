@@ -242,7 +242,7 @@ asterisk user), or something similar.&lt;/p&gt;
 &lt;p&gt;Last things. Check your firewall. You'll need to open some RTP ports and
 some SIP ports. A google will reveal more. Try to limit what you open
 though, I've not given any instructions for securing asterisk in this
-post, that also is for your further reading.&lt;/p&gt;</summary><category term="asterisk"></category><category term="bridge"></category><category term="callback"></category><category term="sip"></category><category term="sip to sip"></category><category term="voip"></category><category term="voip to voip"></category><category term="webcallback"></category></entry><entry><title>Internet Reception</title><link href="http://tim.purewhite.id.au/2010/10/internet-reception/" rel="alternate"></link><updated>2010-10-27T10:32:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-27:2010/10/internet-reception/</id><summary type="html">&lt;p&gt;[&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061-179x300.jpg" title="Modem Reception" /&gt;][]So we finally got our modem a few weeks back. A 3G9WB, also
+post, that also is for your further reading.&lt;/p&gt;</summary><category term="asterisk"></category><category term="bridge"></category><category term="callback"></category><category term="sip"></category><category term="sip to sip"></category><category term="voip"></category><category term="voip to voip"></category><category term="webcallback"></category></entry><entry><title>Internet Reception</title><link href="http://tim.purewhite.id.au/2010/10/internet-reception/" rel="alternate"></link><updated>2010-10-27T10:32:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-27:2010/10/internet-reception/</id><summary type="html">&lt;p&gt;&lt;a href="http://tim.purewhite.id.au/images/2010/10/IMAG0061.jpg"&gt;&lt;img alt="Modem Reception" src="http://tim.purewhite.id.au/images/2010/10/IMAG0061-179x300.jpg" /&gt;&lt;/a&gt; So we finally got our modem a few weeks back. A 3G9WB, also
 known as a 3G9WT (Telstra Branding) or a 7.2 Home Gateway. Really, it's
 just a Netcomm router with a Sierra mobile module inside.&lt;/p&gt;
 &lt;p&gt;It's unlocked, but we still can only get Telstra NextG, although with a
@@ -259,5 +259,4 @@ louvers. Still only a low signal, but success! The download was finished
 in 3minutes! I might actually be able to upload my assignment quickly
 with the modem here (when the submission link is fixed up).&lt;/p&gt;
 &lt;p&gt;So, until we get an external antenna, we'll just have to use an external
-modem! :-P&lt;/p&gt;
-&lt;p&gt;[&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061-179x300.jpg" title="Modem Reception" /&gt;]: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061.jpg&lt;/p&gt;</summary><category term="3g9wb"></category><category term="modem"></category><category term="nextg"></category></entry></feed>
+modem! :-P&lt;/p&gt;</summary><category term="3g9wb"></category><category term="modem"></category><category term="nextg"></category></entry></feed>

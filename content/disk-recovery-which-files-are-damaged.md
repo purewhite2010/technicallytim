@@ -8,11 +8,9 @@ Slug: disk-recovery-which-files-are-damaged
 <ins datetime="2011-08-11T21:49:04+00:00">First, getting an image of the
 damaged hard drive.
 
-~~~~ {escaped="true" lang="bash"}
-$ ddrescue -n /dev/inputdevice rescued.img rescued.log
+    $ ddrescue -n /dev/inputdevice rescued.img rescued.log
 
-$ ddrescue -r 1 /dev/inputdevice rescued.img rescued.log
-~~~~
+    $ ddrescue -r 1 /dev/inputdevice rescued.img rescued.log
 
 The first ddrescue command tries to fly through the disk as quickly as
 possible, skipping over sections when an error occurs. This allows me to
@@ -58,14 +56,12 @@ had all the files resided on the local machine on  a nice RAID array.
 
 So a simplified example
 
-~~~~ {escaped="true" lang="bash"}
 copy all files off rescued image (loop mount) to another location
 
-$ echo -n "BAD SECTOR " > tmpfile
-$ ddrescue --fill=- tmpfile rescue.img rescue.log
+    $ echo -n "BAD SECTOR " > tmpfile
+    $ ddrescue --fill=- tmpfile rescue.img rescue.log
 
-$ diff -r /mnt/loop/ /mnt/server/rescuedfiles/ > damagedfiles
-~~~~
+    $ diff -r /mnt/loop/ /mnt/server/rescuedfiles/ > damagedfiles
 
 You'll then have a list of files that differ between the 2 versions,
 which are the ones with damaged sectors. Also, the ddrescue doesn't
@@ -73,31 +69,28 @@ damage the logfile so you can then reverse it using /dev/zero to restore
 the image to it's original recovery state. This won't work with sparse
 files.
 
-~~~~ {escaped="true" lang="bash"}
-$ ddrescue --fill=- /dev/zero rescue.img rescue.log
-~~~~
+    $ ddrescue --fill=- /dev/zero rescue.img rescue.log
 
 <ins datetime="2011-08-11T21:54:00+00:00">Or, if you haven't copied the
 files off, then the way suggested in the ddrescue manual looks like
 this. (After getting your disk image)
 
-~~~~ {escaped="true" lang="bash"}
 
-# mount -o loop rescued.img /mnt/loop
+    # mount -o loop rescued.img /mnt/loop
 
-$ find /mnt/loop -type f -print0 | xargs -0 md5sum > prefill.md5
+    $ find /mnt/loop -type f -print0 | xargs -0 md5sum > prefill.md5
 
-$ echo -n "BAD SECTOR " > tmpfile
-$ ddrescue --fill=- tmpfile rescue.img rescue.log
+    $ echo -n "BAD SECTOR " > tmpfile
+    $ ddrescue --fill=- tmpfile rescue.img rescue.log
 
-## You may need to unmount and remount the loop file to prevent any caching interferring.
-# umount /mnt/loop
-# mount -o loop rescued.img /mnt/loop
+    ## You may need to unmount and remount the loop file to prevent any caching interferring.
+    # umount /mnt/loop
+    # mount -o loop rescued.img /mnt/loop
 
-$ find /mnt/loop -type f -print0 | xargs -0 md5sum > postfill.md5
+    $ find /mnt/loop -type f -print0 | xargs -0 md5sum > postfill.md5
 
-$ diff prefill.md5 postfill.md5
-~~~~
+    $ diff prefill.md5 postfill.md5
+
 
 </ins>
 
@@ -113,19 +106,17 @@ First, check that the sector is actually used. This used to be the dstat
 command, but it has since been renamed to blkstat. So we take a sector
 number from the logfile that couldn't be recovered.
 
-~~~~ {escaped="true" lang="bash"}
-$ cat rescue.log |grep -|head
-0x0178F200  0x0000D400  -
-0x017A0000  0x00000200  -
-0x2BC488F400  0x00011600  -
-0x2BEEFF0A00  0x00020000  -
-0x5AC5FB0A00  0x00020000  -
-0x5AC6050A00  0x00020000  -
-0x5AC60E0A00  0x00020000  -
-0x5AC6180A00  0x00020000  -
-0x5AC6220A00  0x00020000  -
-0x5AC62B0A00  0x00020000  -
-~~~~
+    $ cat rescue.log |grep -|head
+    0x0178F200  0x0000D400  -
+    0x017A0000  0x00000200  -
+    0x2BC488F400  0x00011600  -
+    0x2BEEFF0A00  0x00020000  -
+    0x5AC5FB0A00  0x00020000  -
+    0x5AC6050A00  0x00020000  -
+    0x5AC60E0A00  0x00020000  -
+    0x5AC6180A00  0x00020000  -
+    0x5AC6220A00  0x00020000  -
+    0x5AC62B0A00  0x00020000  -
 
 We then convert it to a sector number. I know the sector size is 512
 bytes in this case, but you will need to verify it for your drive. If in
@@ -137,37 +128,30 @@ I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.
 
-~~~~ {escaped="true" lang="bash"}
-$ echo "ibase=16; 2BEEFF0A00/200"|bc
-368541573
-~~~~
+    $ echo "ibase=16; 2BEEFF0A00/200"|bc
+    368541573
 
 Or do it the long way
 
-~~~~ {escaped="true" lang="bash"}
-$ echo "ibase=16; 2BEEFF0A00"|bc
-188693285376
-$ echo "188693285376/512"|bc
-368541573
-~~~~
+    $ echo "ibase=16; 2BEEFF0A00"|bc
+    188693285376
+    $ echo "188693285376/512"|bc
+    368541573
 
 Ether way, I now know that the sector number is 368541573. Using blkstat
 (formerly dstat) I can verify that the sector is used or not.
 
-~~~~ {escaped="true" lang="bash"}
-$ blkstat rescued.img 368541573
-Sector: 368541573
-Allocated
-Cluster: 5754738
-~~~~
+    $ blkstat rescued.img 368541573
+    Sector: 368541573
+    Allocated
+    Cluster: 5754738
+
 
 Now a little warning, if you get a sector that looks like this.
 
-~~~~ {escaped="true" lang="bash"}
-$ blkstat rescued.img 48249
-Sector: 48249
-Allocated (Meta)
-~~~~
+    $ blkstat rescued.img 48249
+    Sector: 48249
+    Allocated (Meta)
 
 Then you are probably looking at a sector in a directory listing. The
 next tool we are going to use, ifind, may take a very long time to
@@ -185,32 +169,28 @@ damage to the FAT your 2nd FAT will still be good.</ins>
 Our next step is to use ifind to find the inode associated with the
 sector. This can take some time and lots of CPU.
 
-~~~~ {escaped="true" lang="bash"}
-$ time ifind rescued.img -d 368541573
-5892375559
+    $ time ifind rescued.img -d 368541573
+    5892375559
 
-real    2m52.314s
-user    1m15.280s
-sys 0m2.170s
-~~~~
+    real    2m52.314s
+    user    1m15.280s
+    sys 0m2.170s
 
 This finally gives us the inode associated with that file.
 
-~~~~ {escaped="true" lang="bash"}
-$ istat rescued.img 5892375559|head -12
-Directory Entry: 5892375559
-Allocated
-File Attributes: File, Archive
-Size: 21346140
-Name: MICROS~1
+    $ istat rescued.img 5892375559|head -12
+    Directory Entry: 5892375559
+    Allocated
+    File Attributes: File, Archive
+    Size: 21346140
+    Name: MICROS~1
 
-Directory Entry Times:
-Written:    Wed Aug 25 22:16:38 2010
-Accessed:   Wed Apr 13 00:00:00 2011
-Created:    Wed Aug 25 22:16:39 2010
+    Directory Entry Times:
+    Written:    Wed Aug 25 22:16:38 2010
+    Accessed:   Wed Apr 13 00:00:00 2011
+    Created:    Wed Aug 25 22:16:39 2010
 
-Sectors:
-~~~~
+    Sectors:
 
 The listing then goes on to show all sectors that the file uses. If we
 grep the listing, we can confirm that the sector 5892375559 is in that
@@ -222,10 +202,8 @@ and save the contents to a file so you can just grep over that file each
 time as it takes a long time to recursively list all the files in a big
 filesystem.
 
-~~~~ {escaped="true" lang="bash"}
-$ fls -rFp bunsom.img |grep 5892375559
-r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
-~~~~
+    $ fls -rFp bunsom.img |grep 5892375559
+    r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
 
 So finally we can see that the inode 5892375559, which contains our
 damaged sector, belongs to this file from the Microsoft Office Chart

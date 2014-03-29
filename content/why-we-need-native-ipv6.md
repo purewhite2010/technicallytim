@@ -16,20 +16,11 @@ now, letter the numbers do the talking.
 I ping the same machine both via IPv6 and via IPv4. Lets see if you can
 work out which is which.
 
-~~~~ {escaped="true" lang="bash"}
-~~~~
+    10 packets transmitted, 10 received, 0% packet loss
+    rtt min/avg/max/mdev = 698.592/712.159/814.473/34.163 ms
 
- 
-
-~~~~ {escaped="true" lang="bash"}
-10 packets transmitted, 10 received, 0% packet loss
-rtt min/avg/max/mdev = 698.592/712.159/814.473/34.163 ms
-~~~~
-
-~~~~ {escaped="true" lang="bash"}
-10 packets transmitted, 10 received, 0% packet loss
-rtt min/avg/max/mdev = 76.670/79.557/87.452/2.866 ms
-~~~~
+    10 packets transmitted, 10 received, 0% packet loss
+    rtt min/avg/max/mdev = 76.670/79.557/87.452/2.866 ms
 
 The PoP has an average ping of 350ms just to get to the PoP! No wonder
 it takes so long to get to the PoP and back to Australia! Hopefully
@@ -43,7 +34,5 @@ working. Hopefully I'll see better IPv6 improvement now. Still, native
 IPv6 would be better.
 <http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/></ins>
 
-~~~~ {escaped="true" lang="bash"}
-10 packets transmitted, 10 received, 0% packet loss
-rtt min/avg/max/mdev = 235.587/267.187/382.010/45.090 ms
-~~~~
+    10 packets transmitted, 10 received, 0% packet loss
+    rtt min/avg/max/mdev = 235.587/267.187/382.010/45.090 ms

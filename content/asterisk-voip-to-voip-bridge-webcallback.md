@@ -74,9 +74,8 @@ hosted out on the internet and has enough bandwidth. A big reason for me
 setting this up is lack of a decent internet connection from my home to
 be able to do normal VoIP.
 
-~~~~ {escaped="true" lang="bash"}
-sudo apt-get install asterisk
-~~~~
+    :::bash
+    sudo apt-get install asterisk
 
 Yes,this does pull in a far few bits of software, some of which isn't
 needed and I've not even poked at yet, but this is what we do to get
@@ -93,48 +92,46 @@ provider. Mine is in the following format. You can see that the username
 is repeated a few times on the mynetfone one. It can be different for
 other providers.
 
-~~~~ {escaped="true" lang="ini"}
-register => username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username
+    :::ini
+    register => username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username
 
-register => 888xxxxxxx:secret@sip.pennytel.com/888xxxxxxx
-~~~~
+    register => 888xxxxxxx:secret@sip.pennytel.com/888xxxxxxx
 
 Now drop to the bottom of the /etc/asterisk/sip.conf file, and add in
 your "trunks" for the VoIP providers. In my situation, I don't want
 incoming calls (as then they need to be routed), so I just have the
 outgoing trunks.
 
-~~~~ {escaped="true" lang="ini"}
-[mynetfone-out]
-disallow=all
-allow=alaw
-allow=ulaw
-allow=ilbc
-allow=g729
-allow=gsm
-allow=g723
-authname=09xxxxxx
-canreinvite=no
-dtmfmode=rfc2833
-fromuser=09xxxxxx
-host=sip01.mynetfone.com.au
-insecure=very
-nat=no
-pedantic=no
-qualify=yes
-secret=password
-type=friend
-defaultuser=09xxxxxx
+    :::ini
+    [mynetfone-out]
+    disallow=all
+    allow=alaw
+    allow=ulaw
+    allow=ilbc
+    allow=g729
+    allow=gsm
+    allow=g723
+    authname=09xxxxxx
+    canreinvite=no
+    dtmfmode=rfc2833
+    fromuser=09xxxxxx
+    host=sip01.mynetfone.com.au
+    insecure=very
+    nat=no
+    pedantic=no
+    qualify=yes
+    secret=password
+    type=friend
+    defaultuser=09xxxxxx
 
-[pennytel-out]
-type=friend
-host=sip.pennytel.com
-fromuser=888xxxxxxx
-defaultuser=888xxxxxxx
-secret=password
-canreinvite=no
-insecure=invite
-~~~~
+    [pennytel-out]
+    type=friend
+    host=sip.pennytel.com
+    fromuser=888xxxxxxx
+    defaultuser=888xxxxxxx
+    secret=password
+    canreinvite=no
+    insecure=invite
 
 Again, these can look different. A bit of googling around should help,
 or if you work from the above you should be able to work out the
@@ -151,12 +148,11 @@ asterisk cli, how ever it may be a bit harder).
 The format of the file you create is as follows.
 /etc/asterisk/manager.d/somename.conf
 
-~~~~ {escaped="true" lang="ini"}
-[username]
-secret = password
-read = system,call,log,verbose,command,agent,user,config
-write = system,call.log,verbose,command,agent,user,config 
-~~~~
+    :::ini
+    [username]
+    secret = password
+    read = system,call,log,verbose,command,agent,user,config
+    write = system,call.log,verbose,command,agent,user,config 
 
 This username and password isn't related to your VPS at all, it's what
 you'll use when logging in with Astman or other tools.
@@ -169,14 +165,12 @@ that should sort out Hangup/Busy detection and the likes, so the
 extensions we are adding can be very simple, however, you can customise
 these very easily to do more than just connect the 2 calls.
 
-~~~~ {escaped="true" lang="ini"}
+    :::ini
+    [DialOutMyNetFone]
+    exten => _0X.,1,Dial(SIP/mynetfone-out/${EXTEN})
 
-[DialOutMyNetFone]
-exten => _0X.,1,Dial(SIP/mynetfone-out/${EXTEN})
-
-[DialOutPennyTel]
-exten => _0X.,1,Dial(SIP/pennytel-out/${EXTEN})
-~~~~
+    [DialOutPennyTel]
+    exten => _0X.,1,Dial(SIP/pennytel-out/${EXTEN})
 
 And we are done. Everything should be setup now. The default install of
 Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
@@ -184,19 +178,16 @@ should just work.
 
 After all those edits, restart asterisk.
 
-~~~~ {escaped="true" lang="bash"}
-sudo /etc/init.d/asterisk restart
-~~~~
+    sudo /etc/init.d/asterisk restart
 
 Now we create our call file.
 
-~~~~ {escaped="true" lang="ini"}
-Channel: SIP/pennytel-out/YOURNUMBER
-Context: DialOutMyNetFone
-Extension: WHOTOCALLNUMBER
-Priority: 1
-Archive: Yes
-~~~~
+    :::ini
+    Channel: SIP/pennytel-out/YOURNUMBER
+    Context: DialOutMyNetFone
+    Extension: WHOTOCALLNUMBER
+    Priority: 1
+    Archive: Yes
 
 Very simple file. The Channel line is what calls you, so replace
 pennytel-out with the trunk you wish to use to call you. (It can be the
@@ -219,11 +210,9 @@ all there. For this reason, the mv command is recommended and I'll
 demonstrate. (I first copy the file so I can keep a number of pre setup
 files stored).
 
-~~~~ {escaped="true" lang="bash"}
-cp preset1.call call123.call
-sudo chown asterisk call123.call
-sudo mv call123.call /var/spool/asterisk/outgoing/
-~~~~
+    cp preset1.call call123.call
+    sudo chown asterisk call123.call
+    sudo mv call123.call /var/spool/asterisk/outgoing/
 
 As soon as the file hits that directory, asterisk reads it and executes
 it. If everything goes right, within 10 seconds your phone should start

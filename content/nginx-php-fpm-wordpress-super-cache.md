@@ -15,67 +15,66 @@ non PHP files to the php interpreter).
 
 Firstly, my Nginx config for this very blog.
 
-~~~~ {escaped="true" lang="ini" line="1"}
-server {
-  server_name www.tim.purewhite.id.au;
-  rewrite ^/(.*) http://tim.purewhite.id.au/$1 permanent;
-}
+    :::nginx
+    server {
+      server_name www.tim.purewhite.id.au;
+      rewrite ^/(.*) http://tim.purewhite.id.au/$1 permanent;
+    }
 
-server {
-    server_name tim.purewhite.id.au static.tim.purewhite.id.au;
-    root /home/tim/domains/tim.purewhite.id.au/public_html;
+    server {
+        server_name tim.purewhite.id.au static.tim.purewhite.id.au;
+        root /home/tim/domains/tim.purewhite.id.au/public_html;
 
-    access_log /var/log/nginx/tim.purewhite.id.au_access_log;
-    access_log  /var/log/nginx/default.access.log host_combined;
-    #access_log  /var/log/nginx/uri.log host_combined_uri;
-    error_log /var/log/nginx/tim.purewhite.id.au_error_log;
+        access_log /var/log/nginx/tim.purewhite.id.au_access_log;
+        access_log  /var/log/nginx/default.access.log host_combined;
+        #access_log  /var/log/nginx/uri.log host_combined_uri;
+        error_log /var/log/nginx/tim.purewhite.id.au_error_log;
 
-    index index.php;
+        index index.php;
 
-    location / {
+        location / {
 
-        if ($http_cookie ~ "comment_author_|wordpress|wp-postpass_") {
-            rewrite ^/(.*) /loggedin$1 last;
+            if ($http_cookie ~ "comment_author_|wordpress|wp-postpass_") {
+                rewrite ^/(.*) /loggedin$1 last;
+            }
+            try_files $uri
+            /wordpress/wp-content/cache/supercache/$http_host/$uri/index.html
+            $uri/
+            /index.php;
         }
-        try_files $uri
-        /wordpress/wp-content/cache/supercache/$http_host/$uri/index.html
-        $uri/
-         /index.php;
+
+        location /loggedin {
+            internal;
+            rewrite ^/loggedin(.*) /$1 break;
+            try_files $uri $uri/ /index.php;
+        }
+
+
+        location ^~ /code {
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-Server $host;
+                proxy_set_header X-Forwarded-Host $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://127.0.0.1:8080/code/;
+        }
+
+        location ~* \.(ico|css|js|gif|jpe?g|png)$ {
+            expires 1w;
+            break;
+        }
+
+
+
+        fastcgi_intercept_errors off;
+
+        location ~ \.php {
+            try_files $uri =404;
+            include fastcgi_params;
+            fastcgi_pass   127.0.0.1:9002;
+        }
+
+        include drop;
     }
-
-    location /loggedin {
-        internal;
-        rewrite ^/loggedin(.*) /$1 break;
-        try_files $uri $uri/ /index.php;
-    }
-
-
-    location ^~ /code {
-            proxy_set_header Host $host;
-            proxy_set_header X-Forwarded-Server $host;
-            proxy_set_header X-Forwarded-Host $host;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_pass http://127.0.0.1:8080/code/;
-    }
-
-    location ~* \.(ico|css|js|gif|jpe?g|png)$ {
-        expires 1w;
-        break;
-    }
-
-
-
-    fastcgi_intercept_errors off;
-
-    location ~ \.php {
-        try_files $uri =404;
-        include fastcgi_params;
-        fastcgi_pass   127.0.0.1:9002;
-    }
-
-    include drop;
-}
-~~~~
 
 The first thing to notice is line 1-4. This simply redirects everyone
 from www.tim.purewhite.id.au to tim.purewhite.id.au. Simple as that.

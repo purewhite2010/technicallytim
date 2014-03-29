@@ -34,38 +34,37 @@ wp-cli scripts. It uses sudo, so make sure you know what you are doing.
 You may also have to tweak how locate finds things, as by default it
 won't show you files you can't access.
 
-~~~~ {lang="bash"}
-#!/bin/bash
+    :::basg
+    #!/bin/bash
 
-# Just find all installs and try and run tools in them
-# find wp-config.php files
-SAVEIFS=$IFS
-IFS=$(echo -en "\n\b")
-installs=$(locate -r wp-config.php$)
+    # Just find all installs and try and run tools in them
+    # find wp-config.php files
+    SAVEIFS=$IFS
+    IFS=$(echo -en "\n\b")
+    installs=$(locate -r wp-config.php$)
 
-for conffile in $installs
-do
-# goto root wp dir as user
-    wpdir=$(dirname "$conffile");
-    pushd $wpdir > /dev/null || exit
-    
-    echo "Checking $wpdir..."
-    
-    ## Check we actually have a wordpress install
-    
-    if [[ ! -f "wp-includes/version.php" || ! -f $conffile ]]
-        then echo "$wpdir doesn't appear to be a wordpress install, skipping..."
-        continue
-    fi
-    
-    # Get username for tool
-    username=$(stat -c %U $conffile)
-    
-    # run tool commands
-    sudo -u $username -- wp plugin update-all
-    
-    popd > /dev/null
-done
-~~~~
+    for conffile in $installs
+    do
+    # goto root wp dir as user
+        wpdir=$(dirname "$conffile");
+        pushd $wpdir > /dev/null || exit
+        
+        echo "Checking $wpdir..."
+        
+        ## Check we actually have a wordpress install
+        
+        if [[ ! -f "wp-includes/version.php" || ! -f $conffile ]]
+            then echo "$wpdir doesn't appear to be a wordpress install, skipping..."
+            continue
+        fi
+        
+        # Get username for tool
+        username=$(stat -c %U $conffile)
+        
+        # run tool commands
+        sudo -u $username -- wp plugin update-all
+        
+        popd > /dev/null
+    done
 
   [wp-cli]: http://wp-cli.org/ "wp-cli"

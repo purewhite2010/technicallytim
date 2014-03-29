@@ -28,31 +28,29 @@ and not matched with the other arrays.
 So normally when we submit input fields and some items have been left
 blank, they still consume a spot in the array, like so.
 
-~~~~ {lang="php" escaped="true"}
-array(4) {
-  [0]=>
-  string(6) "Item 1"
-  [1]=>
-  string(0) ""
-  [2]=>
-  string(0) ""
-  [3]=>
-  string(6) "Item 4"
-}
-~~~~
+    :::php
+    array(4) {
+    [0]=>
+    string(6) "Item 1"
+    [1]=>
+    string(0) ""
+    [2]=>
+    string(0) ""
+    [3]=>
+    string(6) "Item 4"
+    }
 
 However, the checkboxes (which have a value on On normally when
 checked), would appear like so (with Item numbers instead of "On" for
 clarity)
 
-~~~~ {lang="php" escaped="true"}
-array(2) {
-  [0]=>
-  string(6) "Item 1"
-  [1]=>
-  string(6) "Item 4"
-}
-~~~~
+    :::php
+    array(2) {
+    [0]=>
+    string(6) "Item 1"
+    [1]=>
+    string(6) "Item 4"
+    }
 
 There are solutions out there, however none work very well for dynamic
 adding and creating "groups" of data, including checkboxes. Given that
@@ -65,23 +63,22 @@ couldn't get it working well. A bit of fiddling and working on the
 solution in the comments and I came up with the following snippit that
 works nicely for me.
 
-~~~~ {lang="php" escaped="true"}
-$(document).ready(function(){
-    // do when submit is pressed
-    $('form').submit(function() {
+    :::js
+    $(document).ready(function(){
+        // do when submit is pressed
+        $('form').submit(function() {
 
-        $('input:checkbox:not(:checked)').each(function() {
-                console.log($(this).attr('name'));
-                $(this).before($('<input>')
-                .attr('class', '_temp')
-                .attr('type', 'hidden')
-                .attr('name', $(this).attr('name')));
-                // .val('off'));
-        });  
+            $('input:checkbox:not(:checked)').each(function() {
+                    console.log($(this).attr('name'));
+                    $(this).before($('<input>')
+                    .attr('class', '_temp')
+                    .attr('type', 'hidden')
+                    .attr('name', $(this).attr('name')));
+                    // .val('off'));
+            });  
+        });
+
     });
-
-});
-~~~~
 
 One of the main things I changed (once I made it work) was not having it
 set the "extra" inputs to the value of "Off", but leaving them as an

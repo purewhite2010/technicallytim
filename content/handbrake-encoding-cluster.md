@@ -33,10 +33,8 @@ server, and a working cluster.
 
 Firstly, I setup some NFS mounts on all the computers involved.
 
-~~~~ {escaped="true" lang="bash"}
-$ mkdir /mnt/DVD_rip
-$ mkdir /mnt/DVD_encode
-~~~~
+    $ mkdir /mnt/DVD_rip
+    $ mkdir /mnt/DVD_encode
 
 For me, I had 2 mounts as I wanted the DVD\_rip folder to be on a local
 computer, and the DVD\_encode folder to be on a server that all the
@@ -51,9 +49,7 @@ the ripping process at any time without loosing what has been ripped
 successfully. NB: It doesn't remove the CSS encryption so you will need
 libdvdcss on all computers doing encoding.
 
-~~~~ {escaped="true" lang="bash"}
-lsdvd /dev/sr0 > /dev/null & ddrescue -r 1 /dev/sr0 "$1.iso" "$1.log"
-~~~~
+    lsdvd /dev/sr0 > /dev/null & ddrescue -r 1 /dev/sr0 "$1.iso" "$1.log"
 
 My next script ([submitjob.sh][]) is another 1 liner, it submits the job
 to gearmand. It simply takes the name of the file to encode (iso or a
@@ -95,9 +91,7 @@ All the files can be found at
 <http://tim.purewhite.id.au/code/handbrake-cluster> or checked out with
 bzr.
 
-~~~~ {escaped="true" lang="bash"}
-bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
-~~~~
+    bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
 
   [Handbrake]: http://handbrake.fr
   [gearman]: http://gearman.org/

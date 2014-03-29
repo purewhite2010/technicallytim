@@ -25,9 +25,7 @@ for Transmission!
 
 Simply add the following line to the settings.json file.
 
-~~~~ {escaped="true" lang="bash"}
-"bind-address-ipv6": "fe80::"
-~~~~
+    "bind-address-ipv6": "fe80::"
 
  
 

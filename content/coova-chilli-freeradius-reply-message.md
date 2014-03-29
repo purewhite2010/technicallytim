@@ -29,16 +29,16 @@ So we next turn our attention to FreeRadius.
 The first place you may be tempted to look is in
 /etc/freeradius/modules/expiration
 
-~~~~ {escaped="true" lang="ini"}
-expiration {
-        #
-        # The Reply-Message which will be sent back in case the
-        # account has expired. Dynamic substitution is supported
-        #
-        reply-message = "Password Has Expired\r\n" 
-        #reply-message = "Your account has expired, %{User-Name}\r\n"
-}
-~~~~
+    :::ini
+    expiration {
+            #
+            # The Reply-Message which will be sent back in case the
+            # account has expired. Dynamic substitution is supported
+            #
+            reply-message = "Password Has Expired\r\n" 
+            #reply-message = "Your account has expired, %{User-Name}\r\n"
+    }
+
 
 This file gives you false hope. You see the option reply-message and
 think, if the expiration has a reply-message, then surely I can just
@@ -64,85 +64,84 @@ Please don't just copy and paste this, it's to give better understanding
 of where the parts go, as many examples don't give you the context of
 the changes needed.
 
-~~~~ {escaped="true" lang="ini"}
-authorize {
-    preprocess
-    chap
-    mschap
-    suffix
-    eap {
-        ok = return
-    }
-    sql{
-        notfound = 1
-        reject = 2
-    }
-    if(notfound){
-        update reply {
-            Reply-Message := "Login Failed. Please check your Username and Password"
+    :::ini
+    authorize {
+        preprocess
+        chap
+        mschap
+        suffix
+        eap {
+            ok = return
         }
-        ok = reject
-    }
-    
-    if(reject){
-        update reply {
-            Reply-Message := "Login Failed. Please check your Username and Password"
+        sql{
+            notfound = 1
+            reject = 2
         }
-        ok = reject
-    }   
-
-
-    expiration{
-        userlock = 1
-    }
-    if(userlock){
+        if(notfound){
             update reply {
-                    Reply-Message := "Your account has expired, %{User-Name}"
+                Reply-Message := "Login Failed. Please check your Username and Password"
             }
             ok = reject
-    }
-    
-    logintime
-
-    noresetBytecounter{
-        reject = 1
-    }
-    if(reject){
-            update reply {
-                    Reply-Message := "You have reached your bandwidth limit"
-            }
-            ok = reject
-    }
-
-    
-    noresetcounter{
-        reject = 1
-    }
-    if(reject){
-            update reply {
-                    Reply-Message := "You have reached your time limit"
-            }
-            ok = reject
-    }
-
-    pap
-}
-
-post-auth {
-    sql
-    exec
-    Post-Auth-Type REJECT {
-        update reply { # Fallback error message
-            Reply-Message = "Login Failed. Please check your username and password"
         }
-        attr_filter.access_reject
+        
+        if(reject){
+            update reply {
+                Reply-Message := "Login Failed. Please check your Username and Password"
+            }
+            ok = reject
+        }   
+
+
+        expiration{
+            userlock = 1
+        }
+        if(userlock){
+                update reply {
+                        Reply-Message := "Your account has expired, %{User-Name}"
+                }
+                ok = reject
+        }
+        
+        logintime
+
+        noresetBytecounter{
+            reject = 1
+        }
+        if(reject){
+                update reply {
+                        Reply-Message := "You have reached your bandwidth limit"
+                }
+                ok = reject
+        }
+
+        
+        noresetcounter{
+            reject = 1
+        }
+        if(reject){
+                update reply {
+                        Reply-Message := "You have reached your time limit"
+                }
+                ok = reject
+        }
+
+        pap
     }
-}
-~~~~
+
+    post-auth {
+        sql
+        exec
+        Post-Auth-Type REJECT {
+            update reply { # Fallback error message
+                Reply-Message = "Login Failed. Please check your username and password"
+            }
+            attr_filter.access_reject
+        }
+    }
 
 I'll start with the part that will help explain the best.
 
-~~~~ {escaped="true" lang="ini"}
+    :::ini
     noresetBytecounter{
         reject = 1
     }
@@ -152,7 +151,6 @@ I'll start with the part that will help explain the best.
             }
             ok = reject
     }
-~~~~
 
 When I first saw this code, I thought it was setting a variable reject
 to the value of 1. However it's not quite like that. See all modules
@@ -190,18 +188,18 @@ Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
 piece of code sets a default message for Access-Reject.
 
-~~~~ {escaped="true" lang="ini"}
-post-auth {
-    sql
-    exec
-    Post-Auth-Type REJECT {
-                update reply { # Fallback error message
-                    Reply-Message = "Login Failed. Please check your username and password"
-                }
-        attr_filter.access_reject
+    :::ini
+    post-auth {
+        sql
+        exec
+        Post-Auth-Type REJECT {
+                    update reply { # Fallback error message
+                        Reply-Message = "Login Failed. Please check your username and password"
+                    }
+            attr_filter.access_reject
+        }
     }
-}
-~~~~
+
 
 It's rather easy to see what is happening here. In the post-auth section
 (same file as the rest of the stuff), we match the Reject packets. We

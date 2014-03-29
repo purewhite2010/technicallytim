@@ -10,7 +10,7 @@ ripped off or getting a good deal. Then bring in VoIP, and things get
 even trickier.
 
 For the sake of this research, I was looking for a mobile phone plan,
-prepaid or post paid, that would ideally cost less than \$40 a month and
+prepaid or post paid, that would ideally cost less than $40 a month and
 didn't rely on any VoIP. (Due to data connections being unreliable and
 sometimes VoIP applications are difficult, like calling an access number
 then dialing the rest of your number). I firstly crunched just the
@@ -49,8 +49,8 @@ away from per second billing towards per minute billing. You'll notice a
 lot of VoIP providers advertise per second billing, which is because
 people know that they are only paying for what they use. For example, my
 scenario outcome for one month on one particular per minute biller,
-comes out to \$311, but if they offered per 30 second billing like they
-previously did, I'd save \$32 worth of cap credit, or about \$2 of real
+comes out to $311, but if they offered per 30 second billing like they
+previously did, I'd save $32 worth of cap credit, or about $2 of real
 money. Not much, but as you can see, it's extra money in the providers
 pockets.
 
@@ -67,14 +67,14 @@ however, that the numbers I'm about to quote assume that you ether use
 *all* the cap credit on a call, or on sms's, and don't take into account
 flagfalls (which would be charged for each call).**
 
-*A plan with a \$0.99 per minute call rate, costs \$0.06 per minute in
+*A plan with a $0.99 per minute call rate, costs $0.06 per minute in
 real dollars.*  
-*The same plan with \$0.28 sms rate, costs \$0.02 per sms in real
+*The same plan with $0.28 sms rate, costs $0.02 per sms in real
 dollars.*
 
 When I first saw these numbers, I was shocked. So for comparison, I
-looked at one of the cheapest VoIP providers. \$0.105 per minute, no
-flagfall and per second billing. And \$0.05 per sms. Yes, you read that
+looked at one of the cheapest VoIP providers. $0.105 per minute, no
+flagfall and per second billing. And $0.05 per sms. Yes, you read that
 correctly, the mobile phone is cheaper! Now before you trash your VoIP,
 that VoIP rate is to mobile phones in Australia, calls to Landlines and
 of course, overseas calls will be cheaper.
@@ -89,8 +89,8 @@ an access number, it hangs up and calls me back, then I dial the number
 I want and it calls the other side. No cost on the mobile side (except I
 need to have credit to make the call, even though I'm not charged for
 the call). Yet this requires 2 calls via the VoIP provider, one back to
-my mobile, and one to whom ever I'm calling, and at \$0.105 a minute,
-that's \$0.21 a minute all up!
+my mobile, and one to whom ever I'm calling, and at $0.105 a minute,
+that's $0.21 a minute all up!
 
 So when is VoIP cheaper then? It's cheaper for international, and
 untimed calls, for example, calls to landlines in Australia and a number
@@ -102,7 +102,7 @@ the providers, and Caps that you don't use completely are also wasting
 some money. But even with the months of very light usage, the Cap still
 works out cheaper than going with other plans.
 
-My recommendation, go for a Cap plan that gives you enough Cap \$'s that
+My recommendation, go for a Cap plan that gives you enough Cap $'s that
 you won't go over (especially if going post-paid) but you also won't
 have heaps unused each month. Then, if your phone can, setup VoIP and
 use it for calls to fixed lines. (This could be via mobile data or WiFi
@@ -111,14 +111,10 @@ mobiles much, or SMS, and get good 3G in your area, then a Data only
 plan with VoIP might be a better choice, as long as you are sure you
 don't need normal mobile voice service.
 
-[caption id="attachment\_267" align="alignright" width="300"
-caption="Snapshot of comparison"][![][]][][/caption]
+[![Phone Comparison]({filename}/images/2011/04/Phone-Comparison-300x126.png)]({filename}/images/2011/04/Phone-Comparison.png) 
 
 NB: Yes, I have taken into account Free calls between phones on the same
 carriers, however I only used calls between me and my wife as fitting
 into this category, as they are the only calls we can guarantee to be on
 the same network.
 
-  []: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2011/04/Phone-Comparison-300x126.png
-    "Phone Comparison"
-  [![][]]: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2011/04/Phone-Comparison.png

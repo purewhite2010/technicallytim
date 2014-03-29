@@ -5,7 +5,7 @@ Category: Technical
 Tags: 3g9wb, modem, nextg
 Slug: internet-reception
 
-[![][]][]So we finally got our modem a few weeks back. A 3G9WB, also
+[![Modem Reception]({filename}/images/2010/10/IMAG0061-179x300.jpg)]({filename}/images/2010/10/IMAG0061.jpg) So we finally got our modem a few weeks back. A 3G9WB, also
 known as a 3G9WT (Telstra Branding) or a 7.2 Home Gateway. Really, it's
 just a Netcomm router with a Sierra mobile module inside.
 
@@ -27,7 +27,4 @@ with the modem here (when the submission link is fixed up).
 So, until we get an external antenna, we'll just have to use an external
 modem! :-P
 
-  []: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061-179x300.jpg
-    "Modem Reception"
-  [![][]]: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061.jpg
   [OpenShot]: http://www.openshotvideo.com/ "OpenShot Video Editor"

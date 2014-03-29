@@ -1,0 +1,1681 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/all.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2013-05-18T17:18:00+10:00</updated><entry><title>"Windows" is full of bloat</title><link href="http://tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-05-18:2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
+computer, in particular lots of software installs and uninstalls to
+cleanup a slow computer.&lt;/p&gt;
+&lt;p&gt;Now before you jump the gun, I'm not talking about Windows the operating
+system being full of bloat, although it may be. I'm also not talking
+about the bloat that comes installed on OEM installs.&lt;/p&gt;
+&lt;p&gt;What I am talking about, is how so much third party free windows
+software is full of bloat. Just about every installer now wants to
+install another piece of software with the piece you downloaded, ether a
+toolbar or another "great" piece of software they recommend to you. And
+then when you uninstall a piece of software, just about every piece of
+software then insist on opening a webpage saying how sorry they are that
+you uninstalled the software and would you please do this 5 minute
+survey telling them why blah blah blah.&lt;/p&gt;
+&lt;p&gt;And even my favourite antivirus Avast has started doing it. First, the
+installer has jumped from 20Mb a few years ago to over 100Mb now. And
+now when you install it, if you aren't watching out it'll try and
+install Google Drive, and once it is installed it keeps popping up
+asking you to install the great security extension for chrome, blah blah
+blah.&lt;/p&gt;
+&lt;p&gt;What ever happened to nice free software that wasn't packed full of
+bloat, and that let you install and uninstall just that software that
+you asked for without trying to push other software on you? I'll happily
+keep my Linux world, where software does what you ask, and nothing more.&lt;/p&gt;
+&lt;p&gt;And if you live in the Windows world, seriously, I think it's well past
+time to get out, but you can still get out now!&lt;/p&gt;</summary><category term="bloat"></category><category term="windows"></category></entry><entry><title>Wordpress Server Maintenance</title><link href="http://tim.purewhite.id.au/2013/04/wordpress-server-maintenance/" rel="alternate"></link><updated>2013-04-25T14:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-04-25:2013/04/wordpress-server-maintenance/</id><summary type="html">&lt;p&gt;Wow. Somehow I missed when this amazing tool was released. &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt;.
+Just wow.&lt;/p&gt;
+&lt;p&gt;I have a bunch of scripts I use to keep all the Wordpress installs up to
+date on my server, it finds all the installs, then it downloads the
+latest version, checks each install for the installed version and
+updates them by extracting the files correctly, ensuring user
+permissions etc. However, that only keeps the core updated, I still need
+to rely on all my customers to keep their plugins updated. This is ok,
+except when a plugin has a security issue and needs to be updated ASAP.
+Recently, we had just that situation with the WP-Super-Cache plugin. So
+I modified my scripts, and now they update that particular plugin. But
+it would be a pain to write a script that updated every plugin, so I'm
+stuck logging into a number of sites I maintain, updating all the
+plugins regularly, and then hoping for the sites that the customer
+maintains, they do the same.&lt;/p&gt;
+&lt;p&gt;Enter, &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt;. The tool I've been dreaming of for a long time.
+Simply install, then using the basic structure of my script (the part
+that finds all installs, verifies they are valid installs, and executes
+commands as the user who owns the install), I can now run any of the
+awesome &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt; commands on all the sites I host! Server maintenance
+just got a whole lot easier (as long as no plugin updates break things)&lt;/p&gt;
+&lt;p&gt;For the really lazy, here is my code for updating all plugins, using the
+wp-cli scripts. It uses sudo, so make sure you know what you are doing.
+You may also have to tweak how locate finds things, as by default it
+won't show you files you can't access.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="c"&gt;# Just find all installs and try and run tools in them&lt;/span&gt;
+&lt;span class="c"&gt;# find wp-config.php files&lt;/span&gt;
+&lt;span class="nv"&gt;SAVEIFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$IFS&lt;/span&gt;
+&lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -en &lt;span class="s2"&gt;&amp;quot;\n\b&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php&lt;span class="nv"&gt;$)&lt;/span&gt;
+
+&lt;span class="k"&gt;for &lt;/span&gt;conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="c"&gt;# goto root wp dir as user&lt;/span&gt;
+    &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;$conffile&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;;
+    &lt;span class="nb"&gt;pushd&lt;/span&gt; &lt;span class="nv"&gt;$wpdir&lt;/span&gt; &amp;gt; /dev/null &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt;
+
+&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking $wpdir...&amp;quot;&lt;/span&gt;
+
+    &lt;span class="c"&gt;## Check we actually have a wordpress install&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;wp-includes/version.php&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; ! -f &lt;span class="nv"&gt;$conffile&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;
+        &lt;span class="k"&gt;then &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$wpdir doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;continue&lt;/span&gt;
+&lt;span class="k"&gt;    fi&lt;/span&gt;
+
+    &lt;span class="c"&gt;# Get username for tool&lt;/span&gt;
+    &lt;span class="nv"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;stat -c %U &lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+
+    &lt;span class="c"&gt;# run tool commands&lt;/span&gt;
+    sudo -u &lt;span class="nv"&gt;$username&lt;/span&gt; -- wp plugin update-all
+
+    &lt;span class="nb"&gt;popd&lt;/span&gt; &amp;gt; /dev/null
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="security"></category><category term="updates"></category><category term="wordpress"></category><category term="wp-cli"></category></entry><entry><title>Submitting Empty Checkboxes when in Array</title><link href="http://tim.purewhite.id.au/2012/09/submitting-empty-checkboxes-when-in-array/" rel="alternate"></link><updated>2012-09-11T15:20:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2012-09-11:2012/09/submitting-empty-checkboxes-when-in-array/</id><summary type="html">&lt;p&gt;In HTML, we often use a nice feature for POSTing a form, or submitting a
+form, where we have lots of items the "same". In the Grase Hotspot
+project, we have groups for example, and we can dynamically add and
+delete groups, but need a complete form for each group with it's
+settings. So we use an "array" to submit the values. Simple put, we have
+a number of \&amp;lt;inputs&gt; with the same name, but with square brackets on
+the end. i.e. \&amp;lt;input type="text" name="groupprice[]"/&gt;, and we have
+multiples of these. Thanks to page ordering, we can have a number of
+different arrays as well, and can associate all the group values
+together thanks to their positions in each array.&lt;/p&gt;
+&lt;p&gt;However, this breaks when we are submitting checkboxes, because
+unchecked checkboxes won't submit. When unchecked, they are a form
+element that isn't successful, and only successful form elements are
+submitted. That's fine, except we are relying on the array behaviour to
+match elements together, and when a checkbox isn't submitted, it doesn't
+even take up an array position, it's just absent, which means all
+following checkboxes on the page are now in the wrong spot in the array
+and not matched with the other arrays.&lt;/p&gt;
+&lt;p&gt;So normally when we submit input fields and some items have been left
+blank, they still consume a spot in the array, like so.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(4) {&lt;/span&gt;
+&lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(0) &amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[2]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(0) &amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[3]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 4&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;However, the checkboxes (which have a value on On normally when
+checked), would appear like so (with Item numbers instead of "On" for
+clarity)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(2) {&lt;/span&gt;
+&lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 4&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There are solutions out there, however none work very well for dynamic
+adding and creating "groups" of data, including checkboxes. Given that
+the dynamic creation and deletion of those groups is with Javascript,
+I've turned to a small javascript snippit to get it working. Hopefully
+I'll find a nice way to have it fallback when javascript is disabled.&lt;/p&gt;
+&lt;p&gt;I found the solution I'm using at &lt;a href="http://www.dwright.us/?p=472"&gt;http://www.dwright.us/?p=472&lt;/a&gt; however
+couldn't get it working well. A bit of fiddling and working on the
+solution in the comments and I came up with the following snippit that
+works nicely for me.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+    &lt;span class="c1"&gt;// do when submit is pressed&lt;/span&gt;
+    &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;form&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;submit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+        &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;input:checkbox:not(:checked)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;each&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+                &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;before&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;input&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;class&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;_temp&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;hidden&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)));&lt;/span&gt;
+                &lt;span class="c1"&gt;// .val(&amp;#39;off&amp;#39;));&lt;/span&gt;
+        &lt;span class="p"&gt;});&lt;/span&gt;  
+    &lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;One of the main things I changed (once I made it work) was not having it
+set the "extra" inputs to the value of "Off", but leaving them as an
+empty value. This is because in my code I run the incoming arrays
+through array_filter which removes all the empty ones (and maintains
+the array indexes so the order and position is still there).&lt;/p&gt;</summary><category term="array"></category><category term="checkboxes"></category><category term="empty"></category><category term="HTML"></category><category term="submit"></category></entry><entry><title>When did 'Linux' start moving away from it's simplicity?</title><link href="http://tim.purewhite.id.au/2012/05/when-did-linux-start-moving-away-from-its-simplicity/" rel="alternate"></link><updated>2012-05-08T19:46:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2012-05-08:2012/05/when-did-linux-start-moving-away-from-its-simplicity/</id><summary type="html">&lt;p&gt;Today I had the joy of trying to change a users desktop environment from
+Gnome, to Cinnamon, via ssh. At first I thought it would be easy, change
+the default desktop environment in lightdm.conf and restart. Fail. Ok,
+so where is a users desktop environment preference stored? .dmrc, or at
+least I thought so. I even logged in with a brand new user and confirmed
+that it saved the users desktop preference in \~/.dmrc. Except, if I
+changed .dmrc for a user, it just got overwritten with the old contents
+at their next automatic login. (Remember, ssh, so can't use the gui to
+change what was selected in the lightdm login screen).&lt;br /&gt;
+Wha?!!? Surely not a dconf/gconf setting somewhere. Search search
+search. Still no luck. Eventually I discover a service called
+"AccountsService" or something along that name. It stores the users
+".dmrc" contents in /var/lib/AccountsService/users/ with a file for each
+user, which believe it or not, can't be changed by the user! Arg! (And I
+believe you need to kill accountsservice to be able to change the
+contents of the file and have it actually honored, I tried just changing
+it, but ended up changing it then rebooting to get it to work)&lt;/p&gt;
+&lt;p&gt;This is stupidity! Have a daemon, that one of it's tasks is to tell the
+"display manager" what the users preferred desktop environment
+preference is, that stores it in a place the user can't change, without
+talking to the daemon! Oh, and write the contents of that file out to
+.dmrc at login, but don't bother reading from that file.&lt;/p&gt;
+&lt;p&gt;Doing some more digging, AccountService is for querying and manipulating
+user account information via D-Bus, essentially replacing the useradd,
+usermod and userdel commands. I can't find a "homepage" for it, the
+homepage listed is it's source code repo.
+(&lt;a href="http://cgit.freedesktop.org/accountsservice/"&gt;http://cgit.freedesktop.org/accountsservice/&lt;/a&gt;)  (NB: Some more digging
+finds this &lt;a href="http://www.freedesktop.org/wiki/Software/AccountsService"&gt;http://www.freedesktop.org/wiki/Software/AccountsService&lt;/a&gt; as
+the homepage)&lt;br /&gt;
+I personally don't mind D-Bus, it services its purposes, but here is an
+instance where it looks like someone has gone to the trouble of writing
+a piece of code, to complicate some that use to be a simple stat/open of
+a file, that the user was in total control of.&lt;/p&gt;
+&lt;p&gt;For the record, lightdm will work without AccountsService, and I believe
+then it will honor \~/.dmrc&lt;br /&gt;
+Also, accountsservice isn't in Debian stable, but is in Debian testing,
+and gdm3 and gnome depend on it. (So in other words Gnome3 depends on
+it)&lt;/p&gt;
+&lt;p&gt;I just don't understand why we need to reinvent the wheel, take
+something that is so simple (and fits in the Unix "philosophies" of
+everything is a file, and that file formats should be simple text based)
+and turn it into something that user no longer has control over, for
+something that sets their preference!&lt;/p&gt;
+&lt;p&gt;Read
+[http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
+some more thoughts on dbus.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;http:&lt;/span&gt;&lt;span class="c1"&gt;//blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Belkin? Rtkit?</title><link href="http://tim.purewhite.id.au/2011/11/belkin-rtkit/" rel="alternate"></link><updated>2011-11-05T12:10:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-11-05:2011/11/belkin-rtkit/</id><summary type="html">&lt;p&gt;While attempting to remotely debug a linux machine today, I was first
+encountering a strange problem. Any process that took more than about
+1/2 second to complete, would freeze. top, ps, lsmod, tail -f, the list
+goes on. For example, trying to run dmesg and display it's output would
+freeze, but dmesg into a file, and it would complete!&lt;/p&gt;
+&lt;p&gt;After much digging, I eventually found that rtkit (rtkit-daemon) is
+constantly trying to make pulseaudio operate at realtime. In reality, we
+don't need our audio to operate in realtime as most modern computers can
+keep up with video playback just fine. For the few people we actually
+want near real time audio (say, people recording multitrack stuff), then
+they can enable it themselves. Disabling rtkit (actually, uninstalling
+it as it appears to be started in dbus stuff), seems to have solved that
+problem.&lt;/p&gt;
+&lt;p&gt;The next problem was a strange DNS response. A dns request through the
+Belkin modem, to this server (purewhite.id.au) would return 10.45.41.175
+instead of 175.41.45.10. I know what reverse DNS is, but this is reverse
+IP! Belkin is returning the ip in reverse!! (Or backwards if you
+desire). A quick check reveals that this relatively new modem, hasn't
+got any new firmware for it (and it's firmware is over 1 year old).
+Apparently, someone else had this problem and belkin told them to just
+hard code the ip's in your hosts file for the hosts that are being
+returned wrong! I believe it was also a Belkin modem that would return
+strange results when you did an AAAA request (ipv6).&lt;br /&gt;
+So if you have a Belkin, maybe force your computer to use your ISP's
+DNS servers directly, rather than the routers. (Or take it back to the
+shop, because after all, it is faulty)&lt;/p&gt;</summary><category term="backwards ip"></category><category term="belkin"></category><category term="reverse ip"></category><category term="rtkit"></category></entry><entry><title>Nginx, PHP-FPM, Wordpress, Super Cache</title><link href="http://tim.purewhite.id.au/2011/10/nginx-php-fpm-wordpress-super-cache/" rel="alternate"></link><updated>2011-10-24T11:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-10-24:2011/10/nginx-php-fpm-wordpress-super-cache/</id><summary type="html">&lt;p&gt;So recently I've been exploring the alternative world of Nginx instead
+of Apache, and PHP-FPM instead of mod_php. There are plenty of
+tutorials on the net for getting all of this setup, however not that
+many are up to date anymore for the Super Cache stuff. Hopefully what I
+present here will be a more up to date config, that is also mostly
+secure compare to a good number of ones on the net (to do with passing
+non PHP files to the php interpreter).&lt;/p&gt;
+&lt;p&gt;Firstly, my Nginx config for this very blog.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;www.tim.purewhite.id.au&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/(.*)&lt;/span&gt; &lt;span class="s"&gt;http://tim.purewhite.id.au/&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="s"&gt;permanent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;tim.purewhite.id.au&lt;/span&gt; &lt;span class="s"&gt;static.tim.purewhite.id.au&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;root&lt;/span&gt; &lt;span class="s"&gt;/home/tim/domains/tim.purewhite.id.au/public_html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="kn"&gt;access_log&lt;/span&gt; &lt;span class="s"&gt;/var/log/nginx/tim.purewhite.id.au_access_log&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;access_log&lt;/span&gt;  &lt;span class="s"&gt;/var/log/nginx/default.access.log&lt;/span&gt; &lt;span class="s"&gt;host_combined&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;#access_log  /var/log/nginx/uri.log host_combined_uri;&lt;/span&gt;
+    &lt;span class="kn"&gt;error_log&lt;/span&gt; &lt;span class="s"&gt;/var/log/nginx/tim.purewhite.id.au_error_log&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="kn"&gt;index&lt;/span&gt; &lt;span class="s"&gt;index.php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+        &lt;span class="kn"&gt;if&lt;/span&gt; &lt;span class="s"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$http_cookie&lt;/span&gt; &lt;span class="p"&gt;~&lt;/span&gt; &lt;span class="sr"&gt;&amp;quot;comment_author_|wordpress|wp-postpass_&amp;quot;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/(.*)&lt;/span&gt; &lt;span class="s"&gt;/loggedin&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="s"&gt;last&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="kn"&gt;try_files&lt;/span&gt; &lt;span class="nv"&gt;$uri&lt;/span&gt;
+        &lt;span class="s"&gt;/wordpress/wp-content/cache/supercache/&lt;/span&gt;&lt;span class="nv"&gt;$http_host/$uri/index.html&lt;/span&gt;
+        &lt;span class="nv"&gt;$uri/&lt;/span&gt;
+        &lt;span class="s"&gt;/index.php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/loggedin&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;internal&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/loggedin(.*)&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="s"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;try_files&lt;/span&gt; &lt;span class="nv"&gt;$uri&lt;/span&gt; &lt;span class="nv"&gt;$uri/&lt;/span&gt; &lt;span class="s"&gt;/index.php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;^~&lt;/span&gt; &lt;span class="s"&gt;/code&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-Server&lt;/span&gt; &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-Host&lt;/span&gt; &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-For&lt;/span&gt; &lt;span class="nv"&gt;$proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://127.0.0.1:8080/code/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="p"&gt;~&lt;/span&gt;&lt;span class="sr"&gt;*&lt;/span&gt; &lt;span class="s"&gt;\.(ico|css|js|gif|jpe?g|png)&lt;/span&gt;$ &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;expires&lt;/span&gt; &lt;span class="s"&gt;1w&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+
+
+    &lt;span class="kn"&gt;fastcgi_intercept_errors&lt;/span&gt; &lt;span class="no"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="p"&gt;~&lt;/span&gt; &lt;span class="sr"&gt;\.php&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;try_files&lt;/span&gt; &lt;span class="nv"&gt;$uri&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;404&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;include&lt;/span&gt; &lt;span class="s"&gt;fastcgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;fastcgi_pass&lt;/span&gt;   &lt;span class="n"&gt;127.0.0.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;9002&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="kn"&gt;include&lt;/span&gt; &lt;span class="s"&gt;drop&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first thing to notice is line 1-4. This simply redirects everyone
+from www.tim.purewhite.id.au to tim.purewhite.id.au. Simple as that.&lt;/p&gt;
+&lt;p&gt;Next we define the server and the root document path. Still very
+standard. Then we define access logs, for various reason I'm logging to
+more than one place, but that'll change once everything is finished.&lt;/p&gt;
+&lt;p&gt;Line 15 is boring, we just define the "index index.php" so that if you
+access a directory it will load index.php or give you a 404 (which it
+won't because of things further down).&lt;/p&gt;
+&lt;p&gt;Now for the fun. Lines 19-21. These catch a logged in user and send them
+on an internal redirect down to lines 28-32. This is so we don't serve
+cached content to logged in users. That little snippit is thanks to a
+post at &lt;a href="http://permalink.gmane.org/gmane.comp.web.nginx.english/15664"&gt;http://permalink.gmane.org/gmane.comp.web.nginx.english/15664&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;However, there was a problem in the rest of the code. Thanks to a post
+at
+&lt;a href="http://wordpress.org/support/topic/lack-of-nginx-support-from-wp-super-cache"&gt;http://wordpress.org/support/topic/lack-of-nginx-support-from-wp-super-cache&lt;/a&gt;
+I realised we needed to test if the cache was being used or not. So I
+added the extra logging and discovered it wasn't. I quickly worked out
+what the problem was. The code at lines 22 - 25 had the middle 2 lines
+swapped around. So "\$uri/" was before the supercache line. What this
+mean was that it would try if the \$uri was a directory, and to load a
+directory it would try index.php (due to the index line) and so would
+end up loading wordpress through index.php. However, if we try the
+supercache line first, we find the cache file and so don't need to load
+indexes.&lt;/p&gt;
+&lt;p&gt;And just like that, magic, it works! We use supercache files for normal
+users, and if a cache file doesn't exist, we load wordpress like normal!&lt;/p&gt;
+&lt;p&gt;I'm also looking at how we run Nginx and PHP-FPM. I have heard of a few
+ways, one being that root runs a Nginx as user nginx or nobody, and each
+user runs their own Nginx which we proxy to from the main one. (And
+users run their own PHP-FPM as well). This sounds like a lot of work,
+very complicated, but yes, it gives you absolute security as only the
+user can access his web docs and scripts, and everything runs as that
+user. No one else's php process can load your config file to discover
+your database passwords.&lt;/p&gt;
+&lt;p&gt;Another way of running it is with Nginx as a nginx/nobody/www-data user,
+and each user run their own php-fpm but give the nginx/nobody/www-data
+user read only access to the web directory. If done correctly, this can
+actually be very secure. First, (as root) you chgrp all the files and
+directories in the users doc root (htdocs, www, public_html etc) to the
+user nginx will run as. Ideally, you also only allow them read access
+(so `chmod g+rX,g-w -R public_html` will give them access to read,
+but not write). You then set the gid bit on the directory; `chmod g+s
+public_html` (and do this for any directories that already exist
+underneath). Now any files the user creates underneath the public_html
+dir will be readable to the nginx user, so nginx can serve static files.
+Now running php-fpm as each user (I use php-fpm with a pool per user),
+the php process can read all the files that user can, so only the users
+own php process can read their config files with the password in it! And
+it also means that files you upload (i.e. wordpress media files) will be
+owned by the user, not by www-data or what ever the web user is. This is
+SO much better than Apache and mod_php, and easier than suExec with
+mod_php.&lt;/p&gt;
+&lt;p&gt;Once I have more of my domains moved to Nginx, I'll do a report on
+memory and cpu usage.&lt;/p&gt;</summary><category term="Nginx"></category><category term="php-fpm"></category><category term="secure"></category><category term="supercache"></category><category term="try_files"></category><category term="wordpress"></category></entry><entry><title>Munin cgi graph timing out</title><link href="http://tim.purewhite.id.au/2011/09/munin-cgi-graph-timing-out/" rel="alternate"></link><updated>2011-09-01T11:50:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-09-01:2011/09/munin-cgi-graph-timing-out/</id><summary type="html">&lt;p&gt;A problem that has given lots of people problems, caused me issues
+yesterday. I have munin using munin-cgi-graph to create the graphs on
+demand due to me not often viewing the graphs. A few days ago I had a
+server issue that caused apache to lock up (I think a process ran away
+with my RAM which caused swapping and apache to lock up.) Once I apache
+running again, I wanted to check the munin graphs to see what the system
+looked like during the lockup (which killed a number of processes due to
+out of memory conditions). However, the graphs wouldn't generate and the
+cgi was timing out without sending any data.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Timeout waiting for output from CGI script /usr/lib/cgi-bin/munin-cgi-graph Premature end of script headers: munin-cgi-graph&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I'm not alone ether.
+&lt;a href="http://wiki.kartbuilding.net/index.php/Further_issues_upgrading_to_Lenny#munin_with_cgi"&gt;http://wiki.kartbuilding.net/index.php/Further_issues_upgrading_to_Lenny#munin_with_cgi&lt;/a&gt;
+and &lt;a href="http://forum.linode.com/viewtopic.php?t=5171%3E"&gt;http://forum.linode.com/viewtopic.php?t=5171%3E&lt;/a&gt; both had issues.
+More googling still didn't find an answer so I tried to debug the perl
+cgi. After using CPAN to get Devel:Trace installed, I discovered the cgi
+was sitting waiting for a semaphore flag that it uses to ensure no more
+than a certain number of munin-graphs are running at once. This is
+great, except when a crash has caused this semaphore to be stuck at the
+maximum so no more munin-graph processes get started ever!&lt;/p&gt;
+&lt;p&gt;There are 2 solutions. The first is simple, reboot. The second is also
+simple, clear the semaphore flags manually. &lt;code&gt;ipcs&lt;/code&gt; is the command to
+show the flags and &lt;code&gt;ipcrm&lt;/code&gt; is the command for removing the semaphores.
+Check the man pages for information on the correct syntax.&lt;/p&gt;</summary><category term="ipcrm"></category><category term="ipcs"></category><category term="munin"></category><category term="munin-cgi-graph"></category><category term="semaphore"></category><category term="timeout"></category></entry><entry><title>Day 13</title><link href="http://tim.purewhite.id.au/2011/08/day-13/" rel="alternate"></link><updated>2011-08-29T13:03:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-29:2011/08/day-13/</id><summary type="html">&lt;p&gt;I think today is Day 13.&lt;/p&gt;
+&lt;p&gt;So finally I've had a chance to sit down and nut this out. First things
+first, getting hello world to run on the iPhone. Finally I worked out
+how to self sign a certificate, and get Xcode to build it, then using a
+custom script I found on the net, sign the code so the iPhone will run
+it. Yay! Hello World runs on the iPhone!&lt;/p&gt;
+&lt;p&gt;Next step. Get a GPS app running on the iPhone. After following a pretty
+good tutorial from
+http://www.vellios.com/2010/08/16/core-location-gps-tutorial/ I finally
+got a GPS test app running. (After making some changes so it would run
+on iOS 3.1). However, this is the end of the good news. So far, as I
+suspected, the iPhone 3GS isn't performing well on the GPS. Accuracy of
+1km isn't good enough, that can be achieved with just network location!
+We need down to about 10m. I'm thinking maybe I will need to upgrade to
+a newer iOS to see if it's an issue with the hardware or the software.
+However I want this app to run on iOS 3.1, so am hesitant to do any
+upgrades.&lt;/p&gt;
+&lt;p&gt;The last of the good news is that the Objective-C is starting to make
+some sense to me, and I'll now work on learning the major differences,
+and some more subtle ones, between Objective-C, C++ and
+C.&lt;small&gt;&lt;/small&gt;&lt;/p&gt;</summary><category term="GPS"></category><category term="iOS"></category><category term="iPhone"></category><category term="XCode"></category></entry><entry><title>Day 6</title><link href="http://tim.purewhite.id.au/2011/08/day-6/" rel="alternate"></link><updated>2011-08-22T16:53:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-22:2011/08/day-6/</id><summary type="html">&lt;p&gt;So not much has happened over the weekend due to it being very busy.
+Today the mini-DVI to HDMI adapter arrived, so I could finally "dock"
+the Macbook at my desk. After "docking" it with my monitor, keyboard and
+mouse, it suddenly feels less like a laptop and more like a desktop!
+More screen realestate is a big bonus. But being able to just pick it
+up, pull out a few cables and take it with me, tether it to my mobile
+via wifi and work on the go, just makes such a difference to having a
+separate desktop and laptop!&lt;/p&gt;
+&lt;p&gt;As I already used a password manager under Linux, I wanted an
+application that was compatible with my existing password database.
+Thankfully, Password Gorilla runs on OS X, and all the other platforms,
+and reads the same password database as pwsafe does. So while I was out
+today, I finally migrated a number of machine passwords into a secure
+"safe". The GUI is rather nice on the Mac, so I may considering using it
+under Linux too.&lt;/p&gt;
+&lt;p&gt;I've also installed Qumana which will allow me to blog without using a
+browser. This is something I did many moons ago, and so thought I'd try
+it again for this Project as it assists in making me use the Mac for the
+whole time, rather than using interfaces/apps/things that I am already
+comfortable with.&lt;/p&gt;
+&lt;p&gt;As I have a few uni assignments due this week, I probably won't spend
+much time working on the project. And unfortunately, at least for one of
+the assignments, I will have to use my Linux machine to complete it due
+to some tools that aren't available for Mac. I have contemplated
+installing Linux on the Mac, but for now figure that the time spent
+doing that is better spent on the assignments.&lt;/p&gt;
+&lt;p&gt;Interestingly, while setting in a shopping centre working today, some
+random walked past and said something like "Mac's are nice aren't they?"
+So for all those who want people to stop and talk to you, get a Mac!&lt;/p&gt;
+&lt;p&gt;I think I have gotten this Mac to the point that it's now very usable
+for me. I've installed enough apps to get me going, and I'm forcing
+myself to learn all the Mac shortcuts. Now I'll use it for all my
+Assignments this week as much as possible, and I think by the end of the
+week, I'll probably be using my Linux machine via VNC on my Mac!&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;&lt;em&gt;Powered by&lt;/em&gt; &lt;a href="http://www.qumana.com/"&gt;Qumana&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;</summary></entry><entry><title>Day 3</title><link href="http://tim.purewhite.id.au/2011/08/day-3/" rel="alternate"></link><updated>2011-08-19T12:15:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-19:2011/08/day-3/</id><summary type="html">&lt;p&gt;I've decided to blog this journey of learning and challenge. I am
+developing a mobile app, initially for iOS and eventually for Android. I
+have given myself an initial 60 days to get it done, 60 days from
+getting the equipment.&lt;/p&gt;
+&lt;p&gt;Being an iOS app, I required an Apple Mac computer to run the required
+development tools. Tuesday afternoon an iPhone 3GS and a MacBook
+arrived, curtsey of a friend of Jun's. First thing I needed to do was
+download the Lion update, so I could run XCode 4.1. This started Tuesday
+evening and was finished by Wednesday morning (Day 1). I then prepared a
+USB Drive to boot the installer from, and went and purchased a new
+laptop HDD to upgrade the MacBook. By lunch time I'd fitted the new
+500Gb HDD and the OS X Lion install was finished. Now started the 6-8hr
+download of XCode. Meanwhile I spent some time getting aquainted with
+this MacBook and OS X. No, I'm not converted like some people have been
+asking, however it probably will be my main computer for the next 60 odd
+days.&lt;/p&gt;
+&lt;p&gt;Yesterday (day 2) I wrote a Hello World app in XCode for iOS. It was
+copied straight from a tutorial on the net, and I quickly discovered
+that Apple wants \$99 from me to be able to even test it on my iPhone!
+Come on Apple, you already get the money for the MacBook, the iPhone,
+and now you want more money just so we can test apps on our OWN
+devices!?!? Eventually we'll need to fork out this money so we can sign
+our apps and put them on the App Store. For now though, I think I'll
+just jailbreak for testing purposes.&lt;br /&gt;
+I've continued getting acquainted with the MacBook. It now runs Firefox
+and Thunderbird, iCal is 2 way syncing my calendar. Clementine has
+become my music player (iTunes, no thanks), LibreOffice is installed.
+TextWrangler may become my other code editor if it is good enough.
+Dropbox is setup for syncing between my MacBook and certain folders on
+my main computer. So far, it's been nice using this computer, however
+it's certainly not better than similar hardware running Linux. For a
+start, it took me a long time to get network shares with our NAS working
+well, even though it supports AFP. Eventually it was easier to just
+setup NFS. I'm getting used to all the keyboard shortcuts, which once
+learned certainly speed up some navigation. Annoyingly, there have been
+some things where a keyboard doesn't work and you have to use a mouse.&lt;/p&gt;
+&lt;p&gt;Regarding code, it looks like I'll probably use Git for the SCM as its
+built in to XCode.&lt;/p&gt;
+&lt;p&gt;Thats all for Day 3 so far. I need to get some uni work done and we have
+a busy weekend. I look forward to next week when I'll have to make this
+iPhone run my apps!&lt;/p&gt;</summary><category term="Apple"></category><category term="Development"></category><category term="iOS"></category><category term="iPhone"></category><category term="Mac"></category><category term="MacBook"></category><category term="OS X"></category><category term="project"></category><category term="XCode"></category></entry><entry><title>Gmail account hacked :(</title><link href="http://tim.purewhite.id.au/2011/08/gmail-account-hacked/" rel="alternate"></link><updated>2011-08-04T11:28:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-04:2011/08/gmail-account-hacked/</id><summary type="html">&lt;p&gt;For someone that prides himself on security, it is rather embarrassing
+to get hacked. I currently don't know how they got in, or exactly what
+they have done. I have changed my passwords and security questions
+though.&lt;/p&gt;
+&lt;p&gt;So far, I know that my account was accessed from Poland (194.181.62.13)
+with last access at 8:49 am today. It only appears to have been accessed
+via a browser, and there don't seem to be any extra filters (forwarding)
+setup. I do know that it appears everyone in my address book has been
+sent a link, although the link I can see that was sent (thanks to a
+bounce back) doesn't appear to work. They also deleted everything from
+my sent box and trash, which is probably what annoys me the most. I
+don't know if anything else has been deleted.&lt;/p&gt;
+&lt;p&gt;The most likely method they got in by was from an attack on another
+site, that revealed my password from when I used the same password in
+more than one place. As I no longer do this, I've been slowly changing
+my passwords to all be unique, however I should have changed my gmail
+one along time ago.&lt;/p&gt;
+&lt;p&gt;So 2 morals to this story. Even security conscience people can get
+hacked. And backup your data from the cloud if you wish to avoid loosing
+anything. I'm now in the process of setting up version controlled
+backups of my gmail data.&lt;/p&gt;</summary><category term="gmail"></category><category term="hacked"></category></entry><entry><title>Google+ (Google's Social Network)</title><link href="http://tim.purewhite.id.au/2011/07/google-googles-social-network/" rel="alternate"></link><updated>2011-07-15T10:57:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-07-15:2011/07/google-googles-social-network/</id><summary type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
+what it is, or you may have none, so hopefully I can answer some of your
+questions and help you get started.&lt;/p&gt;
+&lt;p&gt;Firstly, Google+ is Google's latest entry into social networking.
+Already it looks much better than Buzz or Wave. What I like about it
+already is that the interface is clean and simple, and most importantly
+it is very easy to control your privacy settings. Now Facebook does have
+a similar feature, but it is extremely difficult to use.&lt;/p&gt;
+&lt;p&gt;Circles. You simple assign your "friends" to different circles, they can
+be in more than one. Then, you can share a post/photo/video etc with
+different circles, individual people, or the public. (There is also an
+extended circles which I believe shares it with people in your circles,
+and people in their circles). Want to let the world know about your new
+baby, simply post it public! (Like twitter). Want to post how you are
+having a dodgy day but only want your friends to know, and not your
+boss, just post it to your friends circle and make sure you boss is in
+your work circle. Want to share some good news with family and few close
+friends, post it to your family circle and then add the extra friends in
+as well!&lt;br /&gt;
+Circles make it very simple to control who see's what on your Google+
+profile. Given the security scares of facebook stalkers and the like,
+it's good to know you have total control over who see's what.&lt;/p&gt;
+&lt;p&gt;Currently there are no Google+ games or apps. However for me that's a
+bonus. I'm sick of all these status updates of "I just completed level
+235 of bubble popping game...." and lots of other meaningless things
+like that. I don't mind people playing games, but I don't want to hear
+about it! What Google+ offers you out of the box though, is an amazing
+tool for social network communications that will allow you to easily
+keep in contact with people from all areas of your life, without getting
+cluttered down in the mechanisms of the communications. Huddles allow
+you to create a group of people for discussing something, like a group
+assignment, complete with group video chat (which arrived before
+Facebook announce the Skype Video partnership).&lt;/p&gt;
+&lt;p&gt;I'm hoping that you have read this far and are at least interested in
+trying Google+. For many people, until all your friends are there, you
+aren't going to move. In fact, unless you are sick of the bloat of
+facebook, you probably have very little incentive to move unless you
+have privacy concerns with facebook. However I urge to to consider this,
+someone has to take the first steps so that others will follow. And if
+you need a good reason to take those first steps, I believe the privacy
+issues of facebook should be enough for anyone to think twice about
+facebook. And, if Google+ does flop, or you want to run away from it,
+all the stuff you put on it is yours, there is a nice easy way to
+download all your photos and other things on Google+ so you aren't
+locked in!&lt;/p&gt;
+&lt;p&gt;Now here is the hard part, Google+ is still currently invite only as
+it's still in it's "trial" stages while they work out bugs. So below is
+a form that you can put your name and email address in, and a short note
+if you desire, and I'll invite you to Google+. Due to the demand for
+invites, there are 2 things we do to try and get you in. First we send
+you an invite, then we share a post with you. You'll get 2 emails, try
+the invite one first, which should have a red button to "Learn more
+about Google+" which will hopefully take you to the signin page to
+create your profile. If that fails, the second email will have a link to
+"View or Comment on Blah Blahs Post". This link will also hopefully take
+you to a page where you can fill out your public profile and then sign
+in to Google+.&lt;br /&gt;
+Both methods work at different times, so if it doesn't work for you
+immediately, please wait an hour and try again.&lt;/p&gt;
+&lt;p&gt;I promise to not do anything with your email address other than invite
+you to Google+. Please be patient as I need to manually invite each
+person unless I can work out some way to automate this. I am happy to
+invite people I don't know, however please don't be offended if you
+don't end up in my circles.&lt;/p&gt;
+&lt;p&gt;(Form removed as invites no longer needed)&lt;/p&gt;</summary><category term="facebook"></category><category term="google+"></category><category term="googleplus"></category><category term="invites"></category><category term="social network"></category></entry><entry><title>Mt Gox Passwords Leaked</title><link href="http://tim.purewhite.id.au/2011/06/mt-gox-passwords-leaked/" rel="alternate"></link><updated>2011-06-20T14:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-20:2011/06/mt-gox-passwords-leaked/</id><summary type="html">&lt;p&gt;For the second time in a week, I've heard of a websites user database
+being leaked. In the first case it was from a site I've never used. The
+second though was a site I signed up to a few months back.&lt;br /&gt;
+One of the biggest problems with this leaked database is that the
+hashing function used isn't that strong when the hacker has rainbow
+tables to use to crack the database.&lt;br /&gt;
+The first side effect of this for me was to go and change some of my
+passwords as a precautionary measure. The second side effect, and the
+more annoying one, is that I used a private email address for this
+particular account instead of using one of my "junk" gmail addresses. So
+now my private email address is in the hands of every hacker who is
+trying to crack that database. And already we are receiving "spam" to
+those addresses in that database. Most of it so far is users ether
+letting you know the Mt Gox database has been hacked, or users/owners of
+other Bitcoin exchanges sending you "advertising" so you'll come start
+using their exchange. I've email gotten an email advertising online
+storage from a company that accepts Bitcoins as payments. And they
+haven't bothered to try and keep the email addresses slightly private,
+1500 other people also have my address, and I have theirs, as no Bcc was
+used. (Of course, spam filtering will quickly filter that particular
+email out).&lt;br /&gt;
+Interested to see how bad the compromise was, and if it'll affect me,
+I've also downloaded the user database now. A quick look shows that my
+password is hashed with the less secure method and a quick bit of code
+later I can confirm the password I used to make that hash. Luckily for
+me, I use pwdhash to generate a unique password for each site I use.
+This means that an attacker who has cracked my hashed password in the Mt
+Gox password, still only has a password that can be used for one site,
+Mt Gox. If they had enough time and power, then maybe they could work
+backwards and eventually find the password I used to generate my pwdhash
+passwords, but by the time they did this, I'd have changed all those
+passwords anyway.&lt;br /&gt;
+Having only been using pwdhashing for a little while now, it was good
+to discover that it has already protected me from an attack. A number of
+user who had simple passwords that have been cracked already, have also
+had other accounts attacked as they used the same password in multiple
+places.&lt;/p&gt;
+&lt;p&gt;An interesting side note is how much the Mt Gox Bitcoin exchange has
+grown in a very short space of time. A discussion taking place in a
+forum noted that your position in the database is related to when you
+signed up. Working from knowing when you signed up shows how many people
+signed up after you. It seems to have had exponential growth in the last
+few weeks, which is good for Bitcoin in general, but bad once you
+realise how this will look to all those new users. Looking at my
+position in the database, I can see I was a very early adopter.&lt;/p&gt;</summary><category term="bitcoin"></category><category term="crack"></category><category term="database"></category><category term="leaked"></category><category term="mt gox"></category><category term="password"></category></entry><entry><title>Drupal Upgrades</title><link href="http://tim.purewhite.id.au/2011/06/drupal-upgrades/" rel="alternate"></link><updated>2011-06-10T16:42:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-10:2011/06/drupal-upgrades/</id><summary type="html">&lt;p&gt;Drupal upgrades have not been easy, and they should be easy. You look at
+wordpress, one click and the upgrade is done! Plugins, themes and core
+can all be upgraded from in the browser.&lt;/p&gt;
+&lt;p&gt;Drupal upgrades are traditionally backup, move all files out, extract
+new fresh files, move selected files back. Now there is an easier way!
+Patch files from &lt;a href="http://fuerstnet.de/en/drupal-upgrade-easier"&gt;http://fuerstnet.de/en/drupal-upgrade-easier&lt;/a&gt; allow
+you to backup, and then inplace upgrade the Drupal core files! No nasty
+moving things around that is almost guaranteed to break something
+because you forgot to move something back.&lt;/p&gt;
+&lt;p&gt;I still look forward to the day when Drupal upgrades are as easy as
+Wordpress. Until then, I have a good enough method!&lt;/p&gt;</summary><category term="drupal"></category><category term="upgrades"></category></entry><entry><title>Disable IPv6 in Transmission BT</title><link href="http://tim.purewhite.id.au/2011/06/disable-ipv6-in-transmission-bt/" rel="alternate"></link><updated>2011-06-10T15:59:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-10:2011/06/disable-ipv6-in-transmission-bt/</id><summary type="html">&lt;p&gt;After finally getting my IPv6 working nicely, it was time to prevent
+Transmission from using IPv6 as  I don't want lots of torrent traffic
+going through the tunnel when it's faster through IPv4 (until a time I
+can get Native IPv6). Apparently this is an "invalid" feature request
+according to some of the developers.
+(&lt;a href="http://trac.transmissionbt.com/ticket/4197"&gt;http://trac.transmissionbt.com/ticket/4197&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Had the developer actually stopped to consider it, maybe read some
+relevant parts of the source code, they would have quickly discovered
+that you can already disable it! They could document it as a feature
+without having to touch a line of code, and mark the feature request as
+completed!&lt;/p&gt;
+&lt;p&gt;It's a rather simple fix. There are checks for the IPv6 address not
+being a link local address, or a 6to4, or Teredo tunnel[1]. So we just
+make Transmission bind to a link local address and hey presto, no IPv6
+for Transmission!&lt;/p&gt;
+&lt;p&gt;Simply add the following line to the settings.json file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s"&gt;&amp;quot;bind-address-ipv6&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fe80::&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;[1] You'd think given that they already prevent Teredo tunnels from
+being used, that the feature request would actually make sense for those
+wishing to disable IPv6 due to TUNNEL's!&lt;/p&gt;</summary><category term="ipv6"></category><category term="torrent"></category><category term="transmission"></category><category term="tunnel"></category></entry><entry><title>Why we need native IPv6</title><link href="http://tim.purewhite.id.au/2011/06/why-we-need-native-ipv6/" rel="alternate"></link><updated>2011-06-10T12:12:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-10:2011/06/why-we-need-native-ipv6/</id><summary type="html">&lt;p&gt;We need native IPv6, or at least a decent PoP in Australia!&lt;/p&gt;
+&lt;p&gt;Currently our home network is IPv6 enabled via a Sixxs tunnel. If we
+lived in NZ then our PoP would be in NZ. Unfortunately we can't use the
+NZ PoP, so instead we use the London PoP! Eventually I'll get around to
+pinging every PoP available to us and find the "closest" one, but for
+now, letter the numbers do the talking.&lt;/p&gt;
+&lt;p&gt;I ping the same machine both via IPv6 and via IPv4. Lets see if you can
+work out which is which.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
+&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;698.592&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;712.159&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;814.473&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;34.163&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+
+&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
+&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;76.670&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;79.557&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;87.452&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.866&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The PoP has an average ping of 350ms just to get to the PoP! No wonder
+it takes so long to get to the PoP and back to Australia! Hopefully
+later in the year my hosting provider will have fixed the IPv6 transport
+and I can setup my own local tunnel. Until then, slow IPv6 :(&lt;/p&gt;
+&lt;p&gt;&lt;ins datetime="2011-06-10T02:48:46+00:00"&gt;Edit: So I finally got AARNet
+IPv6 tunnel broker service working. A much better improvement. I'm
+running both tunnels in parrallel so that if one dies the other is
+working. Hopefully I'll see better IPv6 improvement now. Still, native
+IPv6 would be better.
+&lt;a href="http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/"&gt;http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/&lt;/a&gt;&lt;/ins&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
+&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;235.587&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;267.187&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;382.010&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;45.090&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="ipv6"></category><category term="ping"></category><category term="sixxs"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="http://tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-02:2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
+easy for students to afford Microsoft products so they don't need to
+pirate them (and steal them). That's fine as long as it works and
+Microsoft don't steal from us!&lt;/p&gt;
+&lt;p&gt;Twice I've now attempted to place an order with the online system, twice
+the order has been denied however the pre-authorisation on my credit
+card means I'm now \$300 "out of pocket" until the transactions are
+reversed in the next 5 business days. I've called my bank (before trying
+to place the order the second time) to ensure that there wasn't a
+problem with my account or the credit card. No problem from the banks
+end, it should have gone through.&lt;/p&gt;
+&lt;p&gt;Fittingly the email I got from them after complaining comes from "The
+Ultimate Steal AU". We'll it sure is the ultimate steal, lets take your
+money and give you nothing. And yes, I know I get the money back, but
+it's my time and effort I'm wasting, and if I needed that money to pay a
+bill, it's not there. Experiences like this sure make me want to buy
+from Micro\$oft!! Oh, and if I was rich and had lots of money in my
+account, each time I hit submit to attempt again (like the text
+suggests) would be another \$150 pre-authorisation without success. Not
+a great payment system if you ask me, no safety limits to prevent you
+from trying again and again. You could easily have a few thousand
+dollars in pre-auth as you keep checking the details, sure they are
+correct, you hit submit.&lt;/p&gt;
+&lt;p&gt;Hopefully they can fix it faster than the amount of time I spent on hold
+just to be told they can't do anything!&lt;/p&gt;</summary><category term="digital river"></category><category term="micro$oft"></category><category term="microsoft"></category><category term="steal"></category></entry><entry><title>Remote Scan to PDF</title><link href="http://tim.purewhite.id.au/2011/04/remote-scan-to-pdf/" rel="alternate"></link><updated>2011-04-20T16:42:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-20:2011/04/remote-scan-to-pdf/</id><summary type="html">&lt;p&gt;I needed a simple and quick way for other users on the network to be
+able to scan documents. So far, what I had been doing was running a
+little bash script I found on the net, and scanning multiple pages into
+a pdf. The problem was that I needed to run it, and teaching everyone
+else to login via ssh and run it wasn't an option.&lt;/p&gt;
+&lt;p&gt;So I knocked together a little PHP application that did the basic things
+the bash script does. It can even customise the settings (however that
+is disabled atm due to a scanner problem). And to make it more natural,
+I used jQuery and AJAX to run the jobs in the background without having
+a script constantly reloading itself.&lt;/p&gt;
+&lt;p&gt;Warning, the script in it's current version has basically no security.
+As there is a "readfile" part to dump the PDF to the browser, a user
+could easily make it read any file the web server has access too. It
+also has minimal error checking as generally things just work, and if
+they don't, you start again.&lt;/p&gt;
+&lt;p&gt;So if you are looking for a simple solution for network access to your
+scanner, and you don't want to go as far as phpsane, then here is the
+code! &lt;a href="http://tim.purewhite.id.au/code/phpscan2pdf/files"&gt;http://tim.purewhite.id.au/code/phpscan2pdf/files&lt;/a&gt;&lt;/p&gt;</summary><category term="code"></category><category term="pdf"></category><category term="php"></category><category term="scan2pdf"></category><category term="scanner"></category><category term="scanning"></category></entry><entry><title>Disk recovery - Which files are damaged?</title><link href="http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="alternate"></link><updated>2011-04-19T09:40:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-19:2011/04/disk-recovery-which-files-are-damaged/</id><summary type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
+damaged hard drive.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;inputdevice&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;inputdevice&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first ddrescue command tries to fly through the disk as quickly as
+possible, skipping over sections when an error occurs. This allows me to
+recover most of the good data as quickly as possible. The second command
+(which is only needed if you had errors found with the first command)
+will then retry the bad sections of disk, splitting the error sections
+into smaller and smaller parts until you eventually have individual
+blocks that are damaged. It is here that ddrescue really works hard to
+recover your data, and this part can take just as long as the first
+part.&lt;/ins&gt;&lt;/p&gt;
+&lt;p&gt;So you have successfully used ddrescue to recover everything you can off
+a failing hard drive. Now you have a big image file, maybe 500Gb, with
+sectors that could be recovered, and those that couldn't. But how do you
+find which files belong to the broken sectors? I recently had this
+problem with a FAT32 filesystem. After lots and lots of googling, I
+still didn't have a decent answer. Windows has a tool called DiskView,
+however it doesn't appear to work on disk images. There is also a Hex
+viewer around that apparently will tell you which files belong to the
+sector you are viewing, but I had no luck with that ether.&lt;/p&gt;
+&lt;p&gt;Eventually I stumbled across a toolset I should have used from the
+start. The Sleuth Kit. I also stumbled across a paper someone had
+written doing some forensics with The Sleuth Kit which pointed me to the
+right tools, although some had changed names.&lt;/p&gt;
+&lt;p&gt;However, let me first point you to a fairly simple way that is hidden in
+the ddrescue info pages. While at first it sounds like this method
+should be the long hard way, it actually works out to be the easiest
+way.&lt;/p&gt;
+&lt;p&gt;It is suggested in the ddrescue info pages that you md5sum all the files
+in the image, then using ddrescue in fill mode you write some data (that
+isn't all zero's) to the sections that couldn't be recovered, and then
+md5sum all the files again and compare. Seeing as I had already copied
+all the files off the image, it was actually even simplier than that. I
+wrote the random data to the damaged sections (in this case "BADSECTOR"
+over and over again) and then did a diff between the files on the image
+and the files I had already copied off the image. It did take awhile to
+do the diff, but 4hrs to compare 180Gb of files with 180Gb of files,
+over a network isn't that bad. I'm sure it would have been a lot quicker
+had all the files resided on the local machine on  a nice RAID array.&lt;/p&gt;
+&lt;p&gt;So a simplified example&lt;/p&gt;
+&lt;p&gt;copy all files off rescued image (loop mount) to another location&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;diff&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rescuedfiles&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;damagedfiles&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You'll then have a list of files that differ between the 2 versions,
+which are the ones with damaged sectors. Also, the ddrescue doesn't
+damage the logfile so you can then reverse it using /dev/zero to restore
+the image to it's original recovery state. This won't work with sparse
+files.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;zero&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;ins datetime="2011-08-11T21:54:00+00:00"&gt;Or, if you haven't copied the
+files off, then the way suggested in the ddrescue manual looks like
+this. (After getting your disk image)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# mount -o loop rescued.img /mnt/loop&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;md5sum&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;prefill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+
+&lt;span class="cp"&gt;## You may need to unmount and remount the loop file to prevent any caching interferring.&lt;/span&gt;
+&lt;span class="cp"&gt;# umount /mnt/loop&lt;/span&gt;
+&lt;span class="cp"&gt;# mount -o loop rescued.img /mnt/loop&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;md5sum&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;postfill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;diff&lt;/span&gt; &lt;span class="n"&gt;prefill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt; &lt;span class="n"&gt;postfill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;/ins&gt;&lt;/p&gt;
+&lt;p&gt;&lt;ins datetime="2011-08-11T21:42:04+00:00"&gt;&lt;strong&gt;This is all you need when
+trying to work out which files are damaged. The following is another
+method for really peaking into the file system that may be more useful
+for deeper analysis&lt;/strong&gt;&lt;/ins&gt;&lt;/p&gt;
+&lt;p&gt;However, if you do want to find out which files are in the damaged
+sectors, then continue as it is possible.&lt;/p&gt;
+&lt;p&gt;First, check that the sector is actually used. This used to be the dstat
+command, but it has since been renamed to blkstat. So we take a sector
+number from the logfile that couldn't be recovered.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="o"&gt;-|&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;
+&lt;span class="mh"&gt;0x0178F200&lt;/span&gt;  &lt;span class="mh"&gt;0x0000D400&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x017A0000&lt;/span&gt;  &lt;span class="mh"&gt;0x00000200&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x2BC488F400&lt;/span&gt;  &lt;span class="mh"&gt;0x00011600&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x2BEEFF0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x5AC5FB0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x5AC6050A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x5AC60E0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x5AC6180A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x5AC6220A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;span class="mh"&gt;0x5AC62B0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We then convert it to a sector number. I know the sector size is 512
+bytes in this case, but you will need to verify it for your drive. If in
+doubt, do the conversion, open a hexeditor, jump to that location, use
+the previous ddrescue command to fill in the badsectors with some known
+next, and confirm that the known text is at the address you are
+viewing.&lt;br /&gt;
+I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
+and dived by 512 (the sector size). I can do this all at once if I know
+that 512 in hex is 200.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
+&lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Or do it the long way&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
+&lt;span class="mi"&gt;188693285376&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
+&lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ether way, I now know that the sector number is 368541573. Using blkstat
+(formerly dstat) I can verify that the sector is used or not.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;blkstat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;span class="nl"&gt;Sector:&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;span class="n"&gt;Allocated&lt;/span&gt;
+&lt;span class="nl"&gt;Cluster:&lt;/span&gt; &lt;span class="mi"&gt;5754738&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now a little warning, if you get a sector that looks like this.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;blkstat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;48249&lt;/span&gt;
+&lt;span class="nl"&gt;Sector:&lt;/span&gt; &lt;span class="mi"&gt;48249&lt;/span&gt;
+&lt;span class="n"&gt;Allocated&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then you are probably looking at a sector in a directory listing. The
+next tool we are going to use, ifind, may take a very long time to
+process that sector for almost no gain. I would leave these sectors
+until you have processed the others. I believe this one for me actually
+is in one of the FAT's, which just told me that the FAT was probably
+damaged. What I can do is work with the damaged FAT initially, then
+switch over to the other FAT and see what is different. (Which I won't
+cover in this post) &lt;ins datetime="2011-04-18T23:52:56+00:00"&gt;On further
+investigation, it turns out this sector was in an unused part of the
+FAT, so had caused no damage to the FAT. Damage to the fat could prevent
+you from even seeing some of the files, so hopefully when you have
+damage to the FAT your 2nd FAT will still be good.&lt;/ins&gt;&lt;/p&gt;
+&lt;p&gt;Our next step is to use ifind to find the inode associated with the
+sector. This can take some time and lots of CPU.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt; &lt;span class="n"&gt;ifind&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;span class="mi"&gt;5892375559&lt;/span&gt;
+
+&lt;span class="n"&gt;real&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="n"&gt;m52&lt;/span&gt;&lt;span class="mf"&gt;.314&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+&lt;span class="n"&gt;user&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;m15&lt;/span&gt;&lt;span class="mf"&gt;.280&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+&lt;span class="n"&gt;sys&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;m2&lt;/span&gt;&lt;span class="mf"&gt;.170&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This finally gives us the inode associated with that file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;istat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;
+&lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;Entry&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;
+&lt;span class="n"&gt;Allocated&lt;/span&gt;
+&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;Attributes&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Archive&lt;/span&gt;
+&lt;span class="nl"&gt;Size:&lt;/span&gt; &lt;span class="mi"&gt;21346140&lt;/span&gt;
+&lt;span class="nl"&gt;Name:&lt;/span&gt; &lt;span class="n"&gt;MICROS&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;Entry&lt;/span&gt; &lt;span class="n"&gt;Times&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="nl"&gt;Written:&lt;/span&gt;    &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Aug&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;38&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;
+&lt;span class="nl"&gt;Accessed:&lt;/span&gt;   &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt; &lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;
+&lt;span class="nl"&gt;Created:&lt;/span&gt;    &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Aug&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;
+
+&lt;span class="nl"&gt;Sectors:&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The listing then goes on to show all sectors that the file uses. If we
+grep the listing, we can confirm that the sector 5892375559 is in that
+file. Unfortunately, we are stuck with the 8.3 filename and not the
+complete filename. Thankfully another tool will come to our rescue. If
+you are looking for a good number of files that are affected (i.e. more
+than 1 or 2 sectors) you'll want to run this command without the grep,
+and save the contents to a file so you can just grep over that file each
+time as it takes a long time to recursively list all the files in a big
+filesystem.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;fls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rFp&lt;/span&gt; &lt;span class="n"&gt;bunsom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;
+&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Office&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Office&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Chart&lt;/span&gt; &lt;span class="n"&gt;Converter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Contents&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;MacOS&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Chart&lt;/span&gt; &lt;span class="n"&gt;Converter&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So finally we can see that the inode 5892375559, which contains our
+damaged sector, belongs to this file from the Microsoft Office Chart
+Converter App. (Yes, it does look a little strange this file but that's
+because it's a OS X App file).&lt;/p&gt;
+&lt;p&gt;We can now repeat this for all damaged sectors. However, I'd be first
+getting a list of all sectors (remember that the second column in the
+ddrescue log is size of the damaged area, use that to work out who many
+sectors in a row are damaged). I'd then check the file we have just
+found (use the istat tool) to see if any of the other damaged sectors
+are also in that file.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;keywords to assist others finding it: data recovery, damaged sector,
+file at sector, file belong to sector, sector contents, damaged files,
+fat32, sector explore, sector view&lt;/em&gt;&lt;/p&gt;</summary><category term="damaged"></category><category term="fat32"></category><category term="recovery"></category><category term="sector"></category></entry><entry><title>Are mobile Providers Ripping Us Off?</title><link href="http://tim.purewhite.id.au/2011/04/are-mobile-providers-ripping-us-off/" rel="alternate"></link><updated>2011-04-08T18:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-08:2011/04/are-mobile-providers-ripping-us-off/</id><summary type="html">&lt;p&gt;With so many options, so many plans, it's hard to know if we are being
+ripped off or getting a good deal. Then bring in VoIP, and things get
+even trickier.&lt;/p&gt;
+&lt;p&gt;For the sake of this research, I was looking for a mobile phone plan,
+prepaid or post paid, that would ideally cost less than \$40 a month and
+didn't rely on any VoIP. (Due to data connections being unreliable and
+sometimes VoIP applications are difficult, like calling an access number
+then dialing the rest of your number). I firstly crunched just the
+numbers, to get an idea of what Mobile Cap plans actually give you in
+real dollars, not cap dollars, and how that would translate into minutes
+of talk time or sms's. Finally, I took my actual usage logs (which my
+Android saves to my Gmail account for me via SMS Backup+), and crunched
+the numbers to work out how much that usage would cost me on each plan.&lt;/p&gt;
+&lt;p&gt;First, a bit about  my method in crunching the numbers. Most mobile
+providers charge in 1 or 3 ways, per second, per 30 seconds, or per
+minute. If you make long calls, then per minute billing won't really
+make much of a difference, but if you make short calls, then per minute
+billing could end up costing you lots. For example, if all my calls are
+less than 30 seconds long, and I'm on per minute billing, then I'm
+always paying for a minute, even though I've used less than half of
+that!&lt;br /&gt;
+Using that, I figured that splitting my calls in to 3 categories would
+allow me to best see the cost difference between per second, per 30
+second, and per minute billing. Calls less than 30 seconds, Calls more
+than 30 seconds but less than a minute, and calls longer than a minute.
+I then wrote my formulas using the split categories, using the average
+call length for each category and the number of calls. To verify that
+this wasn't skewing my data, I then took 1 month and calculated the
+total cost processing each call to the second, for per second, per 30
+second and per minute billing. The results were almost 100% the same
+between the 2 methods. You are welcome to show me some mathematical
+proof as to why this happens, just know that if I take the average
+length of all calls for the month, and don't split them into categories,
+then the results are not close and the providers offering per second
+billing loose their advantage.&lt;/p&gt;
+&lt;p&gt;So, as you may have already worked out, per second billing can really
+save you money. Which is probably why more and more providers are moving
+away from per second billing towards per minute billing. You'll notice a
+lot of VoIP providers advertise per second billing, which is because
+people know that they are only paying for what they use. For example, my
+scenario outcome for one month on one particular per minute biller,
+comes out to \$311, but if they offered per 30 second billing like they
+previously did, I'd save \$32 worth of cap credit, or about \$2 of real
+money. Not much, but as you can see, it's extra money in the providers
+pockets.&lt;/p&gt;
+&lt;p&gt;When I started my research, I expected to find that these Cap plans are
+ripping us off with the illusion of lots of money (cap credit) for very
+little real money. I also expected to find that per second billing would
+save us the most money. And I hoped to find a provider that would be
+better value than my current one. Well, a lot of my expectations have
+been crushed.&lt;/p&gt;
+&lt;p&gt;Instead, what I've found is that while the Cap plans do have a very high
+call rate, and high flag fall, they are actually good value.&lt;strong&gt;Note
+however, that the numbers I'm about to quote assume that you ether use
+&lt;em&gt;all&lt;/em&gt; the cap credit on a call, or on sms's, and don't take into account
+flagfalls (which would be charged for each call).&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;A plan with a \$0.99 per minute call rate, costs \$0.06 per minute in
+real dollars.&lt;/em&gt;&lt;br /&gt;
+&lt;em&gt;The same plan with \$0.28 sms rate, costs \$0.02 per sms in real
+dollars.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;When I first saw these numbers, I was shocked. So for comparison, I
+looked at one of the cheapest VoIP providers. \$0.105 per minute, no
+flagfall and per second billing. And \$0.05 per sms. Yes, you read that
+correctly, the mobile phone is cheaper! Now before you trash your VoIP,
+that VoIP rate is to mobile phones in Australia, calls to Landlines and
+of course, overseas calls will be cheaper.&lt;/p&gt;
+&lt;p&gt;One of the plans I was looking at thinking should work out cheaper, is
+actually a VoIP providers plan. They provider a mobile sim card, with
+decent call rates, and free calls to their VoIP numbers, so you can then
+make your normal call. But as you can see above, even with the VoIP call
+being made over the mobile network, it is still cheaper with this Cap
+plan! I had also been thinking of using a callback VoIP provider, I call
+an access number, it hangs up and calls me back, then I dial the number
+I want and it calls the other side. No cost on the mobile side (except I
+need to have credit to make the call, even though I'm not charged for
+the call). Yet this requires 2 calls via the VoIP provider, one back to
+my mobile, and one to whom ever I'm calling, and at \$0.105 a minute,
+that's \$0.21 a minute all up!&lt;/p&gt;
+&lt;p&gt;So when is VoIP cheaper then? It's cheaper for international, and
+untimed calls, for example, calls to landlines in Australia and a number
+of other countries.&lt;/p&gt;
+&lt;p&gt;So, at the end of the day, Mobile providers aren't ripping us off, well,
+not as much as I thought. Yes, per minute billing means more money to
+the providers, and Caps that you don't use completely are also wasting
+some money. But even with the months of very light usage, the Cap still
+works out cheaper than going with other plans.&lt;/p&gt;
+&lt;p&gt;My recommendation, go for a Cap plan that gives you enough Cap \$'s that
+you won't go over (especially if going post-paid) but you also won't
+have heaps unused each month. Then, if your phone can, setup VoIP and
+use it for calls to fixed lines. (This could be via mobile data or WiFi
+depending on how good the 3G is where you live).  If you don't call
+mobiles much, or SMS, and get good 3G in your area, then a Data only
+plan with VoIP might be a better choice, as long as you are sure you
+don't need normal mobile voice service.&lt;/p&gt;
+&lt;p&gt;[caption id="attachment_267" align="alignright" width="300"
+caption="Snapshot of comparison"][&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2011/04/Phone-Comparison-300x126.png" title="Phone Comparison" /&gt;][][/caption]&lt;/p&gt;
+&lt;p&gt;NB: Yes, I have taken into account Free calls between phones on the same
+carriers, however I only used calls between me and my wife as fitting
+into this category, as they are the only calls we can guarantee to be on
+the same network.&lt;/p&gt;
+&lt;p&gt;[&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2011/04/Phone-Comparison-300x126.png" title="Phone Comparison" /&gt;]: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2011/04/Phone-Comparison.png&lt;/p&gt;</summary><category term="Cap Plan"></category><category term="Comparison"></category><category term="Exetel"></category><category term="iinet"></category><category term="Mobile"></category><category term="Optus"></category><category term="Pennytel"></category><category term="Phone"></category><category term="Post Paid"></category><category term="Pre Paid"></category><category term="Provider"></category><category term="Telstra"></category><category term="Virgin"></category><category term="voip"></category></entry><entry><title>What it takes to keep things running. (How to reduce comment/wiki spam)</title><link href="http://tim.purewhite.id.au/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/" rel="alternate"></link><updated>2011-04-05T22:13:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-05:2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/</id><summary type="html">&lt;p&gt;I recently pushed out a new version of the &lt;a href="http://hotspot.purewhite.id.au/"&gt;GRASE Hotspot&lt;/a&gt;. I spent
+lots of time working on rewriting the splash/welcome page, and login
+forms so that they would work even with javascript disabled, and allow
+you to force it into the non javascript version if you are having
+problems (so browsers like Safari can be used). However, recently I've
+spent a lot of time just doing maintenance.&lt;/p&gt;
+&lt;p&gt;The maintenance started when again I spent lots of time cleaning up spam
+on the wiki, this was after enabling ReCAPTCHA. I decided it wasn't
+practical to keep cleaning up the wiki, and seeing as I was the only one
+contributing to it, it made more sense migrating it to a Wordpress site.
+After the migration was done, I quickly started getting comment spam on
+the new site!! Thankfully, Akismet blocks comment spam, but the volume
+of spam coming in was enormous! A peek into the server logs showed that
+the same ip's that were publishing spam in the wiki, would try to get
+post to the missing wiki, find it missing and discover the wordpress
+site and immediately try to post comment spam! It was time to reduce the
+load on the server if possible.&lt;/p&gt;
+&lt;p&gt;After some research, I implemented some basic .htaccess rules that would
+block some of the spam even getting processed. But why couldn't I find a
+simple DNSBL for Apache? Turns out the right googling will find
+libapache2-mod-spamhaus, which does what we need. But unlike email spam,
+it seems comment/wiki spammers aren't in the DNSBL's as much as email
+spammers. Thankfully, libapache2-mod-spamhaus was now dropping about
+half the spamming connections.&lt;/p&gt;
+&lt;p&gt;Some more research turned up &lt;a href="%20http://www.projecthoneypot.org?rf=93412" title="Project Honey Pot"&gt;Project Honey Pot&lt;/a&gt; which is aimed more
+at the comment spammers and address harvesters. A quick check of the ip
+database they maintain revealed that most of the remaining comment
+spammer ips that were hitting my site were in their database!
+Unfortunately, the mod_httpbl module for Apache isn't in a nice
+repository anywhere, and hasn't been touched for awhile, so setup wasn't
+as easy. I found &lt;a href="http://repel.in-progress.com/"&gt;Repel&lt;/a&gt; which is a simple Python program that you use
+with mod_rewrite (and RewriteMap's). It's not so easy to setup, mainly
+due to the instructions being a little unclear, but also because the
+rewrite rules that use Repel can be very tricky. The documentation was
+good for just blocking, however I figured if I was going to use Project
+Honey Pot, I should contribute too, so I setup a honeypot on the site
+and then had fun and games with rewrite rules. Eventually though, I got
+it all setup. Now if you are thinking of setting this up yourself, it's
+probably a lot easier using the &lt;a href="http://wordpress.org/extend/plugins/httpbl/" title="Wordpress Http:bl Plugin"&gt;Wordpress Plugin&lt;/a&gt; which I've since
+setup on another site I assist with. While this will block the spammers,
+or direct them to a honeypot, it may have slightly more load than Repel.
+This is because Repel is a little python program, that apache already
+has running, and just passes the ipaddress to and waits for a reply. The
+wordpress plugin solution requires Apache to fire up PHP, which then
+fires up Wordpress, which then loads the plugin which finally gets the
+ipaddress, does the DNS lookup and then goes from there. I've done no
+testing, but logically Repel would appear to use less resources, but you
+are welcome to prove me wrong.&lt;/p&gt;
+&lt;p&gt;On top of all that maintenance, I also had some mail servers receiving
+spam, which should have been blocked. Some more tweaks and changes, and
+another influx of spam is now not getting past the gate.&lt;/p&gt;
+&lt;p&gt;Lastly, some advice. Password advice. In particular because I heard an
+"expert" on the ABC radio recently giving some poor advice. Get yourself
+a strong password, with letters and numbers, maybe some capital letters
+as well as lowercase, and decent length, at least 8 characters long. Now
+use that password for one place, and only one place, maybe your email
+account. Now find another one, just as strong, use that for your next
+account, maybe facebook. Reusing passwords is a big No No, as an
+important CEO recently discovered.&lt;br /&gt;
+I can hear you already, moaning and groaning. It's so hard to remember
+one really strong password, how can you remember more than one? Well
+this is the easy part. You use a formula. I've started using
+&lt;a href="https://www.pwdhash.com/" title="PwdHash"&gt;PwdHash&lt;/a&gt;, developed by Standford University. It simply takes the
+domain name of the site you are generating the password, and your master
+password, and creates you a "hash" that you use as your password for
+that site. So for example, if my master password was
+'thecatsatonthemat', my facebook password would be
+'F58VFRH8eUejfcIs9UA'. This will let you create strong unique passwords
+for each account, then if one of your accounts is broken into and the
+password somehow discovered, your other accounts are safe. Of course, if
+your email account gets broken into, a lot of other accounts are not
+safe as the hacker can then just reset your passwords by using the "Lost
+Password" feature many sites provide.&lt;/p&gt;
+&lt;p&gt;If you do decide to use PwdHash, you can install a firefox extension
+that assist, or you can use it directly on the site (as it uses
+Javascript, your password never leaves the computer, you can even save
+the page and use it offline). I found a little python script that does
+it for me, which I have on my server and my machine, so I can create my
+pwdhash's even when I don't have a browser handy. Of course, there is
+nothing preventing you having multiple master passwords ether, just to
+make it even more secure!&lt;/p&gt;</summary><category term="password"></category><category term="project honey pot"></category><category term="pwdhash"></category><category term="security"></category><category term="spam"></category></entry><entry><title>Coova Chilli &amp; FreeRadius Reply-Message</title><link href="http://tim.purewhite.id.au/2011/04/coova-chilli-freeradius-reply-message/" rel="alternate"></link><updated>2011-04-03T01:45:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-03:2011/04/coova-chilli-freeradius-reply-message/</id><summary type="html">&lt;p&gt;I was going to post this on the Grase Hotspot site, but will post it
+here in depth and just the basics on the hotspot site.&lt;/p&gt;
+&lt;p&gt;Previously I researched this problem and found very little, it would
+seem since my last search more material has become available that has
+assisted. In particular
+[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
+][]&lt;br /&gt;
+The basic problem is this. Using CoovaChilli, when a login failed for
+some reason, we usually didn't get an error message. If your data quota
+had been used up, then maybe you'd get "Your maximum never usage time
+has been reached" which for most people was confusing. An expired
+account may give you the error "Password Has Expired". However, any
+other reason for a login failure and you'd usually not get a message.&lt;/p&gt;
+&lt;p&gt;At first, you may want to blame Coova Chilli. After all, it is the piece
+of software sending back the login failed status, and if using the JSON
+interface, it would send back the login failure message. However, good
+CoovaChilli is just relaying the message it gets from the Radius server.
+So we next turn our attention to FreeRadius.&lt;/p&gt;
+&lt;p&gt;The first place you may be tempted to look is in
+/etc/freeradius/modules/expiration&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;expiration&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;#&lt;/span&gt;
+        &lt;span class="c1"&gt;# The Reply-Message which will be sent back in case the&lt;/span&gt;
+        &lt;span class="c1"&gt;# account has expired. Dynamic substitution is supported&lt;/span&gt;
+        &lt;span class="c1"&gt;#&lt;/span&gt;
+        &lt;span class="na"&gt;reply-message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Password Has Expired\r\n&amp;quot; &lt;/span&gt;
+&lt;span class="s"&gt;        #reply-message = &amp;quot;Your account has expired, %{User-Name}\r\n&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This file gives you false hope. You see the option reply-message and
+think, if the expiration has a reply-message, then surely I can just
+drop a similar thing in at other places. However, what you don't realise
+is that the reply-message is an option for the expiration module.
+Internally the module has settings it understands, and other modules
+won't understand those same settings! There is no setting for the sql
+modules, or the sections that handle counting remaining quota. Putting
+this reply-message option in other places will just cause FreeRadius to
+fail to start.&lt;/p&gt;
+&lt;p&gt;By now, if you have read the link above, you may have some better
+understanding of what to do. A good place to start reading for better
+understanding of how freeradius reads it's config files is &lt;code&gt;man unlang&lt;/code&gt;.
+unlang is the "language" used by the config files, and reading it and
+some of the accompanying documents with freeradius will enlighten you to
+how things work.&lt;/p&gt;
+&lt;p&gt;I'll give you a large block of finished code, so you can start to
+understand where all this fits together. This is an exceprt of
+/etc/freeradius/sites-available/default with comments stripped out.
+Please don't just copy and paste this, it's to give better understanding
+of where the parts go, as many examples don't give you the context of
+the changes needed.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;authorize&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;preprocess&lt;/span&gt;
+    &lt;span class="err"&gt;chap&lt;/span&gt;
+    &lt;span class="err"&gt;mschap&lt;/span&gt;
+    &lt;span class="err"&gt;suffix&lt;/span&gt;
+    &lt;span class="err"&gt;eap&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;return&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    sql{&lt;/span&gt;
+&lt;span class="s"&gt;        notfound = 1&lt;/span&gt;
+&lt;span class="s"&gt;        reject = 2&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(notfound){&lt;/span&gt;
+&lt;span class="s"&gt;        update reply {&lt;/span&gt;
+&lt;span class="s"&gt;            Reply-Message := &amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+    &lt;span class="err"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+
+    &lt;span class="err"&gt;expiration{&lt;/span&gt;
+        &lt;span class="na"&gt;userlock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(userlock){&lt;/span&gt;
+&lt;span class="s"&gt;            update reply {&lt;/span&gt;
+&lt;span class="s"&gt;                    Reply-Message := &amp;quot;Your account has expired, %{User-Name}&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;            }&lt;/span&gt;
+&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+    &lt;span class="err"&gt;logintime&lt;/span&gt;
+
+    &lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+        &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(reject){&lt;/span&gt;
+&lt;span class="s"&gt;            update reply {&lt;/span&gt;
+&lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;            }&lt;/span&gt;
+&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+
+    &lt;span class="err"&gt;noresetcounter{&lt;/span&gt;
+        &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(reject){&lt;/span&gt;
+&lt;span class="s"&gt;            update reply {&lt;/span&gt;
+&lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your time limit&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;            }&lt;/span&gt;
+&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+    &lt;span class="err"&gt;pap&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+
+&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;sql&lt;/span&gt;
+    &lt;span class="err"&gt;exec&lt;/span&gt;
+    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+            &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I'll start with the part that will help explain the best.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+    &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+                &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When I first saw this code, I thought it was setting a variable reject
+to the value of 1. However it's not quite like that. See all modules
+have return codes. For example, an ok code, or a reject or fail code.
+However, that code is more than just a code, it also has an action with
+it. For example, a reject code has the action, reject. Rather simple.
+What the reject action does, is stop processing this section and return
+a reject. What the 'reject = 1' does, is says that if this module
+returns a reject, we set the action to a 1, which is setting it's
+priority to 1, so that we can process more modules and get their error
+codes too, and give them priorities, so the highest priority code wins.
+This would let us do complex things for example, letting us exceed our
+bandwidth limit as long as our time limit is also exceeded. Given that
+we can have priorities from 1 to 99999 we can actually do really complex
+things.&lt;/p&gt;
+&lt;p&gt;So what this first bit of code is doing then, is preventing a reject
+from being sent straight away, so we can do more processing. And the
+next bit of processing we do is test for that reject. (You may think
+that this test could catch an earlier reject, but only if an earlier
+reject also had it's priority set to something otherwise it's default
+action would have been to return a reject straight away.) If this reject
+exists, then the module noresetBytecounter must have triggered it. So we
+update the reply package that FreeRadius is going to return, and set the
+Reply-Message to an appropriate error message given then module that
+caused the failure. We then send that reject without processing more
+modules with the "ok = reject" line. We could do other things like
+sending an 'ok = return' which would clear the reject and return an ok.
+You can also do a plain "ok" but I'm not 100% sure what that does, it
+would appear to clear the reject and replace it with an ok code and
+continue processing, where as the 'ok=return' doesn't continue
+processing that section.&lt;/p&gt;
+&lt;p&gt;Most of the rest of that big piece of code is similar pieces of code,
+although some have different codes, like userlock. The other important
+piece of code sets a default message for Access-Reject.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;sql&lt;/span&gt;
+    &lt;span class="err"&gt;exec&lt;/span&gt;
+    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+                    &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;                }&lt;/span&gt;
+&lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It's rather easy to see what is happening here. In the post-auth section
+(same file as the rest of the stuff), we match the Reject packets. We
+then update the reply, with a generic error message. Because of the
+operators (= .vs. :=) it will only add this Reply-Message if there is no
+other Reply-Message already set in the Access-Reject. We used := before
+to replace any Reply-Message already existing, so for example we could
+override the cryptic message sthe the sql_counter module sends back. We
+could also use += if we want to "Append" Reply-Messages, allowing
+multiple messages to be sent back. The "attr_filter.access_reject"
+line is nothing to worry about, it just filters the return Access-Reject
+packet to ensure only allowed attributes are sent back. As Reply-Message
+is allowed, it isn't stripped out.&lt;/p&gt;
+&lt;p&gt;Hopefully that gives better understanding to what code is needed to
+change/set the Reply-Message in Access-Reject packets. It could also be
+used to send back messages with Access-Accept packets. The great thing
+is that there are a good number of return codes, which allow you to make
+some really complex changes to how the data flows. If you have read the
+link at the start, you should by now start to realise how powerful
+unlang is. Not only can you check return codes, you can also check parts
+of the packet that have been "constructed". You can also change much
+more than the Reply-Message, you can change if it's access is accepted
+or rejected, what bandwidth controls are sent back, etc etc! For
+example, and ISP can allow login even with incorrect password, yet move
+that client to a different ip range that is setup for redirection to an
+internal portal to assist with resetting the password.
+(&lt;a href="http://www.easyzonecorp.net/network/view.php?ID=1042"&gt;http://www.easyzonecorp.net/network/view.php?ID=1042&lt;/a&gt;). Or the link
+from the start, they are using it so that when a datalimit is reached,
+FreeRadius sends back a slower speed, i.e. throttling them once their
+quota is used without disconnecting them! When you realise what power
+RADIUS has, you understand why it's used by isp's and the like!&lt;/p&gt;
+&lt;p&gt;Keywords to assist people in finding this information. Radius,
+FreeRadius, Access-Reject, Reply-Message, CoovaChilli, ChilliSpot,
+Hotspot, sql reply-message reject&lt;/p&gt;
+&lt;p&gt;[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
+ ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/p&gt;</summary><category term="Access-Reject"></category><category term="CoovaChili"></category><category term="FreeRadius"></category><category term="Hotspot"></category><category term="Reply-Message"></category></entry><entry><title>Brother HL-2140 Series Test/Information Page</title><link href="http://tim.purewhite.id.au/2011/03/brother-hl-2140-series-testinformation-page/" rel="alternate"></link><updated>2011-03-18T15:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-03-18:2011/03/brother-hl-2140-series-testinformation-page/</id><summary type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
+test or information page, it was good to finally find out how to do it
+again. Of course, if you have the nice windows drivers, hidden in there
+somewhere you can just click "Print Settings" and it will print out the
+toner life, number of pages printed, etc etc. If you are using another
+OS though, you won't always have that nice button.&lt;br /&gt;
+Thankfully the trick is fairly simple. If your printer is on but
+sleeping (The large "Go" button, the blue light one is dimmed) then just
+press the button once to wake it up. Once awake, press the big blue
+button 3 times, slow enough that it can register each press, fast enough
+that you don't take all day doing it. You get the general idea. And out
+will come a "Printer Settings" page, complete with a "bar" showing
+remaining drum and toner life, total pages printed (even down to the
+pages printed for each paper size), and error history and what page it
+happened on. Apparently it even counts paper jams.&lt;/p&gt;
+&lt;p&gt;Now I have to warn, that it doesn't always seem to get things right. I'm
+sure I've had paper jams, yet it thinks I've had none. (Maybe I'm
+remembering an older printer, I won't complain). It also says I've only
+done about 1000 pages since getting the printer, now this I'm sure is
+wrong as I printed 100's of pages for uni last semester.&lt;/p&gt;
+&lt;p&gt;Regardless, it's probably a good idea to print one of these pages when
+ever you change the toner, so you can get a good idea of how many pages
+you are getting out of each toner!&lt;/p&gt;
+&lt;p&gt;NB: This may or may not work on other Brother printers. It should work
+for all the HL-2140 range (including the HL-2142 which is just the
+HL-2140 branded exclusively for office works so no one can price match).&lt;/p&gt;</summary><category term="brother"></category><category term="hl2140"></category><category term="Printer"></category></entry><entry><title>GRASE Hotspot</title><link href="http://tim.purewhite.id.au/2010/12/grase-hotspot/" rel="alternate"></link><updated>2010-12-14T21:55:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-12-14:2010/12/grase-hotspot/</id><summary type="html">&lt;p&gt;3 years in the making, and finally I am releasing the code for the GRASE
+Hotspot. I've always planned on releasing the code, but had a lot things
+I wanted done before the code was released, in particular making it easy
+to install, and modular, as well as more secure than it previously was
+(in particular the remote access).&lt;/p&gt;
+&lt;p&gt;For those that don't know much about the hotspot system I've been
+working on, it's a simple captive portal system, that allows an
+organisation/company to provide controlled internet access to users.
+When a user tries to use a computer on the network (wireless or wired),
+the first time they attempt to access a website, it redirects them to a
+login screen. After a sucessful login they can then use the internet
+until their time or data allowance is exhausted. The main part of the
+GRASE Hotspot is the admin interface I have written. This provides a
+simple interface for adding and managing users, as well as monitoring
+usage and websites visited.&lt;/p&gt;
+&lt;p&gt;The rest of the Hotspot system is what we call glue layers. This is the
+process of connecting individual components together, in this case,
+CoovaChilli, FreeRadius, MySQL, Squid and a few other components. Most
+of the Hotspot solutions I researched required a lot of manual work
+gluing the components together. All this hard work is taken care of
+using the GRASE Hotspot.&lt;/p&gt;
+&lt;p&gt;Currently the best way to get started using the system, is to download
+the grase-repo deb package from
+&lt;a href="http://hotspot.purewhite.id.au/apt/pool/main/g/grase-repo/"&gt;http://hotspot.purewhite.id.au/apt/pool/main/g/grase-repo/&lt;/a&gt; which will
+setup the apt repository. Then head over to
+&lt;a href="http://hotspot.purewhite.id.au/wiki/Documentation/Packages"&gt;http://hotspot.purewhite.id.au/wiki/Documentation/Packages&lt;/a&gt; to get an
+idea of some of the other packages that can be installed to get started.
+More information will appear over time at the main wiki page.&lt;/p&gt;
+&lt;p&gt;Some old screenshots (will be updated soon) and support forums are over
+at &lt;a href="http://sf.net/projects/grase/"&gt;SourceForge.&lt;/a&gt;&lt;/p&gt;</summary><category term="CoovaChilli"></category><category term="FreeRadius"></category><category term="GRASE"></category><category term="GRASE Hotspot"></category><category term="Hotspot"></category></entry><entry><title>Asterisk Voip to Voip "Bridge" (Webcallback)</title><link href="http://tim.purewhite.id.au/2010/10/asterisk-voip-to-voip-bridge-webcallback/" rel="alternate"></link><updated>2010-10-29T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-29:2010/10/asterisk-voip-to-voip-bridge-webcallback/</id><summary type="html">&lt;p&gt;Call it what you like. Sip to Sip, VoIP to VoIP, VoIP Bridge, Callback,
+Webcallback. The idea is to have a server somewhere call two SIP(VoIP)
+devices and connect the 2 calls together.&lt;/p&gt;
+&lt;p&gt;What's the point of it? Maybe you are stuck somewhere with a phone that
+only accepts incoming calls, and you want to make cheap voip calls. Or
+you are overseas, and it's cheaper to call from Australia to your
+location that from your location to Australia. For example you may have
+a payphone that accepts incoming calls but outgoing calls are expensive.
+Or you just want to enjoy nice cheap VoIP rates but don't have any VoIP
+hardware at your location, or poor dodgy internet, but have a mobile
+phone or landline.&lt;/p&gt;
+&lt;p&gt;What ever the reason, being able to have a VoIP call that connects to
+your location, then calls another party is a great thing!&lt;/p&gt;
+&lt;p&gt;Now before I go much further, if all you want is this ability to be
+called, and then have your remote party called, &lt;a href="http://pennytel.com.au"&gt;PennyTel&lt;/a&gt; has this
+Webcallback feature built in. Mynetfone doesn't, but if you can make
+outgoing calls you can use their ANI callback feature (you call a
+special number, your caller ID needs to not be blocked, and then you
+hangup after it rings, then it calls you back and lets you make your
+VoIP call). So, if you aren't going to be using this much, and don't
+need lots of customisation or special features, just signup for PennyTel
+and start using their Webcallback feature. Remember, you pay the cost of
+2 calls using this feature, not 1. First, the cost to your number, then
+the cost to whom you are calling. So if both parties are mobile phones,
+then it certainly might not be cheap anymore. How ever, if your number
+is a landline in australia, and so is the party you are calling, then
+it'll cost a total of \$0.16 to make your call (on their Freedom Untimed
+plan). This is pretty cheap compared to most normal telco's.&lt;/p&gt;
+&lt;p&gt;Read on however, if you want the ability to use just about any VoIP
+provider, and want to maybe use multiple VoIP providers and have heaps
+of control over it all.&lt;/p&gt;
+&lt;p&gt;Asterisk, the VoIP/PBX mega funky software, will turn a normal server
+into a PBX/VoIP Gateway etc etc. When I first looked to a solution to
+this issue a few years ago, I looked at the task of setting up Asterisk
+and found it daunting, so gave up. PennyTel Webcallback essentially
+delivered what I needed so I left it alone until now. I now have
+Asterisk setup as a simple VoIP system that allows me to make 2 calls
+(using multiple VoIP providers if I want) and join them together.&lt;/p&gt;
+&lt;p&gt;Why is it better than PennyTel Webcallback?&lt;br /&gt;
+For me it's better because it can work out cheaper for me. PennyTel
+callback is \$0.16 total (\$0.08 per each call to landline). However, if
+I'm calling someone who is a MyNetFone customer, if  I was to call their
+VoIP number from a MyNetFone VoIP account, the call would be free. And
+if I'm on a MyNetFone monthly plan, then I could have a good number of
+free landline calls each month. My optimal solution is currently
+combining both MyNetFone and PennyTel. PennyTel to the normal landline,
+\$0.08, and MyNetFone to the MyNetFone VoIP numbers, \$0.00. So it's a
+total of \$0.08 for the whole call! So depending on your location, and
+your destination number, and your VoIP provider plans, you can get your
+calls cheaper than using PennyTel webcallback. And just the fact that
+you can use this Callback method with just about any VoIP provider,
+priceless!&lt;/p&gt;
+&lt;p&gt;So lets get onto the easy part, setting it all up. While at first this
+can look daunting, in reality, it's very simple. This is all based on an
+Ubuntu 10.04 box, using the CLI. Quick note before we start, what ever
+machine you set this up on, needs to have enough bandwidth for 2 calls
+at the same time. So if you are putting it on a home ADSL connection,
+check you have enough up and down bandwidth for this. My server is
+hosted out on the internet and has enough bandwidth. A big reason for me
+setting this up is lack of a decent internet connection from my home to
+be able to do normal VoIP.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install asterisk
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Yes,this does pull in a far few bits of software, some of which isn't
+needed and I've not even poked at yet, but this is what we do to get
+Asterisk installed. Easy.&lt;/p&gt;
+&lt;p&gt;Now the setup. You need to edit /etc/asterisk/sip.conf to add your VoIP
+providers. Some providers give you the Asterisk details on their site,
+many others are just a google away, generally on
+http://www.voip-info.org/&lt;/p&gt;
+&lt;p&gt;So drop down to the bottom of the [general] section in
+/etc/asterisk/sip.conf and add in a register line for each VoIP
+provider. Mine is in the following format. You can see that the username
+is repeated a few times on the mynetfone one. It can be different for
+other providers.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username&lt;/span&gt;
+
+&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; 888xxxxxxx:secret@sip.pennytel.com/888xxxxxxx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now drop to the bottom of the /etc/asterisk/sip.conf file, and add in
+your "trunks" for the VoIP providers. In my situation, I don't want
+incoming calls (as then they need to be routed), so I just have the
+outgoing trunks.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[mynetfone-out]&lt;/span&gt;
+&lt;span class="na"&gt;disallow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;all&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;alaw&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ulaw&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ilbc&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;g729&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;gsm&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;g723&lt;/span&gt;
+&lt;span class="na"&gt;authname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;09xxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;canreinvite&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;dtmfmode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;rfc2833&lt;/span&gt;
+&lt;span class="na"&gt;fromuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;09xxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sip01.mynetfone.com.au&lt;/span&gt;
+&lt;span class="na"&gt;insecure&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;very&lt;/span&gt;
+&lt;span class="na"&gt;nat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;pedantic&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;qualify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;secret&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;password&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;friend&lt;/span&gt;
+&lt;span class="na"&gt;defaultuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;09xxxxxx&lt;/span&gt;
+
+&lt;span class="k"&gt;[pennytel-out]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;friend&lt;/span&gt;
+&lt;span class="na"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sip.pennytel.com&lt;/span&gt;
+&lt;span class="na"&gt;fromuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;888xxxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;defaultuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;888xxxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;secret&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;password&lt;/span&gt;
+&lt;span class="na"&gt;canreinvite&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;insecure&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;invite&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Again, these can look different. A bit of googling around should help,
+or if you work from the above you should be able to work out the
+settings for your own provider. Note, username is no more in newer
+Asterisk versions, it's now defaultuser, so you may need to change what
+you find on the net.&lt;/p&gt;
+&lt;p&gt;Have a look in /etc/asterisk/manager.conf, you'll see you need to create
+a file in /etc/asterisk/manager.d/ to add a user. You may wish to do
+this so you can use the astman tool later, which helps with
+disconnecting calls and monitoring things. (You can do this through the
+asterisk cli, how ever it may be a bit harder).&lt;/p&gt;
+&lt;p&gt;The format of the file you create is as follows.
+/etc/asterisk/manager.d/somename.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[username]&lt;/span&gt;
+&lt;span class="na"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;password&lt;/span&gt;
+&lt;span class="na"&gt;read&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call,log,verbose,command,agent,user,config&lt;/span&gt;
+&lt;span class="na"&gt;write&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call.log,verbose,command,agent,user,config&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This username and password isn't related to your VPS at all, it's what
+you'll use when logging in with Astman or other tools.&lt;/p&gt;
+&lt;p&gt;Now we get to the bit we've been waiting for, setting it up to connect 2
+calls.&lt;br /&gt;
+Edit /etc/asterisk/extensions.conf. Comment out the include =&gt; demo
+line from the [default] section. There is a section in the [default]
+that should sort out Hangup/Busy detection and the likes, so the
+extensions we are adding can be very simple, however, you can customise
+these very easily to do more than just connect the 2 calls.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[DialOutMyNetFone]&lt;/span&gt;
+&lt;span class="na"&gt;exten&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; _0X.,1,Dial(SIP/mynetfone-out/${EXTEN})&lt;/span&gt;
+
+&lt;span class="k"&gt;[DialOutPennyTel]&lt;/span&gt;
+&lt;span class="na"&gt;exten&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; _0X.,1,Dial(SIP/pennytel-out/${EXTEN})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And we are done. Everything should be setup now. The default install of
+Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
+should just work.&lt;/p&gt;
+&lt;p&gt;After all those edits, restart asterisk.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asterisk&lt;/span&gt; &lt;span class="n"&gt;restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we create our call file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;Channel:&lt;/span&gt; &lt;span class="err"&gt;SIP/pennytel-out/YOURNUMBER&lt;/span&gt;
+&lt;span class="err"&gt;Context:&lt;/span&gt; &lt;span class="err"&gt;DialOutMyNetFone&lt;/span&gt;
+&lt;span class="err"&gt;Extension:&lt;/span&gt; &lt;span class="err"&gt;WHOTOCALLNUMBER&lt;/span&gt;
+&lt;span class="err"&gt;Priority:&lt;/span&gt; &lt;span class="err"&gt;1&lt;/span&gt;
+&lt;span class="err"&gt;Archive:&lt;/span&gt; &lt;span class="err"&gt;Yes&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Very simple file. The Channel line is what calls you, so replace
+pennytel-out with the trunk you wish to use to call you. (It can be the
+same as the trunk used later on, or different. In this example, it's
+different as I want the cheap call to my landline, and the free call to
+a mynetfone number). The Context is the extension name that we defined
+in /etc/asterisk/extensions.conf, and the Extension is the number that
+you wish to call. Both for YOURNUMBER and WHOTOCALLNUMBER you need to
+know the format your VoIP provider uses. Some will allow just a
+localised version, for example in australia I can just dial 075xxxxxx or
+040 123 4567, and MyNetFone understands them. Some other VoIP providers
+might need 6175xxxxxx instead. Dialing internation, some just need the
+country code, others need a prefix like 0011, etc etc.&lt;/p&gt;
+&lt;p&gt;Now to actually place the call. There are a number of methods of doing
+this, the end result needs to be a call file placed in the
+/var/spool/asterisk/outgoing directory, owned by the asterisk user, and
+placed in a way that asterisk can't start reading it before the file is
+all there. For this reason, the mv command is recommended and I'll
+demonstrate. (I first copy the file so I can keep a number of pre setup
+files stored).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;preset1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;chown&lt;/span&gt; &lt;span class="n"&gt;asterisk&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;spool&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asterisk&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;outgoing&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As soon as the file hits that directory, asterisk reads it and executes
+it. If everything goes right, within 10 seconds your phone should start
+ringing. Pick it up, it'll then start ringing the other party, finally,
+when they pickup you can start talking! Done.&lt;/p&gt;
+&lt;p&gt;Sometimes the hangup detection doesn't work properly. I've not yet
+worked out why or how to fix it, I believe there are a number of things
+to tweak regarding this. What I currently do is run 'astman localhost'
+(from the machine running asterisk), login with the details we setup
+earlier, and I can think select the call and press hangup if it doesn't
+hangup correctly.&lt;/p&gt;
+&lt;p&gt;For more details about Call files, check out
+&lt;a href="http://www.voip-info.org/wiki/view/Asterisk+auto-dial+out"&gt;http://www.voip-info.org/wiki/view/Asterisk+auto-dial+out&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Of course, it's not always practical to ssh into your server just to
+make a phone call. I'll leave the task of setting up other methods of
+creating and moving the call files to the reader. Please though, don't
+give your web server user full sudo access without a password! I'd
+recommend ether a database with a cron runner script (running as the
+asterisk user), or something similar.&lt;/p&gt;
+&lt;p&gt;Last things. Check your firewall. You'll need to open some RTP ports and
+some SIP ports. A google will reveal more. Try to limit what you open
+though, I've not given any instructions for securing asterisk in this
+post, that also is for your further reading.&lt;/p&gt;</summary><category term="asterisk"></category><category term="bridge"></category><category term="callback"></category><category term="sip"></category><category term="sip to sip"></category><category term="voip"></category><category term="voip to voip"></category><category term="webcallback"></category></entry><entry><title>Internet Reception</title><link href="http://tim.purewhite.id.au/2010/10/internet-reception/" rel="alternate"></link><updated>2010-10-27T10:32:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-27:2010/10/internet-reception/</id><summary type="html">&lt;p&gt;[&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061-179x300.jpg" title="Modem Reception" /&gt;][]So we finally got our modem a few weeks back. A 3G9WB, also
+known as a 3G9WT (Telstra Branding) or a 7.2 Home Gateway. Really, it's
+just a Netcomm router with a Sierra mobile module inside.&lt;/p&gt;
+&lt;p&gt;It's unlocked, but we still can only get Telstra NextG, although with a
+Yagi we might be able to get Optus 3G. However, even Telstra NextG is
+dodgy, showing as "Low" signal strength, or 2 bars out of 5. Often it'll
+just stop because the signal is too low. And 2G (EDGE) isn't any better.&lt;/p&gt;
+&lt;p&gt;So today we needed to download some video editing software, thought we
+give &lt;a href="http://www.openshotvideo.com/" title="OpenShot Video Editor"&gt;OpenShot&lt;/a&gt; a try instead of Cinelerra. Hoping for something a
+little simpler for basic editing. The download started off with an ETA
+of 30mins, and then the speed just kept dropping. Soon our ETA was 4
+hours. I'd had enough, so I opened the window, removed the flyscreen and
+climbed onto the window sill. I then carefully wedged the modem into the
+louvers. Still only a low signal, but success! The download was finished
+in 3minutes! I might actually be able to upload my assignment quickly
+with the modem here (when the submission link is fixed up).&lt;/p&gt;
+&lt;p&gt;So, until we get an external antenna, we'll just have to use an external
+modem! :-P&lt;/p&gt;
+&lt;p&gt;[&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061-179x300.jpg" title="Modem Reception" /&gt;]: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061.jpg&lt;/p&gt;</summary><category term="3g9wb"></category><category term="modem"></category><category term="nextg"></category></entry><entry><title>Code</title><link href="http://tim.purewhite.id.au/2010/09/code/" rel="alternate"></link><updated>2010-09-09T18:23:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-09-09:2010/09/code/</id><summary type="html"></summary></entry><entry><title>Home</title><link href="http://tim.purewhite.id.au/2010/09/home/" rel="alternate"></link><updated>2010-09-09T18:23:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-09-09:2010/09/home/</id><summary type="html"></summary></entry><entry><title>Handbrake Encoding Cluster</title><link href="http://tim.purewhite.id.au/2010/09/handbrake-encoding-cluster/" rel="alternate"></link><updated>2010-09-09T18:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-09-09:2010/09/handbrake-encoding-cluster/</id><summary type="html">&lt;p&gt;Recently I've been given the task of putting a DVD collection on to the
+computer (for backup purposes, so that the originals can be locked away
+and not damaged by little hands). Having used &lt;a href="http://handbrake.fr"&gt;Handbrake&lt;/a&gt; before to
+convert DVD's to H.264 videos, I figured I'd be able to use it again.
+But for such a large task, it makes sense to have many computers doing
+the encoding. Unlike dvd::rip, Handbrake doesn't have a distributed
+cluster feature.&lt;/p&gt;
+&lt;p&gt;I found a possible solution in the Handbrake Forums, using ppss and some
+scripts. &lt;a href="http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504"&gt;http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Unfortunately, I wasn't able to get PPSS working how I wanted (or at
+all). However, it did provide me with a transcode bash script that
+assisted with getting the HandbrakeCLI options right, in particular
+splitting TV episodes into individual episodes.&lt;/p&gt;
+&lt;p&gt;I continued looking for ways to do this, knowing I'd previously used
+some clustering script many years ago, and finally found &lt;a href="http://gearman.org/"&gt;gearman&lt;/a&gt;.&lt;br /&gt;
+At first glace, gearman seems to be perfect, except digging deeper you
+discover it's designed to be called from within applications and not so
+much as a command line "queue". Thankfully I discovered a &lt;a href="http://stefaanlippens.net/gearman_setting_worker_process_arguments_through_xargs"&gt;post&lt;/a&gt;
+explaining how to make gearman more command line friendly using xargs.
+(Which also helped me finally understand how xargs work!) So with a bit
+of scripting I had myself a number of small shell scripts, a gearmand
+server, and a working cluster.&lt;/p&gt;
+&lt;p&gt;Firstly, I setup some NFS mounts on all the computers involved.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_rip&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_encode&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For me, I had 2 mounts as I wanted the DVD_rip folder to be on a local
+computer, and the DVD_encode folder to be on a server that all the
+finished files needed to be on.&lt;/p&gt;
+&lt;p&gt;I then created a simple &lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/rip"&gt;bash script&lt;/a&gt; for ripping the disks (with
+error handling). I can run this script in the /mnt/DVD_rip folder, give
+it one argument (the DVD name) and it'll rip the disk and attempt to
+retry any sectors that have errors. The 'lsdvd' is so that css keys are
+loaded so you can read encrypted DVD's. You can also stop and restart
+the ripping process at any time without loosing what has been ripped
+successfully. NB: It doesn't remove the CSS encryption so you will need
+libdvdcss on all computers doing encoding.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lsdvd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.iso&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.log&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;My next script (&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/submitjob.sh"&gt;submitjob.sh&lt;/a&gt;) is another 1 liner, it submits the job
+to gearmand. It simply takes the name of the file to encode (iso or a
+video file) and optionally an attribute that ether tells our transcoding
+script to encode all the titles (split episodes) or which title to
+encode. Without this attribute it will scan for the longest title and
+only encode that.&lt;/p&gt;
+&lt;p&gt;My next script (&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/startworker.sh"&gt;startworker.sh&lt;/a&gt;) starts the gearman worker processes.
+I run it on each machine in the cluster that I want processing videos. I
+usually run it in a screen session as when it's encoding it outputs some
+information through this script, the rest goes into log files. NB: The
+script has the hostname of the gearmand server in it as does the
+&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/submitjob.sh"&gt;submitjob.sh&lt;/a&gt; script.&lt;/p&gt;
+&lt;p&gt;Our last script (&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/transcode2mkv.sh"&gt;transcode2mkv.sh&lt;/a&gt;) is the actually transcoding
+script. This is what the gearman worker calls to do the encoding. I got
+this script from the method that uses PPSS at
+&lt;a href="http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504"&gt;http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504&lt;/a&gt;. I then modified
+it to encode to mkv files instead of mp4, and I changed some of the
+default encoding options, as well as how it handled the titles (i.e.
+selecting all, or individual ones), and how it handled selection of
+audio and subtitle tracks (it selected them all, I wanted it to just
+select the English audio, and all the subtitles). I also added logging
+so that it would update a cluster log when it started and stopped
+encoding (with timestamps), and to log the progress output to one
+logfile, and the verbose information to another logfile (so I could
+easily tail the logfile to get the current progress).&lt;br /&gt;
+Initially for doing TV episodes, this script would select all the
+titles and encode each one to it's own file. I changed it to just select
+the 4 I wanted, and then later changed it so I could select individual
+titles. The reason I changed to selecting individual titles was that
+some of my encoding machines are faster than others, this way I didn't
+have 3 machines sitting idle while one machine was still on the first
+title of the disk, instead they each took a title and the disk was
+processed a lot quicker.&lt;/p&gt;
+&lt;p&gt;All the files can be found at
+&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster"&gt;http://tim.purewhite.id.au/code/handbrake-cluster&lt;/a&gt; or checked out with
+bzr.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;bzr&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//tim.purewhite.id.au/code/handbrake-cluster/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>

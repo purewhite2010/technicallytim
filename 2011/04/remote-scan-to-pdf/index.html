@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Remote Scan to PDFTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Remote Scan to PDF
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2011-04-20T16:42:00">
+  Wed 20 April 2011
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/code">code</a>, 
+    <a href="http://tim.purewhite.id.au/tag/pdf">pdf</a>, 
+    <a href="http://tim.purewhite.id.au/tag/php">php</a>, 
+    <a href="http://tim.purewhite.id.au/tag/scan2pdf">scan2pdf</a>, 
+    <a href="http://tim.purewhite.id.au/tag/scanner">scanner</a>, 
+    <a href="http://tim.purewhite.id.au/tag/scanning">scanning</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2011/04/remote-scan-to-pdf/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>I needed a simple and quick way for other users on the network to be
+able to scan documents. So far, what I had been doing was running a
+little bash script I found on the net, and scanning multiple pages into
+a pdf. The problem was that I needed to run it, and teaching everyone
+else to login via ssh and run it wasn't an option.</p>
+<p>So I knocked together a little PHP application that did the basic things
+the bash script does. It can even customise the settings (however that
+is disabled atm due to a scanner problem). And to make it more natural,
+I used jQuery and AJAX to run the jobs in the background without having
+a script constantly reloading itself.</p>
+<p>Warning, the script in it's current version has basically no security.
+As there is a "readfile" part to dump the PDF to the browser, a user
+could easily make it read any file the web server has access too. It
+also has minimal error checking as generally things just work, and if
+they don't, you start again.</p>
+<p>So if you are looking for a simple solution for network access to your
+scanner, and you don't want to go as far as phpsane, then here is the
+code! <a href="http://tim.purewhite.id.au/code/phpscan2pdf/files">http://tim.purewhite.id.au/code/phpscan2pdf/files</a></p>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2011/04/remote-scan-to-pdf/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

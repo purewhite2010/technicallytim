@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/blog.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2013-05-18T17:18:00+10:00</updated><entry><title>"Windows" is full of bloat</title><link href="http://tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-05-18:2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
+computer, in particular lots of software installs and uninstalls to
+cleanup a slow computer.&lt;/p&gt;
+&lt;p&gt;Now before you jump the gun, I'm not talking about Windows the operating
+system being full of bloat, although it may be. I'm also not talking
+about the bloat that comes installed on OEM installs.&lt;/p&gt;
+&lt;p&gt;What I am talking about, is how so much third party free windows
+software is full of bloat. Just about every installer now wants to
+install another piece of software with the piece you downloaded, ether a
+toolbar or another "great" piece of software they recommend to you. And
+then when you uninstall a piece of software, just about every piece of
+software then insist on opening a webpage saying how sorry they are that
+you uninstalled the software and would you please do this 5 minute
+survey telling them why blah blah blah.&lt;/p&gt;
+&lt;p&gt;And even my favourite antivirus Avast has started doing it. First, the
+installer has jumped from 20Mb a few years ago to over 100Mb now. And
+now when you install it, if you aren't watching out it'll try and
+install Google Drive, and once it is installed it keeps popping up
+asking you to install the great security extension for chrome, blah blah
+blah.&lt;/p&gt;
+&lt;p&gt;What ever happened to nice free software that wasn't packed full of
+bloat, and that let you install and uninstall just that software that
+you asked for without trying to push other software on you? I'll happily
+keep my Linux world, where software does what you ask, and nothing more.&lt;/p&gt;
+&lt;p&gt;And if you live in the Windows world, seriously, I think it's well past
+time to get out, but you can still get out now!&lt;/p&gt;</summary><category term="bloat"></category><category term="windows"></category></entry><entry><title>When did 'Linux' start moving away from it's simplicity?</title><link href="http://tim.purewhite.id.au/2012/05/when-did-linux-start-moving-away-from-its-simplicity/" rel="alternate"></link><updated>2012-05-08T19:46:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2012-05-08:2012/05/when-did-linux-start-moving-away-from-its-simplicity/</id><summary type="html">&lt;p&gt;Today I had the joy of trying to change a users desktop environment from
+Gnome, to Cinnamon, via ssh. At first I thought it would be easy, change
+the default desktop environment in lightdm.conf and restart. Fail. Ok,
+so where is a users desktop environment preference stored? .dmrc, or at
+least I thought so. I even logged in with a brand new user and confirmed
+that it saved the users desktop preference in \~/.dmrc. Except, if I
+changed .dmrc for a user, it just got overwritten with the old contents
+at their next automatic login. (Remember, ssh, so can't use the gui to
+change what was selected in the lightdm login screen).&lt;br /&gt;
+Wha?!!? Surely not a dconf/gconf setting somewhere. Search search
+search. Still no luck. Eventually I discover a service called
+"AccountsService" or something along that name. It stores the users
+".dmrc" contents in /var/lib/AccountsService/users/ with a file for each
+user, which believe it or not, can't be changed by the user! Arg! (And I
+believe you need to kill accountsservice to be able to change the
+contents of the file and have it actually honored, I tried just changing
+it, but ended up changing it then rebooting to get it to work)&lt;/p&gt;
+&lt;p&gt;This is stupidity! Have a daemon, that one of it's tasks is to tell the
+"display manager" what the users preferred desktop environment
+preference is, that stores it in a place the user can't change, without
+talking to the daemon! Oh, and write the contents of that file out to
+.dmrc at login, but don't bother reading from that file.&lt;/p&gt;
+&lt;p&gt;Doing some more digging, AccountService is for querying and manipulating
+user account information via D-Bus, essentially replacing the useradd,
+usermod and userdel commands. I can't find a "homepage" for it, the
+homepage listed is it's source code repo.
+(&lt;a href="http://cgit.freedesktop.org/accountsservice/"&gt;http://cgit.freedesktop.org/accountsservice/&lt;/a&gt;)  (NB: Some more digging
+finds this &lt;a href="http://www.freedesktop.org/wiki/Software/AccountsService"&gt;http://www.freedesktop.org/wiki/Software/AccountsService&lt;/a&gt; as
+the homepage)&lt;br /&gt;
+I personally don't mind D-Bus, it services its purposes, but here is an
+instance where it looks like someone has gone to the trouble of writing
+a piece of code, to complicate some that use to be a simple stat/open of
+a file, that the user was in total control of.&lt;/p&gt;
+&lt;p&gt;For the record, lightdm will work without AccountsService, and I believe
+then it will honor \~/.dmrc&lt;br /&gt;
+Also, accountsservice isn't in Debian stable, but is in Debian testing,
+and gdm3 and gnome depend on it. (So in other words Gnome3 depends on
+it)&lt;/p&gt;
+&lt;p&gt;I just don't understand why we need to reinvent the wheel, take
+something that is so simple (and fits in the Unix "philosophies" of
+everything is a file, and that file formats should be simple text based)
+and turn it into something that user no longer has control over, for
+something that sets their preference!&lt;/p&gt;
+&lt;p&gt;Read
+[http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
+some more thoughts on dbus.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;http:&lt;/span&gt;&lt;span class="c1"&gt;//blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Google+ (Google's Social Network)</title><link href="http://tim.purewhite.id.au/2011/07/google-googles-social-network/" rel="alternate"></link><updated>2011-07-15T10:57:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-07-15:2011/07/google-googles-social-network/</id><summary type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
+what it is, or you may have none, so hopefully I can answer some of your
+questions and help you get started.&lt;/p&gt;
+&lt;p&gt;Firstly, Google+ is Google's latest entry into social networking.
+Already it looks much better than Buzz or Wave. What I like about it
+already is that the interface is clean and simple, and most importantly
+it is very easy to control your privacy settings. Now Facebook does have
+a similar feature, but it is extremely difficult to use.&lt;/p&gt;
+&lt;p&gt;Circles. You simple assign your "friends" to different circles, they can
+be in more than one. Then, you can share a post/photo/video etc with
+different circles, individual people, or the public. (There is also an
+extended circles which I believe shares it with people in your circles,
+and people in their circles). Want to let the world know about your new
+baby, simply post it public! (Like twitter). Want to post how you are
+having a dodgy day but only want your friends to know, and not your
+boss, just post it to your friends circle and make sure you boss is in
+your work circle. Want to share some good news with family and few close
+friends, post it to your family circle and then add the extra friends in
+as well!&lt;br /&gt;
+Circles make it very simple to control who see's what on your Google+
+profile. Given the security scares of facebook stalkers and the like,
+it's good to know you have total control over who see's what.&lt;/p&gt;
+&lt;p&gt;Currently there are no Google+ games or apps. However for me that's a
+bonus. I'm sick of all these status updates of "I just completed level
+235 of bubble popping game...." and lots of other meaningless things
+like that. I don't mind people playing games, but I don't want to hear
+about it! What Google+ offers you out of the box though, is an amazing
+tool for social network communications that will allow you to easily
+keep in contact with people from all areas of your life, without getting
+cluttered down in the mechanisms of the communications. Huddles allow
+you to create a group of people for discussing something, like a group
+assignment, complete with group video chat (which arrived before
+Facebook announce the Skype Video partnership).&lt;/p&gt;
+&lt;p&gt;I'm hoping that you have read this far and are at least interested in
+trying Google+. For many people, until all your friends are there, you
+aren't going to move. In fact, unless you are sick of the bloat of
+facebook, you probably have very little incentive to move unless you
+have privacy concerns with facebook. However I urge to to consider this,
+someone has to take the first steps so that others will follow. And if
+you need a good reason to take those first steps, I believe the privacy
+issues of facebook should be enough for anyone to think twice about
+facebook. And, if Google+ does flop, or you want to run away from it,
+all the stuff you put on it is yours, there is a nice easy way to
+download all your photos and other things on Google+ so you aren't
+locked in!&lt;/p&gt;
+&lt;p&gt;Now here is the hard part, Google+ is still currently invite only as
+it's still in it's "trial" stages while they work out bugs. So below is
+a form that you can put your name and email address in, and a short note
+if you desire, and I'll invite you to Google+. Due to the demand for
+invites, there are 2 things we do to try and get you in. First we send
+you an invite, then we share a post with you. You'll get 2 emails, try
+the invite one first, which should have a red button to "Learn more
+about Google+" which will hopefully take you to the signin page to
+create your profile. If that fails, the second email will have a link to
+"View or Comment on Blah Blahs Post". This link will also hopefully take
+you to a page where you can fill out your public profile and then sign
+in to Google+.&lt;br /&gt;
+Both methods work at different times, so if it doesn't work for you
+immediately, please wait an hour and try again.&lt;/p&gt;
+&lt;p&gt;I promise to not do anything with your email address other than invite
+you to Google+. Please be patient as I need to manually invite each
+person unless I can work out some way to automate this. I am happy to
+invite people I don't know, however please don't be offended if you
+don't end up in my circles.&lt;/p&gt;
+&lt;p&gt;(Form removed as invites no longer needed)&lt;/p&gt;</summary><category term="facebook"></category><category term="google+"></category><category term="googleplus"></category><category term="invites"></category><category term="social network"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="http://tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-02:2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
+easy for students to afford Microsoft products so they don't need to
+pirate them (and steal them). That's fine as long as it works and
+Microsoft don't steal from us!&lt;/p&gt;
+&lt;p&gt;Twice I've now attempted to place an order with the online system, twice
+the order has been denied however the pre-authorisation on my credit
+card means I'm now \$300 "out of pocket" until the transactions are
+reversed in the next 5 business days. I've called my bank (before trying
+to place the order the second time) to ensure that there wasn't a
+problem with my account or the credit card. No problem from the banks
+end, it should have gone through.&lt;/p&gt;
+&lt;p&gt;Fittingly the email I got from them after complaining comes from "The
+Ultimate Steal AU". We'll it sure is the ultimate steal, lets take your
+money and give you nothing. And yes, I know I get the money back, but
+it's my time and effort I'm wasting, and if I needed that money to pay a
+bill, it's not there. Experiences like this sure make me want to buy
+from Micro\$oft!! Oh, and if I was rich and had lots of money in my
+account, each time I hit submit to attempt again (like the text
+suggests) would be another \$150 pre-authorisation without success. Not
+a great payment system if you ask me, no safety limits to prevent you
+from trying again and again. You could easily have a few thousand
+dollars in pre-auth as you keep checking the details, sure they are
+correct, you hit submit.&lt;/p&gt;
+&lt;p&gt;Hopefully they can fix it faster than the amount of time I spent on hold
+just to be told they can't do anything!&lt;/p&gt;</summary><category term="digital river"></category><category term="micro$oft"></category><category term="microsoft"></category><category term="steal"></category></entry><entry><title>What it takes to keep things running. (How to reduce comment/wiki spam)</title><link href="http://tim.purewhite.id.au/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/" rel="alternate"></link><updated>2011-04-05T22:13:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-05:2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/</id><summary type="html">&lt;p&gt;I recently pushed out a new version of the &lt;a href="http://hotspot.purewhite.id.au/"&gt;GRASE Hotspot&lt;/a&gt;. I spent
+lots of time working on rewriting the splash/welcome page, and login
+forms so that they would work even with javascript disabled, and allow
+you to force it into the non javascript version if you are having
+problems (so browsers like Safari can be used). However, recently I've
+spent a lot of time just doing maintenance.&lt;/p&gt;
+&lt;p&gt;The maintenance started when again I spent lots of time cleaning up spam
+on the wiki, this was after enabling ReCAPTCHA. I decided it wasn't
+practical to keep cleaning up the wiki, and seeing as I was the only one
+contributing to it, it made more sense migrating it to a Wordpress site.
+After the migration was done, I quickly started getting comment spam on
+the new site!! Thankfully, Akismet blocks comment spam, but the volume
+of spam coming in was enormous! A peek into the server logs showed that
+the same ip's that were publishing spam in the wiki, would try to get
+post to the missing wiki, find it missing and discover the wordpress
+site and immediately try to post comment spam! It was time to reduce the
+load on the server if possible.&lt;/p&gt;
+&lt;p&gt;After some research, I implemented some basic .htaccess rules that would
+block some of the spam even getting processed. But why couldn't I find a
+simple DNSBL for Apache? Turns out the right googling will find
+libapache2-mod-spamhaus, which does what we need. But unlike email spam,
+it seems comment/wiki spammers aren't in the DNSBL's as much as email
+spammers. Thankfully, libapache2-mod-spamhaus was now dropping about
+half the spamming connections.&lt;/p&gt;
+&lt;p&gt;Some more research turned up &lt;a href="%20http://www.projecthoneypot.org?rf=93412" title="Project Honey Pot"&gt;Project Honey Pot&lt;/a&gt; which is aimed more
+at the comment spammers and address harvesters. A quick check of the ip
+database they maintain revealed that most of the remaining comment
+spammer ips that were hitting my site were in their database!
+Unfortunately, the mod_httpbl module for Apache isn't in a nice
+repository anywhere, and hasn't been touched for awhile, so setup wasn't
+as easy. I found &lt;a href="http://repel.in-progress.com/"&gt;Repel&lt;/a&gt; which is a simple Python program that you use
+with mod_rewrite (and RewriteMap's). It's not so easy to setup, mainly
+due to the instructions being a little unclear, but also because the
+rewrite rules that use Repel can be very tricky. The documentation was
+good for just blocking, however I figured if I was going to use Project
+Honey Pot, I should contribute too, so I setup a honeypot on the site
+and then had fun and games with rewrite rules. Eventually though, I got
+it all setup. Now if you are thinking of setting this up yourself, it's
+probably a lot easier using the &lt;a href="http://wordpress.org/extend/plugins/httpbl/" title="Wordpress Http:bl Plugin"&gt;Wordpress Plugin&lt;/a&gt; which I've since
+setup on another site I assist with. While this will block the spammers,
+or direct them to a honeypot, it may have slightly more load than Repel.
+This is because Repel is a little python program, that apache already
+has running, and just passes the ipaddress to and waits for a reply. The
+wordpress plugin solution requires Apache to fire up PHP, which then
+fires up Wordpress, which then loads the plugin which finally gets the
+ipaddress, does the DNS lookup and then goes from there. I've done no
+testing, but logically Repel would appear to use less resources, but you
+are welcome to prove me wrong.&lt;/p&gt;
+&lt;p&gt;On top of all that maintenance, I also had some mail servers receiving
+spam, which should have been blocked. Some more tweaks and changes, and
+another influx of spam is now not getting past the gate.&lt;/p&gt;
+&lt;p&gt;Lastly, some advice. Password advice. In particular because I heard an
+"expert" on the ABC radio recently giving some poor advice. Get yourself
+a strong password, with letters and numbers, maybe some capital letters
+as well as lowercase, and decent length, at least 8 characters long. Now
+use that password for one place, and only one place, maybe your email
+account. Now find another one, just as strong, use that for your next
+account, maybe facebook. Reusing passwords is a big No No, as an
+important CEO recently discovered.&lt;br /&gt;
+I can hear you already, moaning and groaning. It's so hard to remember
+one really strong password, how can you remember more than one? Well
+this is the easy part. You use a formula. I've started using
+&lt;a href="https://www.pwdhash.com/" title="PwdHash"&gt;PwdHash&lt;/a&gt;, developed by Standford University. It simply takes the
+domain name of the site you are generating the password, and your master
+password, and creates you a "hash" that you use as your password for
+that site. So for example, if my master password was
+'thecatsatonthemat', my facebook password would be
+'F58VFRH8eUejfcIs9UA'. This will let you create strong unique passwords
+for each account, then if one of your accounts is broken into and the
+password somehow discovered, your other accounts are safe. Of course, if
+your email account gets broken into, a lot of other accounts are not
+safe as the hacker can then just reset your passwords by using the "Lost
+Password" feature many sites provide.&lt;/p&gt;
+&lt;p&gt;If you do decide to use PwdHash, you can install a firefox extension
+that assist, or you can use it directly on the site (as it uses
+Javascript, your password never leaves the computer, you can even save
+the page and use it offline). I found a little python script that does
+it for me, which I have on my server and my machine, so I can create my
+pwdhash's even when I don't have a browser handy. Of course, there is
+nothing preventing you having multiple master passwords ether, just to
+make it even more secure!&lt;/p&gt;</summary><category term="password"></category><category term="project honey pot"></category><category term="pwdhash"></category><category term="security"></category><category term="spam"></category></entry></feed>

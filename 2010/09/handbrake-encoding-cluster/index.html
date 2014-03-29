@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Handbrake Encoding ClusterTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Handbrake Encoding Cluster
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2010-09-09T18:18:00">
+  Thu 09 September 2010
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/bzr">bzr</a>, 
+    <a href="http://tim.purewhite.id.au/tag/cluster">cluster</a>, 
+    <a href="http://tim.purewhite.id.au/tag/code">code</a>, 
+    <a href="http://tim.purewhite.id.au/tag/distributed">distributed</a>, 
+    <a href="http://tim.purewhite.id.au/tag/encode">encode</a>, 
+    <a href="http://tim.purewhite.id.au/tag/encoding">encoding</a>, 
+    <a href="http://tim.purewhite.id.au/tag/gearman">gearman</a>, 
+    <a href="http://tim.purewhite.id.au/tag/handbrake">handbrake</a>, 
+    <a href="http://tim.purewhite.id.au/tag/handbrakecli">handbrakecli</a>, 
+    <a href="http://tim.purewhite.id.au/tag/script">script</a>, 
+    <a href="http://tim.purewhite.id.au/tag/transcode">transcode</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2010/09/handbrake-encoding-cluster/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>Recently I've been given the task of putting a DVD collection on to the
+computer (for backup purposes, so that the originals can be locked away
+and not damaged by little hands). Having used <a href="http://handbrake.fr">Handbrake</a> before to
+convert DVD's to H.264 videos, I figured I'd be able to use it again.
+But for such a large task, it makes sense to have many computers doing
+the encoding. Unlike dvd::rip, Handbrake doesn't have a distributed
+cluster feature.</p>
+<p>I found a possible solution in the Handbrake Forums, using ppss and some
+scripts. <a href="http://forum.handbrake.fr/viewtopic.php?f=6&amp;t=17504">http://forum.handbrake.fr/viewtopic.php?f=6&amp;t=17504</a></p>
+<p>Unfortunately, I wasn't able to get PPSS working how I wanted (or at
+all). However, it did provide me with a transcode bash script that
+assisted with getting the HandbrakeCLI options right, in particular
+splitting TV episodes into individual episodes.</p>
+<p>I continued looking for ways to do this, knowing I'd previously used
+some clustering script many years ago, and finally found <a href="http://gearman.org/">gearman</a>.<br />
+At first glace, gearman seems to be perfect, except digging deeper you
+discover it's designed to be called from within applications and not so
+much as a command line "queue". Thankfully I discovered a <a href="http://stefaanlippens.net/gearman_setting_worker_process_arguments_through_xargs">post</a>
+explaining how to make gearman more command line friendly using xargs.
+(Which also helped me finally understand how xargs work!) So with a bit
+of scripting I had myself a number of small shell scripts, a gearmand
+server, and a working cluster.</p>
+<p>Firstly, I setup some NFS mounts on all the computers involved.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">DVD_rip</span>
+<span class="err">$</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">DVD_encode</span>
+</pre></div>
+
+
+<p>For me, I had 2 mounts as I wanted the DVD_rip folder to be on a local
+computer, and the DVD_encode folder to be on a server that all the
+finished files needed to be on.</p>
+<p>I then created a simple <a href="http://tim.purewhite.id.au/code/handbrake-cluster/rip">bash script</a> for ripping the disks (with
+error handling). I can run this script in the /mnt/DVD_rip folder, give
+it one argument (the DVD name) and it'll rip the disk and attempt to
+retry any sectors that have errors. The 'lsdvd' is so that css keys are
+loaded so you can read encrypted DVD's. You can also stop and restart
+the ripping process at any time without loosing what has been ripped
+successfully. NB: It doesn't remove the CSS encryption so you will need
+libdvdcss on all computers doing encoding.</p>
+<div class="highlight"><pre><span class="n">lsdvd</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sr0</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span> <span class="n">ddrescue</span> <span class="o">-</span><span class="n">r</span> <span class="mi">1</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sr0</span> <span class="s">&quot;$1.iso&quot;</span> <span class="s">&quot;$1.log&quot;</span>
+</pre></div>
+
+
+<p>My next script (<a href="http://tim.purewhite.id.au/code/handbrake-cluster/submitjob.sh">submitjob.sh</a>) is another 1 liner, it submits the job
+to gearmand. It simply takes the name of the file to encode (iso or a
+video file) and optionally an attribute that ether tells our transcoding
+script to encode all the titles (split episodes) or which title to
+encode. Without this attribute it will scan for the longest title and
+only encode that.</p>
+<p>My next script (<a href="http://tim.purewhite.id.au/code/handbrake-cluster/startworker.sh">startworker.sh</a>) starts the gearman worker processes.
+I run it on each machine in the cluster that I want processing videos. I
+usually run it in a screen session as when it's encoding it outputs some
+information through this script, the rest goes into log files. NB: The
+script has the hostname of the gearmand server in it as does the
+<a href="http://tim.purewhite.id.au/code/handbrake-cluster/submitjob.sh">submitjob.sh</a> script.</p>
+<p>Our last script (<a href="http://tim.purewhite.id.au/code/handbrake-cluster/transcode2mkv.sh">transcode2mkv.sh</a>) is the actually transcoding
+script. This is what the gearman worker calls to do the encoding. I got
+this script from the method that uses PPSS at
+<a href="http://forum.handbrake.fr/viewtopic.php?f=6&amp;t=17504">http://forum.handbrake.fr/viewtopic.php?f=6&amp;t=17504</a>. I then modified
+it to encode to mkv files instead of mp4, and I changed some of the
+default encoding options, as well as how it handled the titles (i.e.
+selecting all, or individual ones), and how it handled selection of
+audio and subtitle tracks (it selected them all, I wanted it to just
+select the English audio, and all the subtitles). I also added logging
+so that it would update a cluster log when it started and stopped
+encoding (with timestamps), and to log the progress output to one
+logfile, and the verbose information to another logfile (so I could
+easily tail the logfile to get the current progress).<br />
+Initially for doing TV episodes, this script would select all the
+titles and encode each one to it's own file. I changed it to just select
+the 4 I wanted, and then later changed it so I could select individual
+titles. The reason I changed to selecting individual titles was that
+some of my encoding machines are faster than others, this way I didn't
+have 3 machines sitting idle while one machine was still on the first
+title of the disk, instead they each took a title and the disk was
+processed a lot quicker.</p>
+<p>All the files can be found at
+<a href="http://tim.purewhite.id.au/code/handbrake-cluster">http://tim.purewhite.id.au/code/handbrake-cluster</a> or checked out with
+bzr.</p>
+<div class="highlight"><pre><span class="n">bzr</span> <span class="n">branch</span> <span class="n">http</span><span class="o">:</span><span class="c1">//tim.purewhite.id.au/code/handbrake-cluster/</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2010/09/handbrake-encoding-cluster/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

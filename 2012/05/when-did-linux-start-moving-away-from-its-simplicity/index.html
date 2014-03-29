@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>When did 'Linux' start moving away from it's simplicity?Technically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        When did 'Linux' start moving away from it's simplicity?
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2012-05-08T19:46:00">
+  Tue 08 May 2012
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/accountservice">accountservice</a>, 
+    <a href="http://tim.purewhite.id.au/tag/accountsservice">accountsservice</a>, 
+    <a href="http://tim.purewhite.id.au/tag/dbus">dbus</a>, 
+    <a href="http://tim.purewhite.id.au/tag/gnome3">Gnome3</a>, 
+    <a href="http://tim.purewhite.id.au/tag/linux">Linux</a>, 
+    <a href="http://tim.purewhite.id.au/tag/simplicity">simplicity</a>, 
+    <a href="http://tim.purewhite.id.au/tag/unix">unix</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2012/05/when-did-linux-start-moving-away-from-its-simplicity/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>Today I had the joy of trying to change a users desktop environment from
+Gnome, to Cinnamon, via ssh. At first I thought it would be easy, change
+the default desktop environment in lightdm.conf and restart. Fail. Ok,
+so where is a users desktop environment preference stored? .dmrc, or at
+least I thought so. I even logged in with a brand new user and confirmed
+that it saved the users desktop preference in \~/.dmrc. Except, if I
+changed .dmrc for a user, it just got overwritten with the old contents
+at their next automatic login. (Remember, ssh, so can't use the gui to
+change what was selected in the lightdm login screen).<br />
+Wha?!!? Surely not a dconf/gconf setting somewhere. Search search
+search. Still no luck. Eventually I discover a service called
+"AccountsService" or something along that name. It stores the users
+".dmrc" contents in /var/lib/AccountsService/users/ with a file for each
+user, which believe it or not, can't be changed by the user! Arg! (And I
+believe you need to kill accountsservice to be able to change the
+contents of the file and have it actually honored, I tried just changing
+it, but ended up changing it then rebooting to get it to work)</p>
+<p>This is stupidity! Have a daemon, that one of it's tasks is to tell the
+"display manager" what the users preferred desktop environment
+preference is, that stores it in a place the user can't change, without
+talking to the daemon! Oh, and write the contents of that file out to
+.dmrc at login, but don't bother reading from that file.</p>
+<p>Doing some more digging, AccountService is for querying and manipulating
+user account information via D-Bus, essentially replacing the useradd,
+usermod and userdel commands. I can't find a "homepage" for it, the
+homepage listed is it's source code repo.
+(<a href="http://cgit.freedesktop.org/accountsservice/">http://cgit.freedesktop.org/accountsservice/</a>)  (NB: Some more digging
+finds this <a href="http://www.freedesktop.org/wiki/Software/AccountsService">http://www.freedesktop.org/wiki/Software/AccountsService</a> as
+the homepage)<br />
+I personally don't mind D-Bus, it services its purposes, but here is an
+instance where it looks like someone has gone to the trouble of writing
+a piece of code, to complicate some that use to be a simple stat/open of
+a file, that the user was in total control of.</p>
+<p>For the record, lightdm will work without AccountsService, and I believe
+then it will honor \~/.dmrc<br />
+Also, accountsservice isn't in Debian stable, but is in Debian testing,
+and gdm3 and gnome depend on it. (So in other words Gnome3 depends on
+it)</p>
+<p>I just don't understand why we need to reinvent the wheel, take
+something that is so simple (and fits in the Unix "philosophies" of
+everything is a file, and that file formats should be simple text based)
+and turn it into something that user no longer has control over, for
+something that sets their preference!</p>
+<p>Read
+[http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
+some more thoughts on dbus.</p>
+<div class="highlight"><pre><span class="nl">http:</span><span class="c1">//blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2012/05/when-did-linux-start-moving-away-from-its-simplicity/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

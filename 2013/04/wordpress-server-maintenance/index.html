@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wordpress Server MaintenanceTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Wordpress Server Maintenance
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2013-04-25T14:00:00">
+  Thu 25 April 2013
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/security">security</a>, 
+    <a href="http://tim.purewhite.id.au/tag/updates">updates</a>, 
+    <a href="http://tim.purewhite.id.au/tag/wordpress">wordpress</a>, 
+    <a href="http://tim.purewhite.id.au/tag/wp-cli">wp-cli</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2013/04/wordpress-server-maintenance/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>Wow. Somehow I missed when this amazing tool was released. <a href="http://wp-cli.org/" title="wp-cli">wp-cli</a>.
+Just wow.</p>
+<p>I have a bunch of scripts I use to keep all the Wordpress installs up to
+date on my server, it finds all the installs, then it downloads the
+latest version, checks each install for the installed version and
+updates them by extracting the files correctly, ensuring user
+permissions etc. However, that only keeps the core updated, I still need
+to rely on all my customers to keep their plugins updated. This is ok,
+except when a plugin has a security issue and needs to be updated ASAP.
+Recently, we had just that situation with the WP-Super-Cache plugin. So
+I modified my scripts, and now they update that particular plugin. But
+it would be a pain to write a script that updated every plugin, so I'm
+stuck logging into a number of sites I maintain, updating all the
+plugins regularly, and then hoping for the sites that the customer
+maintains, they do the same.</p>
+<p>Enter, <a href="http://wp-cli.org/" title="wp-cli">wp-cli</a>. The tool I've been dreaming of for a long time.
+Simply install, then using the basic structure of my script (the part
+that finds all installs, verifies they are valid installs, and executes
+commands as the user who owns the install), I can now run any of the
+awesome <a href="http://wp-cli.org/" title="wp-cli">wp-cli</a> commands on all the sites I host! Server maintenance
+just got a whole lot easier (as long as no plugin updates break things)</p>
+<p>For the really lazy, here is my code for updating all plugins, using the
+wp-cli scripts. It uses sudo, so make sure you know what you are doing.
+You may also have to tweak how locate finds things, as by default it
+won't show you files you can't access.</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="c"># Just find all installs and try and run tools in them</span>
+<span class="c"># find wp-config.php files</span>
+<span class="nv">SAVEIFS</span><span class="o">=</span><span class="nv">$IFS</span>
+<span class="nv">IFS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> -en <span class="s2">&quot;\n\b&quot;</span><span class="k">)</span>
+<span class="nv">installs</span><span class="o">=</span><span class="k">$(</span>locate -r wp-config.php<span class="nv">$)</span>
+
+<span class="k">for </span>conffile in <span class="nv">$installs</span>
+<span class="k">do</span>
+<span class="c"># goto root wp dir as user</span>
+    <span class="nv">wpdir</span><span class="o">=</span><span class="k">$(</span>dirname <span class="s2">&quot;$conffile&quot;</span><span class="k">)</span>;
+    <span class="nb">pushd</span> <span class="nv">$wpdir</span> &gt; /dev/null <span class="o">||</span> <span class="nb">exit</span>
+
+<span class="nb">    echo</span> <span class="s2">&quot;Checking $wpdir...&quot;</span>
+
+    <span class="c">## Check we actually have a wordpress install</span>
+
+    <span class="k">if</span> <span class="o">[[</span> ! -f <span class="s2">&quot;wp-includes/version.php&quot;</span> <span class="o">||</span> ! -f <span class="nv">$conffile</span> <span class="o">]]</span>
+        <span class="k">then </span><span class="nb">echo</span> <span class="s2">&quot;$wpdir doesn&#39;t appear to be a wordpress install, skipping...&quot;</span>
+        <span class="k">continue</span>
+<span class="k">    fi</span>
+
+    <span class="c"># Get username for tool</span>
+    <span class="nv">username</span><span class="o">=</span><span class="k">$(</span>stat -c %U <span class="nv">$conffile</span><span class="k">)</span>
+
+    <span class="c"># run tool commands</span>
+    sudo -u <span class="nv">$username</span> -- wp plugin update-all
+
+    <span class="nb">popd</span> &gt; /dev/null
+<span class="k">done</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2013/04/wordpress-server-maintenance/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

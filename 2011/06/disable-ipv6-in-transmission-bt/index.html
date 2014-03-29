@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Disable IPv6 in Transmission BTTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Disable IPv6 in Transmission BT
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2011-06-10T15:59:00">
+  Fri 10 June 2011
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/ipv6">ipv6</a>, 
+    <a href="http://tim.purewhite.id.au/tag/torrent">torrent</a>, 
+    <a href="http://tim.purewhite.id.au/tag/transmission">transmission</a>, 
+    <a href="http://tim.purewhite.id.au/tag/tunnel">tunnel</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2011/06/disable-ipv6-in-transmission-bt/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>After finally getting my IPv6 working nicely, it was time to prevent
+Transmission from using IPv6 as  I don't want lots of torrent traffic
+going through the tunnel when it's faster through IPv4 (until a time I
+can get Native IPv6). Apparently this is an "invalid" feature request
+according to some of the developers.
+(<a href="http://trac.transmissionbt.com/ticket/4197">http://trac.transmissionbt.com/ticket/4197</a>)</p>
+<p>Had the developer actually stopped to consider it, maybe read some
+relevant parts of the source code, they would have quickly discovered
+that you can already disable it! They could document it as a feature
+without having to touch a line of code, and mark the feature request as
+completed!</p>
+<p>It's a rather simple fix. There are checks for the IPv6 address not
+being a link local address, or a 6to4, or Teredo tunnel[1]. So we just
+make Transmission bind to a link local address and hey presto, no IPv6
+for Transmission!</p>
+<p>Simply add the following line to the settings.json file.</p>
+<div class="highlight"><pre><span class="s">&quot;bind-address-ipv6&quot;</span><span class="o">:</span> <span class="s">&quot;fe80::&quot;</span>
+</pre></div>
+
+
+<p>[1] You'd think given that they already prevent Teredo tunnels from
+being used, that the feature request would actually make sense for those
+wishing to disable IPv6 due to TUNNEL's!</p>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2011/06/disable-ipv6-in-transmission-bt/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

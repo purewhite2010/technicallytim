@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/technical.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2011-03-18T15:37:00+10:00</updated><entry><title>Brother HL-2140 Series Test/Information Page</title><link href="http://tim.purewhite.id.au/2011/03/brother-hl-2140-series-testinformation-page/" rel="alternate"></link><updated>2011-03-18T15:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-03-18:2011/03/brother-hl-2140-series-testinformation-page/</id><summary type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
+test or information page, it was good to finally find out how to do it
+again. Of course, if you have the nice windows drivers, hidden in there
+somewhere you can just click "Print Settings" and it will print out the
+toner life, number of pages printed, etc etc. If you are using another
+OS though, you won't always have that nice button.&lt;br /&gt;
+Thankfully the trick is fairly simple. If your printer is on but
+sleeping (The large "Go" button, the blue light one is dimmed) then just
+press the button once to wake it up. Once awake, press the big blue
+button 3 times, slow enough that it can register each press, fast enough
+that you don't take all day doing it. You get the general idea. And out
+will come a "Printer Settings" page, complete with a "bar" showing
+remaining drum and toner life, total pages printed (even down to the
+pages printed for each paper size), and error history and what page it
+happened on. Apparently it even counts paper jams.&lt;/p&gt;
+&lt;p&gt;Now I have to warn, that it doesn't always seem to get things right. I'm
+sure I've had paper jams, yet it thinks I've had none. (Maybe I'm
+remembering an older printer, I won't complain). It also says I've only
+done about 1000 pages since getting the printer, now this I'm sure is
+wrong as I printed 100's of pages for uni last semester.&lt;/p&gt;
+&lt;p&gt;Regardless, it's probably a good idea to print one of these pages when
+ever you change the toner, so you can get a good idea of how many pages
+you are getting out of each toner!&lt;/p&gt;
+&lt;p&gt;NB: This may or may not work on other Brother printers. It should work
+for all the HL-2140 range (including the HL-2142 which is just the
+HL-2140 branded exclusively for office works so no one can price match).&lt;/p&gt;</summary><category term="brother"></category><category term="hl2140"></category><category term="Printer"></category></entry><entry><title>Asterisk Voip to Voip "Bridge" (Webcallback)</title><link href="http://tim.purewhite.id.au/2010/10/asterisk-voip-to-voip-bridge-webcallback/" rel="alternate"></link><updated>2010-10-29T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-29:2010/10/asterisk-voip-to-voip-bridge-webcallback/</id><summary type="html">&lt;p&gt;Call it what you like. Sip to Sip, VoIP to VoIP, VoIP Bridge, Callback,
+Webcallback. The idea is to have a server somewhere call two SIP(VoIP)
+devices and connect the 2 calls together.&lt;/p&gt;
+&lt;p&gt;What's the point of it? Maybe you are stuck somewhere with a phone that
+only accepts incoming calls, and you want to make cheap voip calls. Or
+you are overseas, and it's cheaper to call from Australia to your
+location that from your location to Australia. For example you may have
+a payphone that accepts incoming calls but outgoing calls are expensive.
+Or you just want to enjoy nice cheap VoIP rates but don't have any VoIP
+hardware at your location, or poor dodgy internet, but have a mobile
+phone or landline.&lt;/p&gt;
+&lt;p&gt;What ever the reason, being able to have a VoIP call that connects to
+your location, then calls another party is a great thing!&lt;/p&gt;
+&lt;p&gt;Now before I go much further, if all you want is this ability to be
+called, and then have your remote party called, &lt;a href="http://pennytel.com.au"&gt;PennyTel&lt;/a&gt; has this
+Webcallback feature built in. Mynetfone doesn't, but if you can make
+outgoing calls you can use their ANI callback feature (you call a
+special number, your caller ID needs to not be blocked, and then you
+hangup after it rings, then it calls you back and lets you make your
+VoIP call). So, if you aren't going to be using this much, and don't
+need lots of customisation or special features, just signup for PennyTel
+and start using their Webcallback feature. Remember, you pay the cost of
+2 calls using this feature, not 1. First, the cost to your number, then
+the cost to whom you are calling. So if both parties are mobile phones,
+then it certainly might not be cheap anymore. How ever, if your number
+is a landline in australia, and so is the party you are calling, then
+it'll cost a total of \$0.16 to make your call (on their Freedom Untimed
+plan). This is pretty cheap compared to most normal telco's.&lt;/p&gt;
+&lt;p&gt;Read on however, if you want the ability to use just about any VoIP
+provider, and want to maybe use multiple VoIP providers and have heaps
+of control over it all.&lt;/p&gt;
+&lt;p&gt;Asterisk, the VoIP/PBX mega funky software, will turn a normal server
+into a PBX/VoIP Gateway etc etc. When I first looked to a solution to
+this issue a few years ago, I looked at the task of setting up Asterisk
+and found it daunting, so gave up. PennyTel Webcallback essentially
+delivered what I needed so I left it alone until now. I now have
+Asterisk setup as a simple VoIP system that allows me to make 2 calls
+(using multiple VoIP providers if I want) and join them together.&lt;/p&gt;
+&lt;p&gt;Why is it better than PennyTel Webcallback?&lt;br /&gt;
+For me it's better because it can work out cheaper for me. PennyTel
+callback is \$0.16 total (\$0.08 per each call to landline). However, if
+I'm calling someone who is a MyNetFone customer, if  I was to call their
+VoIP number from a MyNetFone VoIP account, the call would be free. And
+if I'm on a MyNetFone monthly plan, then I could have a good number of
+free landline calls each month. My optimal solution is currently
+combining both MyNetFone and PennyTel. PennyTel to the normal landline,
+\$0.08, and MyNetFone to the MyNetFone VoIP numbers, \$0.00. So it's a
+total of \$0.08 for the whole call! So depending on your location, and
+your destination number, and your VoIP provider plans, you can get your
+calls cheaper than using PennyTel webcallback. And just the fact that
+you can use this Callback method with just about any VoIP provider,
+priceless!&lt;/p&gt;
+&lt;p&gt;So lets get onto the easy part, setting it all up. While at first this
+can look daunting, in reality, it's very simple. This is all based on an
+Ubuntu 10.04 box, using the CLI. Quick note before we start, what ever
+machine you set this up on, needs to have enough bandwidth for 2 calls
+at the same time. So if you are putting it on a home ADSL connection,
+check you have enough up and down bandwidth for this. My server is
+hosted out on the internet and has enough bandwidth. A big reason for me
+setting this up is lack of a decent internet connection from my home to
+be able to do normal VoIP.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install asterisk
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Yes,this does pull in a far few bits of software, some of which isn't
+needed and I've not even poked at yet, but this is what we do to get
+Asterisk installed. Easy.&lt;/p&gt;
+&lt;p&gt;Now the setup. You need to edit /etc/asterisk/sip.conf to add your VoIP
+providers. Some providers give you the Asterisk details on their site,
+many others are just a google away, generally on
+http://www.voip-info.org/&lt;/p&gt;
+&lt;p&gt;So drop down to the bottom of the [general] section in
+/etc/asterisk/sip.conf and add in a register line for each VoIP
+provider. Mine is in the following format. You can see that the username
+is repeated a few times on the mynetfone one. It can be different for
+other providers.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username&lt;/span&gt;
+
+&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; 888xxxxxxx:secret@sip.pennytel.com/888xxxxxxx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now drop to the bottom of the /etc/asterisk/sip.conf file, and add in
+your "trunks" for the VoIP providers. In my situation, I don't want
+incoming calls (as then they need to be routed), so I just have the
+outgoing trunks.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[mynetfone-out]&lt;/span&gt;
+&lt;span class="na"&gt;disallow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;all&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;alaw&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ulaw&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ilbc&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;g729&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;gsm&lt;/span&gt;
+&lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;g723&lt;/span&gt;
+&lt;span class="na"&gt;authname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;09xxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;canreinvite&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;dtmfmode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;rfc2833&lt;/span&gt;
+&lt;span class="na"&gt;fromuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;09xxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sip01.mynetfone.com.au&lt;/span&gt;
+&lt;span class="na"&gt;insecure&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;very&lt;/span&gt;
+&lt;span class="na"&gt;nat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;pedantic&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;qualify&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;secret&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;password&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;friend&lt;/span&gt;
+&lt;span class="na"&gt;defaultuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;09xxxxxx&lt;/span&gt;
+
+&lt;span class="k"&gt;[pennytel-out]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;friend&lt;/span&gt;
+&lt;span class="na"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sip.pennytel.com&lt;/span&gt;
+&lt;span class="na"&gt;fromuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;888xxxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;defaultuser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;888xxxxxxx&lt;/span&gt;
+&lt;span class="na"&gt;secret&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;password&lt;/span&gt;
+&lt;span class="na"&gt;canreinvite&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;no&lt;/span&gt;
+&lt;span class="na"&gt;insecure&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;invite&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Again, these can look different. A bit of googling around should help,
+or if you work from the above you should be able to work out the
+settings for your own provider. Note, username is no more in newer
+Asterisk versions, it's now defaultuser, so you may need to change what
+you find on the net.&lt;/p&gt;
+&lt;p&gt;Have a look in /etc/asterisk/manager.conf, you'll see you need to create
+a file in /etc/asterisk/manager.d/ to add a user. You may wish to do
+this so you can use the astman tool later, which helps with
+disconnecting calls and monitoring things. (You can do this through the
+asterisk cli, how ever it may be a bit harder).&lt;/p&gt;
+&lt;p&gt;The format of the file you create is as follows.
+/etc/asterisk/manager.d/somename.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[username]&lt;/span&gt;
+&lt;span class="na"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;password&lt;/span&gt;
+&lt;span class="na"&gt;read&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call,log,verbose,command,agent,user,config&lt;/span&gt;
+&lt;span class="na"&gt;write&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call.log,verbose,command,agent,user,config&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This username and password isn't related to your VPS at all, it's what
+you'll use when logging in with Astman or other tools.&lt;/p&gt;
+&lt;p&gt;Now we get to the bit we've been waiting for, setting it up to connect 2
+calls.&lt;br /&gt;
+Edit /etc/asterisk/extensions.conf. Comment out the include =&gt; demo
+line from the [default] section. There is a section in the [default]
+that should sort out Hangup/Busy detection and the likes, so the
+extensions we are adding can be very simple, however, you can customise
+these very easily to do more than just connect the 2 calls.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[DialOutMyNetFone]&lt;/span&gt;
+&lt;span class="na"&gt;exten&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; _0X.,1,Dial(SIP/mynetfone-out/${EXTEN})&lt;/span&gt;
+
+&lt;span class="k"&gt;[DialOutPennyTel]&lt;/span&gt;
+&lt;span class="na"&gt;exten&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; _0X.,1,Dial(SIP/pennytel-out/${EXTEN})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And we are done. Everything should be setup now. The default install of
+Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
+should just work.&lt;/p&gt;
+&lt;p&gt;After all those edits, restart asterisk.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asterisk&lt;/span&gt; &lt;span class="n"&gt;restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we create our call file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;Channel:&lt;/span&gt; &lt;span class="err"&gt;SIP/pennytel-out/YOURNUMBER&lt;/span&gt;
+&lt;span class="err"&gt;Context:&lt;/span&gt; &lt;span class="err"&gt;DialOutMyNetFone&lt;/span&gt;
+&lt;span class="err"&gt;Extension:&lt;/span&gt; &lt;span class="err"&gt;WHOTOCALLNUMBER&lt;/span&gt;
+&lt;span class="err"&gt;Priority:&lt;/span&gt; &lt;span class="err"&gt;1&lt;/span&gt;
+&lt;span class="err"&gt;Archive:&lt;/span&gt; &lt;span class="err"&gt;Yes&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Very simple file. The Channel line is what calls you, so replace
+pennytel-out with the trunk you wish to use to call you. (It can be the
+same as the trunk used later on, or different. In this example, it's
+different as I want the cheap call to my landline, and the free call to
+a mynetfone number). The Context is the extension name that we defined
+in /etc/asterisk/extensions.conf, and the Extension is the number that
+you wish to call. Both for YOURNUMBER and WHOTOCALLNUMBER you need to
+know the format your VoIP provider uses. Some will allow just a
+localised version, for example in australia I can just dial 075xxxxxx or
+040 123 4567, and MyNetFone understands them. Some other VoIP providers
+might need 6175xxxxxx instead. Dialing internation, some just need the
+country code, others need a prefix like 0011, etc etc.&lt;/p&gt;
+&lt;p&gt;Now to actually place the call. There are a number of methods of doing
+this, the end result needs to be a call file placed in the
+/var/spool/asterisk/outgoing directory, owned by the asterisk user, and
+placed in a way that asterisk can't start reading it before the file is
+all there. For this reason, the mv command is recommended and I'll
+demonstrate. (I first copy the file so I can keep a number of pre setup
+files stored).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;preset1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;chown&lt;/span&gt; &lt;span class="n"&gt;asterisk&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;spool&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asterisk&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;outgoing&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As soon as the file hits that directory, asterisk reads it and executes
+it. If everything goes right, within 10 seconds your phone should start
+ringing. Pick it up, it'll then start ringing the other party, finally,
+when they pickup you can start talking! Done.&lt;/p&gt;
+&lt;p&gt;Sometimes the hangup detection doesn't work properly. I've not yet
+worked out why or how to fix it, I believe there are a number of things
+to tweak regarding this. What I currently do is run 'astman localhost'
+(from the machine running asterisk), login with the details we setup
+earlier, and I can think select the call and press hangup if it doesn't
+hangup correctly.&lt;/p&gt;
+&lt;p&gt;For more details about Call files, check out
+&lt;a href="http://www.voip-info.org/wiki/view/Asterisk+auto-dial+out"&gt;http://www.voip-info.org/wiki/view/Asterisk+auto-dial+out&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Of course, it's not always practical to ssh into your server just to
+make a phone call. I'll leave the task of setting up other methods of
+creating and moving the call files to the reader. Please though, don't
+give your web server user full sudo access without a password! I'd
+recommend ether a database with a cron runner script (running as the
+asterisk user), or something similar.&lt;/p&gt;
+&lt;p&gt;Last things. Check your firewall. You'll need to open some RTP ports and
+some SIP ports. A google will reveal more. Try to limit what you open
+though, I've not given any instructions for securing asterisk in this
+post, that also is for your further reading.&lt;/p&gt;</summary><category term="asterisk"></category><category term="bridge"></category><category term="callback"></category><category term="sip"></category><category term="sip to sip"></category><category term="voip"></category><category term="voip to voip"></category><category term="webcallback"></category></entry><entry><title>Internet Reception</title><link href="http://tim.purewhite.id.au/2010/10/internet-reception/" rel="alternate"></link><updated>2010-10-27T10:32:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-27:2010/10/internet-reception/</id><summary type="html">&lt;p&gt;[&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061-179x300.jpg" title="Modem Reception" /&gt;][]So we finally got our modem a few weeks back. A 3G9WB, also
+known as a 3G9WT (Telstra Branding) or a 7.2 Home Gateway. Really, it's
+just a Netcomm router with a Sierra mobile module inside.&lt;/p&gt;
+&lt;p&gt;It's unlocked, but we still can only get Telstra NextG, although with a
+Yagi we might be able to get Optus 3G. However, even Telstra NextG is
+dodgy, showing as "Low" signal strength, or 2 bars out of 5. Often it'll
+just stop because the signal is too low. And 2G (EDGE) isn't any better.&lt;/p&gt;
+&lt;p&gt;So today we needed to download some video editing software, thought we
+give &lt;a href="http://www.openshotvideo.com/" title="OpenShot Video Editor"&gt;OpenShot&lt;/a&gt; a try instead of Cinelerra. Hoping for something a
+little simpler for basic editing. The download started off with an ETA
+of 30mins, and then the speed just kept dropping. Soon our ETA was 4
+hours. I'd had enough, so I opened the window, removed the flyscreen and
+climbed onto the window sill. I then carefully wedged the modem into the
+louvers. Still only a low signal, but success! The download was finished
+in 3minutes! I might actually be able to upload my assignment quickly
+with the modem here (when the submission link is fixed up).&lt;/p&gt;
+&lt;p&gt;So, until we get an external antenna, we'll just have to use an external
+modem! :-P&lt;/p&gt;
+&lt;p&gt;[&lt;img alt="" src="http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061-179x300.jpg" title="Modem Reception" /&gt;]: http://tim.purewhite.id.au/wordpress/wp-content/uploads/2010/10/IMAG0061.jpg&lt;/p&gt;</summary><category term="3g9wb"></category><category term="modem"></category><category term="nextg"></category></entry></feed>

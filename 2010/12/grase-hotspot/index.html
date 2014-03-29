@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>GRASE HotspotTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        GRASE Hotspot
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2010-12-14T21:55:00">
+  Tue 14 December 2010
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/coovachilli">CoovaChilli</a>, 
+    <a href="http://tim.purewhite.id.au/tag/freeradius">FreeRadius</a>, 
+    <a href="http://tim.purewhite.id.au/tag/grase">GRASE</a>, 
+    <a href="http://tim.purewhite.id.au/tag/grase-hotspot">GRASE Hotspot</a>, 
+    <a href="http://tim.purewhite.id.au/tag/hotspot">Hotspot</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2010/12/grase-hotspot/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>3 years in the making, and finally I am releasing the code for the GRASE
+Hotspot. I've always planned on releasing the code, but had a lot things
+I wanted done before the code was released, in particular making it easy
+to install, and modular, as well as more secure than it previously was
+(in particular the remote access).</p>
+<p>For those that don't know much about the hotspot system I've been
+working on, it's a simple captive portal system, that allows an
+organisation/company to provide controlled internet access to users.
+When a user tries to use a computer on the network (wireless or wired),
+the first time they attempt to access a website, it redirects them to a
+login screen. After a sucessful login they can then use the internet
+until their time or data allowance is exhausted. The main part of the
+GRASE Hotspot is the admin interface I have written. This provides a
+simple interface for adding and managing users, as well as monitoring
+usage and websites visited.</p>
+<p>The rest of the Hotspot system is what we call glue layers. This is the
+process of connecting individual components together, in this case,
+CoovaChilli, FreeRadius, MySQL, Squid and a few other components. Most
+of the Hotspot solutions I researched required a lot of manual work
+gluing the components together. All this hard work is taken care of
+using the GRASE Hotspot.</p>
+<p>Currently the best way to get started using the system, is to download
+the grase-repo deb package from
+<a href="http://hotspot.purewhite.id.au/apt/pool/main/g/grase-repo/">http://hotspot.purewhite.id.au/apt/pool/main/g/grase-repo/</a> which will
+setup the apt repository. Then head over to
+<a href="http://hotspot.purewhite.id.au/wiki/Documentation/Packages">http://hotspot.purewhite.id.au/wiki/Documentation/Packages</a> to get an
+idea of some of the other packages that can be installed to get started.
+More information will appear over time at the main wiki page.</p>
+<p>Some old screenshots (will be updated soon) and support forums are over
+at <a href="http://sf.net/projects/grase/">SourceForge.</a></p>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2010/12/grase-hotspot/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

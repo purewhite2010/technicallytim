@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Disk recovery - Which files are damaged?Technically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Disk recovery - Which files are damaged?
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2011-04-19T09:40:00">
+  Tue 19 April 2011
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/damaged">damaged</a>, 
+    <a href="http://tim.purewhite.id.au/tag/fat32">fat32</a>, 
+    <a href="http://tim.purewhite.id.au/tag/recovery">recovery</a>, 
+    <a href="http://tim.purewhite.id.au/tag/sector">sector</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p><ins datetime="2011-08-11T21:49:04+00:00">First, getting an image of the
+damaged hard drive.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">ddrescue</span> <span class="o">-</span><span class="n">n</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">inputdevice</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="n">rescued</span><span class="p">.</span><span class="n">log</span>
+
+<span class="err">$</span> <span class="n">ddrescue</span> <span class="o">-</span><span class="n">r</span> <span class="mi">1</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">inputdevice</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="n">rescued</span><span class="p">.</span><span class="n">log</span>
+</pre></div>
+
+
+<p>The first ddrescue command tries to fly through the disk as quickly as
+possible, skipping over sections when an error occurs. This allows me to
+recover most of the good data as quickly as possible. The second command
+(which is only needed if you had errors found with the first command)
+will then retry the bad sections of disk, splitting the error sections
+into smaller and smaller parts until you eventually have individual
+blocks that are damaged. It is here that ddrescue really works hard to
+recover your data, and this part can take just as long as the first
+part.</ins></p>
+<p>So you have successfully used ddrescue to recover everything you can off
+a failing hard drive. Now you have a big image file, maybe 500Gb, with
+sectors that could be recovered, and those that couldn't. But how do you
+find which files belong to the broken sectors? I recently had this
+problem with a FAT32 filesystem. After lots and lots of googling, I
+still didn't have a decent answer. Windows has a tool called DiskView,
+however it doesn't appear to work on disk images. There is also a Hex
+viewer around that apparently will tell you which files belong to the
+sector you are viewing, but I had no luck with that ether.</p>
+<p>Eventually I stumbled across a toolset I should have used from the
+start. The Sleuth Kit. I also stumbled across a paper someone had
+written doing some forensics with The Sleuth Kit which pointed me to the
+right tools, although some had changed names.</p>
+<p>However, let me first point you to a fairly simple way that is hidden in
+the ddrescue info pages. While at first it sounds like this method
+should be the long hard way, it actually works out to be the easiest
+way.</p>
+<p>It is suggested in the ddrescue info pages that you md5sum all the files
+in the image, then using ddrescue in fill mode you write some data (that
+isn't all zero's) to the sections that couldn't be recovered, and then
+md5sum all the files again and compare. Seeing as I had already copied
+all the files off the image, it was actually even simplier than that. I
+wrote the random data to the damaged sections (in this case "BADSECTOR"
+over and over again) and then did a diff between the files on the image
+and the files I had already copied off the image. It did take awhile to
+do the diff, but 4hrs to compare 180Gb of files with 180Gb of files,
+over a network isn't that bad. I'm sure it would have been a lot quicker
+had all the files resided on the local machine on  a nice RAID array.</p>
+<p>So a simplified example</p>
+<p>copy all files off rescued image (loop mount) to another location</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">echo</span> <span class="o">-</span><span class="n">n</span> <span class="s">&quot;BAD SECTOR &quot;</span> <span class="o">&gt;</span> <span class="n">tmpfile</span>
+<span class="err">$</span> <span class="n">ddrescue</span> <span class="o">--</span><span class="n">fill</span><span class="o">=-</span> <span class="n">tmpfile</span> <span class="n">rescue</span><span class="p">.</span><span class="n">img</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span>
+
+<span class="err">$</span> <span class="n">diff</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">loop</span><span class="o">/</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">rescuedfiles</span><span class="o">/</span> <span class="o">&gt;</span> <span class="n">damagedfiles</span>
+</pre></div>
+
+
+<p>You'll then have a list of files that differ between the 2 versions,
+which are the ones with damaged sectors. Also, the ddrescue doesn't
+damage the logfile so you can then reverse it using /dev/zero to restore
+the image to it's original recovery state. This won't work with sparse
+files.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">ddrescue</span> <span class="o">--</span><span class="n">fill</span><span class="o">=-</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">zero</span> <span class="n">rescue</span><span class="p">.</span><span class="n">img</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span>
+</pre></div>
+
+
+<p><ins datetime="2011-08-11T21:54:00+00:00">Or, if you haven't copied the
+files off, then the way suggested in the ddrescue manual looks like
+this. (After getting your disk image)</p>
+<div class="highlight"><pre><span class="cp"># mount -o loop rescued.img /mnt/loop</span>
+
+<span class="err">$</span> <span class="n">find</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">loop</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">print0</span> <span class="o">|</span> <span class="n">xargs</span> <span class="o">-</span><span class="mi">0</span> <span class="n">md5sum</span> <span class="o">&gt;</span> <span class="n">prefill</span><span class="p">.</span><span class="n">md5</span>
+
+<span class="err">$</span> <span class="n">echo</span> <span class="o">-</span><span class="n">n</span> <span class="s">&quot;BAD SECTOR &quot;</span> <span class="o">&gt;</span> <span class="n">tmpfile</span>
+<span class="err">$</span> <span class="n">ddrescue</span> <span class="o">--</span><span class="n">fill</span><span class="o">=-</span> <span class="n">tmpfile</span> <span class="n">rescue</span><span class="p">.</span><span class="n">img</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span>
+
+<span class="cp">## You may need to unmount and remount the loop file to prevent any caching interferring.</span>
+<span class="cp"># umount /mnt/loop</span>
+<span class="cp"># mount -o loop rescued.img /mnt/loop</span>
+
+<span class="err">$</span> <span class="n">find</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">loop</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">print0</span> <span class="o">|</span> <span class="n">xargs</span> <span class="o">-</span><span class="mi">0</span> <span class="n">md5sum</span> <span class="o">&gt;</span> <span class="n">postfill</span><span class="p">.</span><span class="n">md5</span>
+
+<span class="err">$</span> <span class="n">diff</span> <span class="n">prefill</span><span class="p">.</span><span class="n">md5</span> <span class="n">postfill</span><span class="p">.</span><span class="n">md5</span>
+</pre></div>
+
+
+<p></ins></p>
+<p><ins datetime="2011-08-11T21:42:04+00:00"><strong>This is all you need when
+trying to work out which files are damaged. The following is another
+method for really peaking into the file system that may be more useful
+for deeper analysis</strong></ins></p>
+<p>However, if you do want to find out which files are in the damaged
+sectors, then continue as it is possible.</p>
+<p>First, check that the sector is actually used. This used to be the dstat
+command, but it has since been renamed to blkstat. So we take a sector
+number from the logfile that couldn't be recovered.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-|</span><span class="n">head</span>
+<span class="mh">0x0178F200</span>  <span class="mh">0x0000D400</span>  <span class="o">-</span>
+<span class="mh">0x017A0000</span>  <span class="mh">0x00000200</span>  <span class="o">-</span>
+<span class="mh">0x2BC488F400</span>  <span class="mh">0x00011600</span>  <span class="o">-</span>
+<span class="mh">0x2BEEFF0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+<span class="mh">0x5AC5FB0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+<span class="mh">0x5AC6050A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+<span class="mh">0x5AC60E0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+<span class="mh">0x5AC6180A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+<span class="mh">0x5AC6220A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+<span class="mh">0x5AC62B0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+</pre></div>
+
+
+<p>We then convert it to a sector number. I know the sector size is 512
+bytes in this case, but you will need to verify it for your drive. If in
+doubt, do the conversion, open a hexeditor, jump to that location, use
+the previous ddrescue command to fill in the badsectors with some known
+next, and confirm that the known text is at the address you are
+viewing.<br />
+I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
+and dived by 512 (the sector size). I can do this all at once if I know
+that 512 in hex is 200.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;ibase=16; 2BEEFF0A00/200&quot;</span><span class="o">|</span><span class="n">bc</span>
+<span class="mi">368541573</span>
+</pre></div>
+
+
+<p>Or do it the long way</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;ibase=16; 2BEEFF0A00&quot;</span><span class="o">|</span><span class="n">bc</span>
+<span class="mi">188693285376</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;188693285376/512&quot;</span><span class="o">|</span><span class="n">bc</span>
+<span class="mi">368541573</span>
+</pre></div>
+
+
+<p>Ether way, I now know that the sector number is 368541573. Using blkstat
+(formerly dstat) I can verify that the sector is used or not.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">blkstat</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="mi">368541573</span>
+<span class="nl">Sector:</span> <span class="mi">368541573</span>
+<span class="n">Allocated</span>
+<span class="nl">Cluster:</span> <span class="mi">5754738</span>
+</pre></div>
+
+
+<p>Now a little warning, if you get a sector that looks like this.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">blkstat</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="mi">48249</span>
+<span class="nl">Sector:</span> <span class="mi">48249</span>
+<span class="n">Allocated</span> <span class="p">(</span><span class="n">Meta</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Then you are probably looking at a sector in a directory listing. The
+next tool we are going to use, ifind, may take a very long time to
+process that sector for almost no gain. I would leave these sectors
+until you have processed the others. I believe this one for me actually
+is in one of the FAT's, which just told me that the FAT was probably
+damaged. What I can do is work with the damaged FAT initially, then
+switch over to the other FAT and see what is different. (Which I won't
+cover in this post) <ins datetime="2011-04-18T23:52:56+00:00">On further
+investigation, it turns out this sector was in an unused part of the
+FAT, so had caused no damage to the FAT. Damage to the fat could prevent
+you from even seeing some of the files, so hopefully when you have
+damage to the FAT your 2nd FAT will still be good.</ins></p>
+<p>Our next step is to use ifind to find the inode associated with the
+sector. This can take some time and lots of CPU.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">time</span> <span class="n">ifind</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="o">-</span><span class="n">d</span> <span class="mi">368541573</span>
+<span class="mi">5892375559</span>
+
+<span class="n">real</span>    <span class="mi">2</span><span class="n">m52</span><span class="mf">.314</span><span class="n">s</span>
+<span class="n">user</span>    <span class="mi">1</span><span class="n">m15</span><span class="mf">.280</span><span class="n">s</span>
+<span class="n">sys</span> <span class="mi">0</span><span class="n">m2</span><span class="mf">.170</span><span class="n">s</span>
+</pre></div>
+
+
+<p>This finally gives us the inode associated with that file.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">istat</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="mi">5892375559</span><span class="o">|</span><span class="n">head</span> <span class="o">-</span><span class="mi">12</span>
+<span class="n">Directory</span> <span class="n">Entry</span><span class="o">:</span> <span class="mi">5892375559</span>
+<span class="n">Allocated</span>
+<span class="n">File</span> <span class="n">Attributes</span><span class="o">:</span> <span class="n">File</span><span class="p">,</span> <span class="n">Archive</span>
+<span class="nl">Size:</span> <span class="mi">21346140</span>
+<span class="nl">Name:</span> <span class="n">MICROS</span><span class="o">~</span><span class="mi">1</span>
+
+<span class="n">Directory</span> <span class="n">Entry</span> <span class="n">Times</span><span class="o">:</span>
+<span class="nl">Written:</span>    <span class="n">Wed</span> <span class="n">Aug</span> <span class="mi">25</span> <span class="mi">22</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mi">38</span> <span class="mi">2010</span>
+<span class="nl">Accessed:</span>   <span class="n">Wed</span> <span class="n">Apr</span> <span class="mi">13</span> <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="mi">2011</span>
+<span class="nl">Created:</span>    <span class="n">Wed</span> <span class="n">Aug</span> <span class="mi">25</span> <span class="mi">22</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mi">39</span> <span class="mi">2010</span>
+
+<span class="nl">Sectors:</span>
+</pre></div>
+
+
+<p>The listing then goes on to show all sectors that the file uses. If we
+grep the listing, we can confirm that the sector 5892375559 is in that
+file. Unfortunately, we are stuck with the 8.3 filename and not the
+complete filename. Thankfully another tool will come to our rescue. If
+you are looking for a good number of files that are affected (i.e. more
+than 1 or 2 sectors) you'll want to run this command without the grep,
+and save the contents to a file so you can just grep over that file each
+time as it takes a long time to recursively list all the files in a big
+filesystem.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">fls</span> <span class="o">-</span><span class="n">rFp</span> <span class="n">bunsom</span><span class="p">.</span><span class="n">img</span> <span class="o">|</span><span class="n">grep</span> <span class="mi">5892375559</span>
+<span class="n">r</span><span class="o">/</span><span class="n">r</span> <span class="mi">5892375559</span><span class="o">:</span> <span class="n">Microsoft</span> <span class="n">Office</span> <span class="mi">2011</span><span class="o">/</span><span class="n">Office</span><span class="o">/</span><span class="n">Microsoft</span> <span class="n">Chart</span> <span class="n">Converter</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">Microsoft</span> <span class="n">Chart</span> <span class="n">Converter</span>
+</pre></div>
+
+
+<p>So finally we can see that the inode 5892375559, which contains our
+damaged sector, belongs to this file from the Microsoft Office Chart
+Converter App. (Yes, it does look a little strange this file but that's
+because it's a OS X App file).</p>
+<p>We can now repeat this for all damaged sectors. However, I'd be first
+getting a list of all sectors (remember that the second column in the
+ddrescue log is size of the damaged area, use that to work out who many
+sectors in a row are damaged). I'd then check the file we have just
+found (use the istat tool) to see if any of the other damaged sectors
+are also in that file.</p>
+<p><em>keywords to assist others finding it: data recovery, damaged sector,
+file at sector, file belong to sector, sector contents, damaged files,
+fat32, sector explore, sector view</em></p>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2011/04/disk-recovery-which-files-are-damaged/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

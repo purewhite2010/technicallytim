@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/blog-projectx.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2011-08-22T16:53:00+10:00</updated><entry><title>Day 6</title><link href="http://tim.purewhite.id.au/2011/08/day-6/" rel="alternate"></link><updated>2011-08-22T16:53:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-22:2011/08/day-6/</id><summary type="html">&lt;p&gt;So not much has happened over the weekend due to it being very busy.
+Today the mini-DVI to HDMI adapter arrived, so I could finally "dock"
+the Macbook at my desk. After "docking" it with my monitor, keyboard and
+mouse, it suddenly feels less like a laptop and more like a desktop!
+More screen realestate is a big bonus. But being able to just pick it
+up, pull out a few cables and take it with me, tether it to my mobile
+via wifi and work on the go, just makes such a difference to having a
+separate desktop and laptop!&lt;/p&gt;
+&lt;p&gt;As I already used a password manager under Linux, I wanted an
+application that was compatible with my existing password database.
+Thankfully, Password Gorilla runs on OS X, and all the other platforms,
+and reads the same password database as pwsafe does. So while I was out
+today, I finally migrated a number of machine passwords into a secure
+"safe". The GUI is rather nice on the Mac, so I may considering using it
+under Linux too.&lt;/p&gt;
+&lt;p&gt;I've also installed Qumana which will allow me to blog without using a
+browser. This is something I did many moons ago, and so thought I'd try
+it again for this Project as it assists in making me use the Mac for the
+whole time, rather than using interfaces/apps/things that I am already
+comfortable with.&lt;/p&gt;
+&lt;p&gt;As I have a few uni assignments due this week, I probably won't spend
+much time working on the project. And unfortunately, at least for one of
+the assignments, I will have to use my Linux machine to complete it due
+to some tools that aren't available for Mac. I have contemplated
+installing Linux on the Mac, but for now figure that the time spent
+doing that is better spent on the assignments.&lt;/p&gt;
+&lt;p&gt;Interestingly, while setting in a shopping centre working today, some
+random walked past and said something like "Mac's are nice aren't they?"
+So for all those who want people to stop and talk to you, get a Mac!&lt;/p&gt;
+&lt;p&gt;I think I have gotten this Mac to the point that it's now very usable
+for me. I've installed enough apps to get me going, and I'm forcing
+myself to learn all the Mac shortcuts. Now I'll use it for all my
+Assignments this week as much as possible, and I think by the end of the
+week, I'll probably be using my Linux machine via VNC on my Mac!&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;&lt;em&gt;Powered by&lt;/em&gt; &lt;a href="http://www.qumana.com/"&gt;Qumana&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;</summary></entry><entry><title>Day 3</title><link href="http://tim.purewhite.id.au/2011/08/day-3/" rel="alternate"></link><updated>2011-08-19T12:15:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-19:2011/08/day-3/</id><summary type="html">&lt;p&gt;I've decided to blog this journey of learning and challenge. I am
+developing a mobile app, initially for iOS and eventually for Android. I
+have given myself an initial 60 days to get it done, 60 days from
+getting the equipment.&lt;/p&gt;
+&lt;p&gt;Being an iOS app, I required an Apple Mac computer to run the required
+development tools. Tuesday afternoon an iPhone 3GS and a MacBook
+arrived, curtsey of a friend of Jun's. First thing I needed to do was
+download the Lion update, so I could run XCode 4.1. This started Tuesday
+evening and was finished by Wednesday morning (Day 1). I then prepared a
+USB Drive to boot the installer from, and went and purchased a new
+laptop HDD to upgrade the MacBook. By lunch time I'd fitted the new
+500Gb HDD and the OS X Lion install was finished. Now started the 6-8hr
+download of XCode. Meanwhile I spent some time getting aquainted with
+this MacBook and OS X. No, I'm not converted like some people have been
+asking, however it probably will be my main computer for the next 60 odd
+days.&lt;/p&gt;
+&lt;p&gt;Yesterday (day 2) I wrote a Hello World app in XCode for iOS. It was
+copied straight from a tutorial on the net, and I quickly discovered
+that Apple wants \$99 from me to be able to even test it on my iPhone!
+Come on Apple, you already get the money for the MacBook, the iPhone,
+and now you want more money just so we can test apps on our OWN
+devices!?!? Eventually we'll need to fork out this money so we can sign
+our apps and put them on the App Store. For now though, I think I'll
+just jailbreak for testing purposes.&lt;br /&gt;
+I've continued getting acquainted with the MacBook. It now runs Firefox
+and Thunderbird, iCal is 2 way syncing my calendar. Clementine has
+become my music player (iTunes, no thanks), LibreOffice is installed.
+TextWrangler may become my other code editor if it is good enough.
+Dropbox is setup for syncing between my MacBook and certain folders on
+my main computer. So far, it's been nice using this computer, however
+it's certainly not better than similar hardware running Linux. For a
+start, it took me a long time to get network shares with our NAS working
+well, even though it supports AFP. Eventually it was easier to just
+setup NFS. I'm getting used to all the keyboard shortcuts, which once
+learned certainly speed up some navigation. Annoyingly, there have been
+some things where a keyboard doesn't work and you have to use a mouse.&lt;/p&gt;
+&lt;p&gt;Regarding code, it looks like I'll probably use Git for the SCM as its
+built in to XCode.&lt;/p&gt;
+&lt;p&gt;Thats all for Day 3 so far. I need to get some uni work done and we have
+a busy weekend. I look forward to next week when I'll have to make this
+iPhone run my apps!&lt;/p&gt;</summary><category term="Apple"></category><category term="Development"></category><category term="iOS"></category><category term="iPhone"></category><category term="Mac"></category><category term="MacBook"></category><category term="OS X"></category><category term="project"></category><category term="XCode"></category></entry></feed>

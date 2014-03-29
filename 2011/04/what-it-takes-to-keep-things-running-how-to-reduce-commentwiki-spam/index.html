@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>What it takes to keep things running. (How to reduce comment/wiki spam)Technically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        What it takes to keep things running. (How to reduce comment/wiki spam)
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2011-04-05T22:13:00">
+  Tue 05 April 2011
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/password">password</a>, 
+    <a href="http://tim.purewhite.id.au/tag/project-honey-pot">project honey pot</a>, 
+    <a href="http://tim.purewhite.id.au/tag/pwdhash">pwdhash</a>, 
+    <a href="http://tim.purewhite.id.au/tag/security">security</a>, 
+    <a href="http://tim.purewhite.id.au/tag/spam">spam</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>I recently pushed out a new version of the <a href="http://hotspot.purewhite.id.au/">GRASE Hotspot</a>. I spent
+lots of time working on rewriting the splash/welcome page, and login
+forms so that they would work even with javascript disabled, and allow
+you to force it into the non javascript version if you are having
+problems (so browsers like Safari can be used). However, recently I've
+spent a lot of time just doing maintenance.</p>
+<p>The maintenance started when again I spent lots of time cleaning up spam
+on the wiki, this was after enabling ReCAPTCHA. I decided it wasn't
+practical to keep cleaning up the wiki, and seeing as I was the only one
+contributing to it, it made more sense migrating it to a Wordpress site.
+After the migration was done, I quickly started getting comment spam on
+the new site!! Thankfully, Akismet blocks comment spam, but the volume
+of spam coming in was enormous! A peek into the server logs showed that
+the same ip's that were publishing spam in the wiki, would try to get
+post to the missing wiki, find it missing and discover the wordpress
+site and immediately try to post comment spam! It was time to reduce the
+load on the server if possible.</p>
+<p>After some research, I implemented some basic .htaccess rules that would
+block some of the spam even getting processed. But why couldn't I find a
+simple DNSBL for Apache? Turns out the right googling will find
+libapache2-mod-spamhaus, which does what we need. But unlike email spam,
+it seems comment/wiki spammers aren't in the DNSBL's as much as email
+spammers. Thankfully, libapache2-mod-spamhaus was now dropping about
+half the spamming connections.</p>
+<p>Some more research turned up <a href="%20http://www.projecthoneypot.org?rf=93412" title="Project Honey Pot">Project Honey Pot</a> which is aimed more
+at the comment spammers and address harvesters. A quick check of the ip
+database they maintain revealed that most of the remaining comment
+spammer ips that were hitting my site were in their database!
+Unfortunately, the mod_httpbl module for Apache isn't in a nice
+repository anywhere, and hasn't been touched for awhile, so setup wasn't
+as easy. I found <a href="http://repel.in-progress.com/">Repel</a> which is a simple Python program that you use
+with mod_rewrite (and RewriteMap's). It's not so easy to setup, mainly
+due to the instructions being a little unclear, but also because the
+rewrite rules that use Repel can be very tricky. The documentation was
+good for just blocking, however I figured if I was going to use Project
+Honey Pot, I should contribute too, so I setup a honeypot on the site
+and then had fun and games with rewrite rules. Eventually though, I got
+it all setup. Now if you are thinking of setting this up yourself, it's
+probably a lot easier using the <a href="http://wordpress.org/extend/plugins/httpbl/" title="Wordpress Http:bl Plugin">Wordpress Plugin</a> which I've since
+setup on another site I assist with. While this will block the spammers,
+or direct them to a honeypot, it may have slightly more load than Repel.
+This is because Repel is a little python program, that apache already
+has running, and just passes the ipaddress to and waits for a reply. The
+wordpress plugin solution requires Apache to fire up PHP, which then
+fires up Wordpress, which then loads the plugin which finally gets the
+ipaddress, does the DNS lookup and then goes from there. I've done no
+testing, but logically Repel would appear to use less resources, but you
+are welcome to prove me wrong.</p>
+<p>On top of all that maintenance, I also had some mail servers receiving
+spam, which should have been blocked. Some more tweaks and changes, and
+another influx of spam is now not getting past the gate.</p>
+<p>Lastly, some advice. Password advice. In particular because I heard an
+"expert" on the ABC radio recently giving some poor advice. Get yourself
+a strong password, with letters and numbers, maybe some capital letters
+as well as lowercase, and decent length, at least 8 characters long. Now
+use that password for one place, and only one place, maybe your email
+account. Now find another one, just as strong, use that for your next
+account, maybe facebook. Reusing passwords is a big No No, as an
+important CEO recently discovered.<br />
+I can hear you already, moaning and groaning. It's so hard to remember
+one really strong password, how can you remember more than one? Well
+this is the easy part. You use a formula. I've started using
+<a href="https://www.pwdhash.com/" title="PwdHash">PwdHash</a>, developed by Standford University. It simply takes the
+domain name of the site you are generating the password, and your master
+password, and creates you a "hash" that you use as your password for
+that site. So for example, if my master password was
+'thecatsatonthemat', my facebook password would be
+'F58VFRH8eUejfcIs9UA'. This will let you create strong unique passwords
+for each account, then if one of your accounts is broken into and the
+password somehow discovered, your other accounts are safe. Of course, if
+your email account gets broken into, a lot of other accounts are not
+safe as the hacker can then just reset your passwords by using the "Lost
+Password" feature many sites provide.</p>
+<p>If you do decide to use PwdHash, you can install a firefox extension
+that assist, or you can use it directly on the site (as it uses
+Javascript, your password never leaves the computer, you can even save
+the page and use it offline). I found a little python script that does
+it for me, which I have on my server and my machine, so I can create my
+pwdhash's even when I don't have a browser handy. Of course, there is
+nothing preventing you having multiple master passwords ether, just to
+make it even more secure!</p>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/blog-coding-technical.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2011-04-20T16:42:00+10:00</updated><entry><title>Remote Scan to PDF</title><link href="http://tim.purewhite.id.au/2011/04/remote-scan-to-pdf/" rel="alternate"></link><updated>2011-04-20T16:42:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-20:2011/04/remote-scan-to-pdf/</id><summary type="html">&lt;p&gt;I needed a simple and quick way for other users on the network to be
+able to scan documents. So far, what I had been doing was running a
+little bash script I found on the net, and scanning multiple pages into
+a pdf. The problem was that I needed to run it, and teaching everyone
+else to login via ssh and run it wasn't an option.&lt;/p&gt;
+&lt;p&gt;So I knocked together a little PHP application that did the basic things
+the bash script does. It can even customise the settings (however that
+is disabled atm due to a scanner problem). And to make it more natural,
+I used jQuery and AJAX to run the jobs in the background without having
+a script constantly reloading itself.&lt;/p&gt;
+&lt;p&gt;Warning, the script in it's current version has basically no security.
+As there is a "readfile" part to dump the PDF to the browser, a user
+could easily make it read any file the web server has access too. It
+also has minimal error checking as generally things just work, and if
+they don't, you start again.&lt;/p&gt;
+&lt;p&gt;So if you are looking for a simple solution for network access to your
+scanner, and you don't want to go as far as phpsane, then here is the
+code! &lt;a href="http://tim.purewhite.id.au/code/phpscan2pdf/files"&gt;http://tim.purewhite.id.au/code/phpscan2pdf/files&lt;/a&gt;&lt;/p&gt;</summary><category term="code"></category><category term="pdf"></category><category term="php"></category><category term="scan2pdf"></category><category term="scanner"></category><category term="scanning"></category></entry></feed>

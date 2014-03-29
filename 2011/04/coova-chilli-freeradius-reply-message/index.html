@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Coova Chilli & FreeRadius Reply-MessageTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Coova Chilli & FreeRadius Reply-Message
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2011-04-03T01:45:00">
+  Sun 03 April 2011
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/access-reject">Access-Reject</a>, 
+    <a href="http://tim.purewhite.id.au/tag/coovachili">CoovaChili</a>, 
+    <a href="http://tim.purewhite.id.au/tag/freeradius">FreeRadius</a>, 
+    <a href="http://tim.purewhite.id.au/tag/hotspot">Hotspot</a>, 
+    <a href="http://tim.purewhite.id.au/tag/reply-message">Reply-Message</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2011/04/coova-chilli-freeradius-reply-message/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>I was going to post this on the Grase Hotspot site, but will post it
+here in depth and just the basics on the hotspot site.</p>
+<p>Previously I researched this problem and found very little, it would
+seem since my last search more material has become available that has
+assisted. In particular
+[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html<br />
+][]<br />
+The basic problem is this. Using CoovaChilli, when a login failed for
+some reason, we usually didn't get an error message. If your data quota
+had been used up, then maybe you'd get "Your maximum never usage time
+has been reached" which for most people was confusing. An expired
+account may give you the error "Password Has Expired". However, any
+other reason for a login failure and you'd usually not get a message.</p>
+<p>At first, you may want to blame Coova Chilli. After all, it is the piece
+of software sending back the login failed status, and if using the JSON
+interface, it would send back the login failure message. However, good
+CoovaChilli is just relaying the message it gets from the Radius server.
+So we next turn our attention to FreeRadius.</p>
+<p>The first place you may be tempted to look is in
+/etc/freeradius/modules/expiration</p>
+<div class="highlight"><pre><span class="err">expiration</span> <span class="err">{</span>
+        <span class="c1">#</span>
+        <span class="c1"># The Reply-Message which will be sent back in case the</span>
+        <span class="c1"># account has expired. Dynamic substitution is supported</span>
+        <span class="c1">#</span>
+        <span class="na">reply-message</span> <span class="o">=</span> <span class="s">&quot;Password Has Expired\r\n&quot; </span>
+<span class="s">        #reply-message = &quot;Your account has expired, %{User-Name}\r\n&quot;</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>This file gives you false hope. You see the option reply-message and
+think, if the expiration has a reply-message, then surely I can just
+drop a similar thing in at other places. However, what you don't realise
+is that the reply-message is an option for the expiration module.
+Internally the module has settings it understands, and other modules
+won't understand those same settings! There is no setting for the sql
+modules, or the sections that handle counting remaining quota. Putting
+this reply-message option in other places will just cause FreeRadius to
+fail to start.</p>
+<p>By now, if you have read the link above, you may have some better
+understanding of what to do. A good place to start reading for better
+understanding of how freeradius reads it's config files is <code>man unlang</code>.
+unlang is the "language" used by the config files, and reading it and
+some of the accompanying documents with freeradius will enlighten you to
+how things work.</p>
+<p>I'll give you a large block of finished code, so you can start to
+understand where all this fits together. This is an exceprt of
+/etc/freeradius/sites-available/default with comments stripped out.
+Please don't just copy and paste this, it's to give better understanding
+of where the parts go, as many examples don't give you the context of
+the changes needed.</p>
+<div class="highlight"><pre><span class="err">authorize</span> <span class="err">{</span>
+    <span class="err">preprocess</span>
+    <span class="err">chap</span>
+    <span class="err">mschap</span>
+    <span class="err">suffix</span>
+    <span class="err">eap</span> <span class="err">{</span>
+        <span class="na">ok</span> <span class="o">=</span> <span class="s">return</span>
+<span class="s">    }</span>
+<span class="s">    sql{</span>
+<span class="s">        notfound = 1</span>
+<span class="s">        reject = 2</span>
+<span class="s">    }</span>
+<span class="s">    if(notfound){</span>
+<span class="s">        update reply {</span>
+<span class="s">            Reply-Message := &quot;Login Failed. Please check your Username and Password&quot;</span>
+<span class="s">        }</span>
+<span class="s">        ok = reject</span>
+<span class="s">    }</span>
+
+    <span class="err">if(reject){</span>
+        <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span>
+            <span class="na">Reply-Message :</span><span class="o">=</span> <span class="s">&quot;Login Failed. Please check your Username and Password&quot;</span>
+<span class="s">        }</span>
+<span class="s">        ok = reject</span>
+<span class="s">    }</span>
+
+
+    <span class="err">expiration{</span>
+        <span class="na">userlock</span> <span class="o">=</span> <span class="s">1</span>
+<span class="s">    }</span>
+<span class="s">    if(userlock){</span>
+<span class="s">            update reply {</span>
+<span class="s">                    Reply-Message := &quot;Your account has expired, %{User-Name}&quot;</span>
+<span class="s">            }</span>
+<span class="s">            ok = reject</span>
+<span class="s">    }</span>
+
+    <span class="err">logintime</span>
+
+    <span class="err">noresetBytecounter{</span>
+        <span class="na">reject</span> <span class="o">=</span> <span class="s">1</span>
+<span class="s">    }</span>
+<span class="s">    if(reject){</span>
+<span class="s">            update reply {</span>
+<span class="s">                    Reply-Message := &quot;You have reached your bandwidth limit&quot;</span>
+<span class="s">            }</span>
+<span class="s">            ok = reject</span>
+<span class="s">    }</span>
+
+
+    <span class="err">noresetcounter{</span>
+        <span class="na">reject</span> <span class="o">=</span> <span class="s">1</span>
+<span class="s">    }</span>
+<span class="s">    if(reject){</span>
+<span class="s">            update reply {</span>
+<span class="s">                    Reply-Message := &quot;You have reached your time limit&quot;</span>
+<span class="s">            }</span>
+<span class="s">            ok = reject</span>
+<span class="s">    }</span>
+
+    <span class="err">pap</span>
+<span class="err">}</span>
+
+<span class="err">post-auth</span> <span class="err">{</span>
+    <span class="err">sql</span>
+    <span class="err">exec</span>
+    <span class="err">Post-Auth-Type</span> <span class="err">REJECT</span> <span class="err">{</span>
+        <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span> <span class="c1"># Fallback error message</span>
+            <span class="na">Reply-Message</span> <span class="o">=</span> <span class="s">&quot;Login Failed. Please check your username and password&quot;</span>
+<span class="s">        }</span>
+<span class="s">        attr_filter.access_reject</span>
+<span class="s">    }</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>I'll start with the part that will help explain the best.</p>
+<div class="highlight"><pre><span class="err">noresetBytecounter{</span>
+    <span class="na">reject</span> <span class="o">=</span> <span class="s">1</span>
+<span class="err">}</span>
+<span class="err">if(reject){</span>
+        <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span>
+                <span class="na">Reply-Message :</span><span class="o">=</span> <span class="s">&quot;You have reached your bandwidth limit&quot;</span>
+<span class="s">        }</span>
+<span class="s">        ok = reject</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>When I first saw this code, I thought it was setting a variable reject
+to the value of 1. However it's not quite like that. See all modules
+have return codes. For example, an ok code, or a reject or fail code.
+However, that code is more than just a code, it also has an action with
+it. For example, a reject code has the action, reject. Rather simple.
+What the reject action does, is stop processing this section and return
+a reject. What the 'reject = 1' does, is says that if this module
+returns a reject, we set the action to a 1, which is setting it's
+priority to 1, so that we can process more modules and get their error
+codes too, and give them priorities, so the highest priority code wins.
+This would let us do complex things for example, letting us exceed our
+bandwidth limit as long as our time limit is also exceeded. Given that
+we can have priorities from 1 to 99999 we can actually do really complex
+things.</p>
+<p>So what this first bit of code is doing then, is preventing a reject
+from being sent straight away, so we can do more processing. And the
+next bit of processing we do is test for that reject. (You may think
+that this test could catch an earlier reject, but only if an earlier
+reject also had it's priority set to something otherwise it's default
+action would have been to return a reject straight away.) If this reject
+exists, then the module noresetBytecounter must have triggered it. So we
+update the reply package that FreeRadius is going to return, and set the
+Reply-Message to an appropriate error message given then module that
+caused the failure. We then send that reject without processing more
+modules with the "ok = reject" line. We could do other things like
+sending an 'ok = return' which would clear the reject and return an ok.
+You can also do a plain "ok" but I'm not 100% sure what that does, it
+would appear to clear the reject and replace it with an ok code and
+continue processing, where as the 'ok=return' doesn't continue
+processing that section.</p>
+<p>Most of the rest of that big piece of code is similar pieces of code,
+although some have different codes, like userlock. The other important
+piece of code sets a default message for Access-Reject.</p>
+<div class="highlight"><pre><span class="err">post-auth</span> <span class="err">{</span>
+    <span class="err">sql</span>
+    <span class="err">exec</span>
+    <span class="err">Post-Auth-Type</span> <span class="err">REJECT</span> <span class="err">{</span>
+                <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span> <span class="c1"># Fallback error message</span>
+                    <span class="na">Reply-Message</span> <span class="o">=</span> <span class="s">&quot;Login Failed. Please check your username and password&quot;</span>
+<span class="s">                }</span>
+<span class="s">        attr_filter.access_reject</span>
+<span class="s">    }</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>It's rather easy to see what is happening here. In the post-auth section
+(same file as the rest of the stuff), we match the Reject packets. We
+then update the reply, with a generic error message. Because of the
+operators (= .vs. :=) it will only add this Reply-Message if there is no
+other Reply-Message already set in the Access-Reject. We used := before
+to replace any Reply-Message already existing, so for example we could
+override the cryptic message sthe the sql_counter module sends back. We
+could also use += if we want to "Append" Reply-Messages, allowing
+multiple messages to be sent back. The "attr_filter.access_reject"
+line is nothing to worry about, it just filters the return Access-Reject
+packet to ensure only allowed attributes are sent back. As Reply-Message
+is allowed, it isn't stripped out.</p>
+<p>Hopefully that gives better understanding to what code is needed to
+change/set the Reply-Message in Access-Reject packets. It could also be
+used to send back messages with Access-Accept packets. The great thing
+is that there are a good number of return codes, which allow you to make
+some really complex changes to how the data flows. If you have read the
+link at the start, you should by now start to realise how powerful
+unlang is. Not only can you check return codes, you can also check parts
+of the packet that have been "constructed". You can also change much
+more than the Reply-Message, you can change if it's access is accepted
+or rejected, what bandwidth controls are sent back, etc etc! For
+example, and ISP can allow login even with incorrect password, yet move
+that client to a different ip range that is setup for redirection to an
+internal portal to assist with resetting the password.
+(<a href="http://www.easyzonecorp.net/network/view.php?ID=1042">http://www.easyzonecorp.net/network/view.php?ID=1042</a>). Or the link
+from the start, they are using it so that when a datalimit is reached,
+FreeRadius sends back a slower speed, i.e. throttling them once their
+quota is used without disconnecting them! When you realise what power
+RADIUS has, you understand why it's used by isp's and the like!</p>
+<p>Keywords to assist people in finding this information. Radius,
+FreeRadius, Access-Reject, Reply-Message, CoovaChilli, ChilliSpot,
+Hotspot, sql reply-message reject</p>
+<p>[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html<br />
+ ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html</p>
+    </div><!-- /.entry-content -->
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
+        var disqus_identifier = "2011/04/coova-chilli-freeradius-reply-message/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+  </body>
+</html>

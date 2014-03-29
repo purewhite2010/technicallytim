@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/blog-coding.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2013-04-25T14:00:00+10:00</updated><entry><title>Wordpress Server Maintenance</title><link href="http://tim.purewhite.id.au/2013/04/wordpress-server-maintenance/" rel="alternate"></link><updated>2013-04-25T14:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-04-25:2013/04/wordpress-server-maintenance/</id><summary type="html">&lt;p&gt;Wow. Somehow I missed when this amazing tool was released. &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt;.
+Just wow.&lt;/p&gt;
+&lt;p&gt;I have a bunch of scripts I use to keep all the Wordpress installs up to
+date on my server, it finds all the installs, then it downloads the
+latest version, checks each install for the installed version and
+updates them by extracting the files correctly, ensuring user
+permissions etc. However, that only keeps the core updated, I still need
+to rely on all my customers to keep their plugins updated. This is ok,
+except when a plugin has a security issue and needs to be updated ASAP.
+Recently, we had just that situation with the WP-Super-Cache plugin. So
+I modified my scripts, and now they update that particular plugin. But
+it would be a pain to write a script that updated every plugin, so I'm
+stuck logging into a number of sites I maintain, updating all the
+plugins regularly, and then hoping for the sites that the customer
+maintains, they do the same.&lt;/p&gt;
+&lt;p&gt;Enter, &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt;. The tool I've been dreaming of for a long time.
+Simply install, then using the basic structure of my script (the part
+that finds all installs, verifies they are valid installs, and executes
+commands as the user who owns the install), I can now run any of the
+awesome &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt; commands on all the sites I host! Server maintenance
+just got a whole lot easier (as long as no plugin updates break things)&lt;/p&gt;
+&lt;p&gt;For the really lazy, here is my code for updating all plugins, using the
+wp-cli scripts. It uses sudo, so make sure you know what you are doing.
+You may also have to tweak how locate finds things, as by default it
+won't show you files you can't access.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="c"&gt;# Just find all installs and try and run tools in them&lt;/span&gt;
+&lt;span class="c"&gt;# find wp-config.php files&lt;/span&gt;
+&lt;span class="nv"&gt;SAVEIFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$IFS&lt;/span&gt;
+&lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -en &lt;span class="s2"&gt;&amp;quot;\n\b&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php&lt;span class="nv"&gt;$)&lt;/span&gt;
+
+&lt;span class="k"&gt;for &lt;/span&gt;conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="c"&gt;# goto root wp dir as user&lt;/span&gt;
+    &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;$conffile&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;;
+    &lt;span class="nb"&gt;pushd&lt;/span&gt; &lt;span class="nv"&gt;$wpdir&lt;/span&gt; &amp;gt; /dev/null &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt;
+
+&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking $wpdir...&amp;quot;&lt;/span&gt;
+
+    &lt;span class="c"&gt;## Check we actually have a wordpress install&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;wp-includes/version.php&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; ! -f &lt;span class="nv"&gt;$conffile&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;
+        &lt;span class="k"&gt;then &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$wpdir doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;continue&lt;/span&gt;
+&lt;span class="k"&gt;    fi&lt;/span&gt;
+
+    &lt;span class="c"&gt;# Get username for tool&lt;/span&gt;
+    &lt;span class="nv"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;stat -c %U &lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+
+    &lt;span class="c"&gt;# run tool commands&lt;/span&gt;
+    sudo -u &lt;span class="nv"&gt;$username&lt;/span&gt; -- wp plugin update-all
+
+    &lt;span class="nb"&gt;popd&lt;/span&gt; &amp;gt; /dev/null
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="security"></category><category term="updates"></category><category term="wordpress"></category><category term="wp-cli"></category></entry><entry><title>Submitting Empty Checkboxes when in Array</title><link href="http://tim.purewhite.id.au/2012/09/submitting-empty-checkboxes-when-in-array/" rel="alternate"></link><updated>2012-09-11T15:20:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2012-09-11:2012/09/submitting-empty-checkboxes-when-in-array/</id><summary type="html">&lt;p&gt;In HTML, we often use a nice feature for POSTing a form, or submitting a
+form, where we have lots of items the "same". In the Grase Hotspot
+project, we have groups for example, and we can dynamically add and
+delete groups, but need a complete form for each group with it's
+settings. So we use an "array" to submit the values. Simple put, we have
+a number of \&amp;lt;inputs&gt; with the same name, but with square brackets on
+the end. i.e. \&amp;lt;input type="text" name="groupprice[]"/&gt;, and we have
+multiples of these. Thanks to page ordering, we can have a number of
+different arrays as well, and can associate all the group values
+together thanks to their positions in each array.&lt;/p&gt;
+&lt;p&gt;However, this breaks when we are submitting checkboxes, because
+unchecked checkboxes won't submit. When unchecked, they are a form
+element that isn't successful, and only successful form elements are
+submitted. That's fine, except we are relying on the array behaviour to
+match elements together, and when a checkbox isn't submitted, it doesn't
+even take up an array position, it's just absent, which means all
+following checkboxes on the page are now in the wrong spot in the array
+and not matched with the other arrays.&lt;/p&gt;
+&lt;p&gt;So normally when we submit input fields and some items have been left
+blank, they still consume a spot in the array, like so.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(4) {&lt;/span&gt;
+&lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(0) &amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[2]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(0) &amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[3]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 4&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;However, the checkboxes (which have a value on On normally when
+checked), would appear like so (with Item numbers instead of "On" for
+clarity)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(2) {&lt;/span&gt;
+&lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
+&lt;span class="x"&gt;string(6) &amp;quot;Item 4&amp;quot;&lt;/span&gt;
+&lt;span class="x"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There are solutions out there, however none work very well for dynamic
+adding and creating "groups" of data, including checkboxes. Given that
+the dynamic creation and deletion of those groups is with Javascript,
+I've turned to a small javascript snippit to get it working. Hopefully
+I'll find a nice way to have it fallback when javascript is disabled.&lt;/p&gt;
+&lt;p&gt;I found the solution I'm using at &lt;a href="http://www.dwright.us/?p=472"&gt;http://www.dwright.us/?p=472&lt;/a&gt; however
+couldn't get it working well. A bit of fiddling and working on the
+solution in the comments and I came up with the following snippit that
+works nicely for me.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+    &lt;span class="c1"&gt;// do when submit is pressed&lt;/span&gt;
+    &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;form&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;submit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+        &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;input:checkbox:not(:checked)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;each&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+                &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;before&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;input&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;class&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;_temp&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;hidden&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;attr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)));&lt;/span&gt;
+                &lt;span class="c1"&gt;// .val(&amp;#39;off&amp;#39;));&lt;/span&gt;
+        &lt;span class="p"&gt;});&lt;/span&gt;  
+    &lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;One of the main things I changed (once I made it work) was not having it
+set the "extra" inputs to the value of "Off", but leaving them as an
+empty value. This is because in my code I run the incoming arrays
+through array_filter which removes all the empty ones (and maintains
+the array indexes so the order and position is still there).&lt;/p&gt;</summary><category term="array"></category><category term="checkboxes"></category><category term="empty"></category><category term="HTML"></category><category term="submit"></category></entry></feed>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/coding-technical.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2011-04-03T01:45:00+10:00</updated><entry><title>Coova Chilli &amp; FreeRadius Reply-Message</title><link href="http://tim.purewhite.id.au/2011/04/coova-chilli-freeradius-reply-message/" rel="alternate"></link><updated>2011-04-03T01:45:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-03:2011/04/coova-chilli-freeradius-reply-message/</id><summary type="html">&lt;p&gt;I was going to post this on the Grase Hotspot site, but will post it
+here in depth and just the basics on the hotspot site.&lt;/p&gt;
+&lt;p&gt;Previously I researched this problem and found very little, it would
+seem since my last search more material has become available that has
+assisted. In particular
+[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
+][]&lt;br /&gt;
+The basic problem is this. Using CoovaChilli, when a login failed for
+some reason, we usually didn't get an error message. If your data quota
+had been used up, then maybe you'd get "Your maximum never usage time
+has been reached" which for most people was confusing. An expired
+account may give you the error "Password Has Expired". However, any
+other reason for a login failure and you'd usually not get a message.&lt;/p&gt;
+&lt;p&gt;At first, you may want to blame Coova Chilli. After all, it is the piece
+of software sending back the login failed status, and if using the JSON
+interface, it would send back the login failure message. However, good
+CoovaChilli is just relaying the message it gets from the Radius server.
+So we next turn our attention to FreeRadius.&lt;/p&gt;
+&lt;p&gt;The first place you may be tempted to look is in
+/etc/freeradius/modules/expiration&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;expiration&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;#&lt;/span&gt;
+        &lt;span class="c1"&gt;# The Reply-Message which will be sent back in case the&lt;/span&gt;
+        &lt;span class="c1"&gt;# account has expired. Dynamic substitution is supported&lt;/span&gt;
+        &lt;span class="c1"&gt;#&lt;/span&gt;
+        &lt;span class="na"&gt;reply-message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Password Has Expired\r\n&amp;quot; &lt;/span&gt;
+&lt;span class="s"&gt;        #reply-message = &amp;quot;Your account has expired, %{User-Name}\r\n&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This file gives you false hope. You see the option reply-message and
+think, if the expiration has a reply-message, then surely I can just
+drop a similar thing in at other places. However, what you don't realise
+is that the reply-message is an option for the expiration module.
+Internally the module has settings it understands, and other modules
+won't understand those same settings! There is no setting for the sql
+modules, or the sections that handle counting remaining quota. Putting
+this reply-message option in other places will just cause FreeRadius to
+fail to start.&lt;/p&gt;
+&lt;p&gt;By now, if you have read the link above, you may have some better
+understanding of what to do. A good place to start reading for better
+understanding of how freeradius reads it's config files is &lt;code&gt;man unlang&lt;/code&gt;.
+unlang is the "language" used by the config files, and reading it and
+some of the accompanying documents with freeradius will enlighten you to
+how things work.&lt;/p&gt;
+&lt;p&gt;I'll give you a large block of finished code, so you can start to
+understand where all this fits together. This is an exceprt of
+/etc/freeradius/sites-available/default with comments stripped out.
+Please don't just copy and paste this, it's to give better understanding
+of where the parts go, as many examples don't give you the context of
+the changes needed.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;authorize&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;preprocess&lt;/span&gt;
+    &lt;span class="err"&gt;chap&lt;/span&gt;
+    &lt;span class="err"&gt;mschap&lt;/span&gt;
+    &lt;span class="err"&gt;suffix&lt;/span&gt;
+    &lt;span class="err"&gt;eap&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;return&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    sql{&lt;/span&gt;
+&lt;span class="s"&gt;        notfound = 1&lt;/span&gt;
+&lt;span class="s"&gt;        reject = 2&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(notfound){&lt;/span&gt;
+&lt;span class="s"&gt;        update reply {&lt;/span&gt;
+&lt;span class="s"&gt;            Reply-Message := &amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+    &lt;span class="err"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+
+    &lt;span class="err"&gt;expiration{&lt;/span&gt;
+        &lt;span class="na"&gt;userlock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(userlock){&lt;/span&gt;
+&lt;span class="s"&gt;            update reply {&lt;/span&gt;
+&lt;span class="s"&gt;                    Reply-Message := &amp;quot;Your account has expired, %{User-Name}&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;            }&lt;/span&gt;
+&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+    &lt;span class="err"&gt;logintime&lt;/span&gt;
+
+    &lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+        &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(reject){&lt;/span&gt;
+&lt;span class="s"&gt;            update reply {&lt;/span&gt;
+&lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;            }&lt;/span&gt;
+&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+
+    &lt;span class="err"&gt;noresetcounter{&lt;/span&gt;
+        &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="s"&gt;    if(reject){&lt;/span&gt;
+&lt;span class="s"&gt;            update reply {&lt;/span&gt;
+&lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your time limit&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;            }&lt;/span&gt;
+&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+
+    &lt;span class="err"&gt;pap&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+
+&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;sql&lt;/span&gt;
+    &lt;span class="err"&gt;exec&lt;/span&gt;
+    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+            &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I'll start with the part that will help explain the best.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+    &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+                &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;        }&lt;/span&gt;
+&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When I first saw this code, I thought it was setting a variable reject
+to the value of 1. However it's not quite like that. See all modules
+have return codes. For example, an ok code, or a reject or fail code.
+However, that code is more than just a code, it also has an action with
+it. For example, a reject code has the action, reject. Rather simple.
+What the reject action does, is stop processing this section and return
+a reject. What the 'reject = 1' does, is says that if this module
+returns a reject, we set the action to a 1, which is setting it's
+priority to 1, so that we can process more modules and get their error
+codes too, and give them priorities, so the highest priority code wins.
+This would let us do complex things for example, letting us exceed our
+bandwidth limit as long as our time limit is also exceeded. Given that
+we can have priorities from 1 to 99999 we can actually do really complex
+things.&lt;/p&gt;
+&lt;p&gt;So what this first bit of code is doing then, is preventing a reject
+from being sent straight away, so we can do more processing. And the
+next bit of processing we do is test for that reject. (You may think
+that this test could catch an earlier reject, but only if an earlier
+reject also had it's priority set to something otherwise it's default
+action would have been to return a reject straight away.) If this reject
+exists, then the module noresetBytecounter must have triggered it. So we
+update the reply package that FreeRadius is going to return, and set the
+Reply-Message to an appropriate error message given then module that
+caused the failure. We then send that reject without processing more
+modules with the "ok = reject" line. We could do other things like
+sending an 'ok = return' which would clear the reject and return an ok.
+You can also do a plain "ok" but I'm not 100% sure what that does, it
+would appear to clear the reject and replace it with an ok code and
+continue processing, where as the 'ok=return' doesn't continue
+processing that section.&lt;/p&gt;
+&lt;p&gt;Most of the rest of that big piece of code is similar pieces of code,
+although some have different codes, like userlock. The other important
+piece of code sets a default message for Access-Reject.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;sql&lt;/span&gt;
+    &lt;span class="err"&gt;exec&lt;/span&gt;
+    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+                    &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;                }&lt;/span&gt;
+&lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
+&lt;span class="s"&gt;    }&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It's rather easy to see what is happening here. In the post-auth section
+(same file as the rest of the stuff), we match the Reject packets. We
+then update the reply, with a generic error message. Because of the
+operators (= .vs. :=) it will only add this Reply-Message if there is no
+other Reply-Message already set in the Access-Reject. We used := before
+to replace any Reply-Message already existing, so for example we could
+override the cryptic message sthe the sql_counter module sends back. We
+could also use += if we want to "Append" Reply-Messages, allowing
+multiple messages to be sent back. The "attr_filter.access_reject"
+line is nothing to worry about, it just filters the return Access-Reject
+packet to ensure only allowed attributes are sent back. As Reply-Message
+is allowed, it isn't stripped out.&lt;/p&gt;
+&lt;p&gt;Hopefully that gives better understanding to what code is needed to
+change/set the Reply-Message in Access-Reject packets. It could also be
+used to send back messages with Access-Accept packets. The great thing
+is that there are a good number of return codes, which allow you to make
+some really complex changes to how the data flows. If you have read the
+link at the start, you should by now start to realise how powerful
+unlang is. Not only can you check return codes, you can also check parts
+of the packet that have been "constructed". You can also change much
+more than the Reply-Message, you can change if it's access is accepted
+or rejected, what bandwidth controls are sent back, etc etc! For
+example, and ISP can allow login even with incorrect password, yet move
+that client to a different ip range that is setup for redirection to an
+internal portal to assist with resetting the password.
+(&lt;a href="http://www.easyzonecorp.net/network/view.php?ID=1042"&gt;http://www.easyzonecorp.net/network/view.php?ID=1042&lt;/a&gt;). Or the link
+from the start, they are using it so that when a datalimit is reached,
+FreeRadius sends back a slower speed, i.e. throttling them once their
+quota is used without disconnecting them! When you realise what power
+RADIUS has, you understand why it's used by isp's and the like!&lt;/p&gt;
+&lt;p&gt;Keywords to assist people in finding this information. Radius,
+FreeRadius, Access-Reject, Reply-Message, CoovaChilli, ChilliSpot,
+Hotspot, sql reply-message reject&lt;/p&gt;
+&lt;p&gt;[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
+ ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/p&gt;</summary><category term="Access-Reject"></category><category term="CoovaChili"></category><category term="FreeRadius"></category><category term="Hotspot"></category><category term="Reply-Message"></category></entry><entry><title>GRASE Hotspot</title><link href="http://tim.purewhite.id.au/2010/12/grase-hotspot/" rel="alternate"></link><updated>2010-12-14T21:55:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-12-14:2010/12/grase-hotspot/</id><summary type="html">&lt;p&gt;3 years in the making, and finally I am releasing the code for the GRASE
+Hotspot. I've always planned on releasing the code, but had a lot things
+I wanted done before the code was released, in particular making it easy
+to install, and modular, as well as more secure than it previously was
+(in particular the remote access).&lt;/p&gt;
+&lt;p&gt;For those that don't know much about the hotspot system I've been
+working on, it's a simple captive portal system, that allows an
+organisation/company to provide controlled internet access to users.
+When a user tries to use a computer on the network (wireless or wired),
+the first time they attempt to access a website, it redirects them to a
+login screen. After a sucessful login they can then use the internet
+until their time or data allowance is exhausted. The main part of the
+GRASE Hotspot is the admin interface I have written. This provides a
+simple interface for adding and managing users, as well as monitoring
+usage and websites visited.&lt;/p&gt;
+&lt;p&gt;The rest of the Hotspot system is what we call glue layers. This is the
+process of connecting individual components together, in this case,
+CoovaChilli, FreeRadius, MySQL, Squid and a few other components. Most
+of the Hotspot solutions I researched required a lot of manual work
+gluing the components together. All this hard work is taken care of
+using the GRASE Hotspot.&lt;/p&gt;
+&lt;p&gt;Currently the best way to get started using the system, is to download
+the grase-repo deb package from
+&lt;a href="http://hotspot.purewhite.id.au/apt/pool/main/g/grase-repo/"&gt;http://hotspot.purewhite.id.au/apt/pool/main/g/grase-repo/&lt;/a&gt; which will
+setup the apt repository. Then head over to
+&lt;a href="http://hotspot.purewhite.id.au/wiki/Documentation/Packages"&gt;http://hotspot.purewhite.id.au/wiki/Documentation/Packages&lt;/a&gt; to get an
+idea of some of the other packages that can be installed to get started.
+More information will appear over time at the main wiki page.&lt;/p&gt;
+&lt;p&gt;Some old screenshots (will be updated soon) and support forums are over
+at &lt;a href="http://sf.net/projects/grase/"&gt;SourceForge.&lt;/a&gt;&lt;/p&gt;</summary><category term="CoovaChilli"></category><category term="FreeRadius"></category><category term="GRASE"></category><category term="GRASE Hotspot"></category><category term="Hotspot"></category></entry><entry><title>Handbrake Encoding Cluster</title><link href="http://tim.purewhite.id.au/2010/09/handbrake-encoding-cluster/" rel="alternate"></link><updated>2010-09-09T18:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-09-09:2010/09/handbrake-encoding-cluster/</id><summary type="html">&lt;p&gt;Recently I've been given the task of putting a DVD collection on to the
+computer (for backup purposes, so that the originals can be locked away
+and not damaged by little hands). Having used &lt;a href="http://handbrake.fr"&gt;Handbrake&lt;/a&gt; before to
+convert DVD's to H.264 videos, I figured I'd be able to use it again.
+But for such a large task, it makes sense to have many computers doing
+the encoding. Unlike dvd::rip, Handbrake doesn't have a distributed
+cluster feature.&lt;/p&gt;
+&lt;p&gt;I found a possible solution in the Handbrake Forums, using ppss and some
+scripts. &lt;a href="http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504"&gt;http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Unfortunately, I wasn't able to get PPSS working how I wanted (or at
+all). However, it did provide me with a transcode bash script that
+assisted with getting the HandbrakeCLI options right, in particular
+splitting TV episodes into individual episodes.&lt;/p&gt;
+&lt;p&gt;I continued looking for ways to do this, knowing I'd previously used
+some clustering script many years ago, and finally found &lt;a href="http://gearman.org/"&gt;gearman&lt;/a&gt;.&lt;br /&gt;
+At first glace, gearman seems to be perfect, except digging deeper you
+discover it's designed to be called from within applications and not so
+much as a command line "queue". Thankfully I discovered a &lt;a href="http://stefaanlippens.net/gearman_setting_worker_process_arguments_through_xargs"&gt;post&lt;/a&gt;
+explaining how to make gearman more command line friendly using xargs.
+(Which also helped me finally understand how xargs work!) So with a bit
+of scripting I had myself a number of small shell scripts, a gearmand
+server, and a working cluster.&lt;/p&gt;
+&lt;p&gt;Firstly, I setup some NFS mounts on all the computers involved.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_rip&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_encode&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For me, I had 2 mounts as I wanted the DVD_rip folder to be on a local
+computer, and the DVD_encode folder to be on a server that all the
+finished files needed to be on.&lt;/p&gt;
+&lt;p&gt;I then created a simple &lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/rip"&gt;bash script&lt;/a&gt; for ripping the disks (with
+error handling). I can run this script in the /mnt/DVD_rip folder, give
+it one argument (the DVD name) and it'll rip the disk and attempt to
+retry any sectors that have errors. The 'lsdvd' is so that css keys are
+loaded so you can read encrypted DVD's. You can also stop and restart
+the ripping process at any time without loosing what has been ripped
+successfully. NB: It doesn't remove the CSS encryption so you will need
+libdvdcss on all computers doing encoding.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lsdvd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.iso&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.log&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;My next script (&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/submitjob.sh"&gt;submitjob.sh&lt;/a&gt;) is another 1 liner, it submits the job
+to gearmand. It simply takes the name of the file to encode (iso or a
+video file) and optionally an attribute that ether tells our transcoding
+script to encode all the titles (split episodes) or which title to
+encode. Without this attribute it will scan for the longest title and
+only encode that.&lt;/p&gt;
+&lt;p&gt;My next script (&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/startworker.sh"&gt;startworker.sh&lt;/a&gt;) starts the gearman worker processes.
+I run it on each machine in the cluster that I want processing videos. I
+usually run it in a screen session as when it's encoding it outputs some
+information through this script, the rest goes into log files. NB: The
+script has the hostname of the gearmand server in it as does the
+&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/submitjob.sh"&gt;submitjob.sh&lt;/a&gt; script.&lt;/p&gt;
+&lt;p&gt;Our last script (&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster/transcode2mkv.sh"&gt;transcode2mkv.sh&lt;/a&gt;) is the actually transcoding
+script. This is what the gearman worker calls to do the encoding. I got
+this script from the method that uses PPSS at
+&lt;a href="http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504"&gt;http://forum.handbrake.fr/viewtopic.php?f=6&amp;amp;t=17504&lt;/a&gt;. I then modified
+it to encode to mkv files instead of mp4, and I changed some of the
+default encoding options, as well as how it handled the titles (i.e.
+selecting all, or individual ones), and how it handled selection of
+audio and subtitle tracks (it selected them all, I wanted it to just
+select the English audio, and all the subtitles). I also added logging
+so that it would update a cluster log when it started and stopped
+encoding (with timestamps), and to log the progress output to one
+logfile, and the verbose information to another logfile (so I could
+easily tail the logfile to get the current progress).&lt;br /&gt;
+Initially for doing TV episodes, this script would select all the
+titles and encode each one to it's own file. I changed it to just select
+the 4 I wanted, and then later changed it so I could select individual
+titles. The reason I changed to selecting individual titles was that
+some of my encoding machines are faster than others, this way I didn't
+have 3 machines sitting idle while one machine was still on the first
+title of the disk, instead they each took a title and the disk was
+processed a lot quicker.&lt;/p&gt;
+&lt;p&gt;All the files can be found at
+&lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster"&gt;http://tim.purewhite.id.au/code/handbrake-cluster&lt;/a&gt; or checked out with
+bzr.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;bzr&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//tim.purewhite.id.au/code/handbrake-cluster/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>

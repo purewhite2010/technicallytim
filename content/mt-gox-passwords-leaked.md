@@ -1,6 +1,6 @@
 Title: Mt Gox Passwords Leaked
 Date: 2011-06-20 14:37
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: bitcoin, crack, database, leaked, mt gox, password
 Slug: mt-gox-passwords-leaked

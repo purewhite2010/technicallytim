@@ -1,6 +1,6 @@
 Title: Disable IPv6 in Transmission BT
 Date: 2011-06-10 15:59
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: ipv6, torrent, transmission, tunnel
 Slug: disable-ipv6-in-transmission-bt

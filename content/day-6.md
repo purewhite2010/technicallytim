@@ -1,6 +1,6 @@
 Title: Day 6
 Date: 2011-08-22 16:53
-Author: tim
+Author: Tim White
 Category: Blog, projectX
 Slug: day-6
 

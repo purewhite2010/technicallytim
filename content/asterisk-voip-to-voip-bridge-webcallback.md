@@ -1,6 +1,6 @@
 Title: Asterisk Voip to Voip "Bridge" (Webcallback)
 Date: 2010-10-29 06:35
-Author: tim
+Author: Tim White
 Category: Technical
 Tags: asterisk, bridge, callback, sip, sip to sip, voip, voip to voip, webcallback
 Slug: asterisk-voip-to-voip-bridge-webcallback

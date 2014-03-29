@@ -1,6 +1,6 @@
 Title: When did 'Linux' start moving away from it's simplicity?
 Date: 2012-05-08 19:46
-Author: tim
+Author: Tim White
 Category: Blog
 Tags: accountservice, accountsservice, dbus, Gnome3, Linux, simplicity, unix
 Slug: when-did-linux-start-moving-away-from-its-simplicity

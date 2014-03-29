@@ -1,6 +1,6 @@
 Title: Brother HL-2140 Series Test/Information Page
 Date: 2011-03-18 15:37
-Author: tim
+Author: Tim White
 Category: Technical
 Tags: brother, hl2140, Printer
 Slug: brother-hl-2140-series-testinformation-page

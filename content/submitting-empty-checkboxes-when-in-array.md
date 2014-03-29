@@ -1,6 +1,6 @@
 Title: Submitting Empty Checkboxes when in Array
 Date: 2012-09-11 15:20
-Author: tim
+Author: Tim White
 Category: Blog, Coding
 Tags: array, checkboxes, empty, HTML, submit
 Slug: submitting-empty-checkboxes-when-in-array

@@ -1,6 +1,6 @@
 Title: Coova Chilli & FreeRadius Reply-Message
 Date: 2011-04-03 01:45
-Author: tim
+Author: Tim White
 Category: Coding, Technical
 Tags: Access-Reject, CoovaChili, FreeRadius, Hotspot, Reply-Message
 Slug: coova-chilli-freeradius-reply-message

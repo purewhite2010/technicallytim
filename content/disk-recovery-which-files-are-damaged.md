@@ -1,6 +1,6 @@
 Title: Disk recovery - Which files are damaged?
 Date: 2011-04-19 09:40
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: damaged, fat32, recovery, sector
 Slug: disk-recovery-which-files-are-damaged

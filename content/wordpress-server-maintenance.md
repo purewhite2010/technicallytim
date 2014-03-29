@@ -1,6 +1,6 @@
 Title: Wordpress Server Maintenance
 Date: 2013-04-25 14:00
-Author: tim
+Author: Tim White
 Category: Blog, Coding
 Tags: security, updates, wordpress, wp-cli
 Slug: wordpress-server-maintenance

@@ -1,6 +1,6 @@
 Title: "The Ultimate Steal" is right
 Date: 2011-06-02 14:17
-Author: tim
+Author: Tim White
 Category: Blog
 Tags: digital river, micro$oft, microsoft, steal
 Slug: the-ultimate-steal-is-right

@@ -1,6 +1,6 @@
 Title: Internet Reception
 Date: 2010-10-27 10:32
-Author: tim
+Author: Tim White
 Category: Technical
 Tags: 3g9wb, modem, nextg
 Slug: internet-reception

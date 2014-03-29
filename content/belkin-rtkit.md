@@ -1,6 +1,6 @@
 Title: Belkin? Rtkit?
 Date: 2011-11-05 12:10
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: backwards ip, belkin, reverse ip, rtkit
 Slug: belkin-rtkit

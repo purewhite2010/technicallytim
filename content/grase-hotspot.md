@@ -1,6 +1,6 @@
 Title: GRASE Hotspot
 Date: 2010-12-14 21:55
-Author: tim
+Author: Tim White
 Category: Coding, Technical
 Tags: CoovaChilli, FreeRadius, GRASE, GRASE Hotspot, Hotspot
 Slug: grase-hotspot

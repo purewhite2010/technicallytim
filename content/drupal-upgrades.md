@@ -1,6 +1,6 @@
 Title: Drupal Upgrades
 Date: 2011-06-10 16:42
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: drupal, upgrades
 Slug: drupal-upgrades

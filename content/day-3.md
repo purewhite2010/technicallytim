@@ -1,6 +1,6 @@
 Title: Day 3
 Date: 2011-08-19 12:15
-Author: tim
+Author: Tim White
 Category: Blog, projectX
 Tags: Apple, Development, iOS, iPhone, Mac, MacBook, OS X, project, XCode
 Slug: day-3

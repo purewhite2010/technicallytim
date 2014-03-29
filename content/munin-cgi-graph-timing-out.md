@@ -1,6 +1,6 @@
 Title: Munin cgi graph timing out
 Date: 2011-09-01 11:50
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: ipcrm, ipcs, munin, munin-cgi-graph, semaphore, timeout
 Slug: munin-cgi-graph-timing-out

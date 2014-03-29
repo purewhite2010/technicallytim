@@ -1,6 +1,6 @@
 Title: Google+ (Google's Social Network)
 Date: 2011-07-15 10:57
-Author: tim
+Author: Tim White
 Category: Blog
 Tags: facebook, google+, googleplus, invites, social network
 Slug: google-googles-social-network

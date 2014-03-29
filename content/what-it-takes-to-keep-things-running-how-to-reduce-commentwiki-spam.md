@@ -1,6 +1,6 @@
 Title: What it takes to keep things running. (How to reduce comment/wiki spam)
 Date: 2011-04-05 22:13
-Author: tim
+Author: Tim White
 Category: Blog
 Tags: password, project honey pot, pwdhash, security, spam
 Slug: what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam

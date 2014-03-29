@@ -1,6 +1,6 @@
 Title: Why we need native IPv6
 Date: 2011-06-10 12:12
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: ipv6, ping, sixxs
 Slug: why-we-need-native-ipv6

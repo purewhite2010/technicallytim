@@ -1,6 +1,6 @@
 Title: Are mobile Providers Ripping Us Off?
 Date: 2011-04-08 18:17
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: Cap Plan, Comparison, Exetel, iinet, Mobile, Optus, Pennytel, Phone, Post Paid, Pre Paid, Provider, Telstra, Virgin, voip
 Slug: are-mobile-providers-ripping-us-off

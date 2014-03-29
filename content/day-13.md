@@ -1,6 +1,6 @@
 Title: Day 13
 Date: 2011-08-29 13:03
-Author: tim
+Author: Tim White
 Category: Blog, Coding, projectX
 Tags: GPS, iOS, iPhone, XCode
 Slug: day-13

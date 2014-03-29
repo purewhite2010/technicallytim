@@ -1,6 +1,6 @@
 Title: Nginx, PHP-FPM, Wordpress, Super Cache
 Date: 2011-10-24 11:37
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: Nginx, php-fpm, secure, supercache, try_files, wordpress
 Slug: nginx-php-fpm-wordpress-super-cache

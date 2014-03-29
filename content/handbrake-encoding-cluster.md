@@ -1,6 +1,6 @@
 Title: Handbrake Encoding Cluster
 Date: 2010-09-09 18:18
-Author: tim
+Author: Tim White
 Category: Coding, Technical
 Tags: bzr, cluster, code, distributed, encode, encoding, gearman, handbrake, handbrakecli, script, transcode
 Slug: handbrake-encoding-cluster

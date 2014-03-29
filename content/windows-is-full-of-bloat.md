@@ -1,6 +1,6 @@
 Title: "Windows" is full of bloat
 Date: 2013-05-18 17:18
-Author: tim
+Author: Tim White
 Category: Blog
 Tags: bloat, windows
 Slug: windows-is-full-of-bloat

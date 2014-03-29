@@ -1,6 +1,6 @@
 Title: Gmail account hacked :(
 Date: 2011-08-04 11:28
-Author: tim
+Author: Tim White
 Category: Blog, Technical
 Tags: gmail, hacked
 Slug: gmail-account-hacked

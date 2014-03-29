@@ -1,6 +1,6 @@
 Title: Remote Scan to PDF
 Date: 2011-04-20 16:42
-Author: tim
+Author: Tim White
 Category: Blog, Coding, Technical
 Tags: code, pdf, php, scan2pdf, scanner, scanning
 Slug: remote-scan-to-pdf

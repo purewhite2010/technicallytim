@@ -5,7 +5,7 @@ Category: Blog
 Tags: wordpress, pelican
 Slug: wordpress-to-pelican
 
-It's been a while since I last blogged. Since then, I've started a full time job
+It's been awhile since I last blogged. Since then, I've started a full time job
 as a Systems Administrator. This means I have less time for maintaining my own
 servers. So I've finally taken the plunge migrating some of the more static
 sites to static. For example this Technical blog will now be a static site. 
@@ -18,7 +18,7 @@ it's just running a webserver and no web application.
 I believe it results in blogs that are more focused on content than on the web
 application that displays the content.
 
-I've choosen to use [Pelican](https://github.com/getpelican/pelican), mostly
+I've chosen to use [Pelican](https://github.com/getpelican/pelican), mostly
 because I've enjoyed learning Python over the last year, and this gives me 
 another excuse to play with some Python. I'm also more comfortable in Python than
 some of the other options so this allows me to hack away on the code if I want to.

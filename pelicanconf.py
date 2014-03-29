@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-THEME = "/home/tim/pelican-themes/pelican-sundown"
+THEME = "pelican-sundown"
 
 PLUGIN_PATH = '/home/tim/pelican-plugins/'
 #PLUGINS = ['assets']

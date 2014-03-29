@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 THEME = "/home/tim/pelican-themes/pelican-sundown"
 
 PLUGIN_PATH = '/home/tim/pelican-plugins/'
-PLUGINS = ['assets', 'sitemap']
+#PLUGINS = ['assets']
 
 DISQUS_SITENAME = 'technicallytim.disqus.com'
 
@@ -54,3 +54,6 @@ DEFAULT_PAGINATION = 10
 PIWIK_URL = 'piwik.purewhite.id.au'
 PIWIK_SITE_ID = 4 
 
+
+#STATIC_PATHS = ['images', 'extra/CNAME']
+#EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}

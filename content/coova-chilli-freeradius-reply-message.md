@@ -11,8 +11,8 @@ here in depth and just the basics on the hotspot site.
 Previously I researched this problem and found very little, it would
 seem since my last search more material has become available that has
 assisted. In particular
-[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html  
-][]  
+<http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html>
+  
 The basic problem is this. Using CoovaChilli, when a login failed for
 some reason, we usually didn't get an error message. If your data quota
 had been used up, then maybe you'd get "Your maximum never usage time

@@ -96,7 +96,7 @@ nothing preventing you having multiple master passwords ether, just to
 make it even more secure!
 
   [GRASE Hotspot]: http://hotspot.purewhite.id.au/
-  [Project Honey Pot]: %20http://www.projecthoneypot.org?rf=93412
+  [Project Honey Pot]: http://www.projecthoneypot.org?rf=93412
     "Project Honey Pot"
   [Repel]: http://repel.in-progress.com/
   [Wordpress Plugin]: http://wordpress.org/extend/plugins/httpbl/

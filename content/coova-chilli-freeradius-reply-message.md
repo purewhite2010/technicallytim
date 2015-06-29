@@ -81,14 +81,14 @@ the changes needed.
             update reply {
                 Reply-Message := "Login Failed. Please check your Username and Password"
             }
-            ok = reject
+            reject
         }
         
         if(reject){
             update reply {
                 Reply-Message := "Login Failed. Please check your Username and Password"
             }
-            ok = reject
+            reject
         }   
 
 
@@ -99,7 +99,7 @@ the changes needed.
                 update reply {
                         Reply-Message := "Your account has expired, %{User-Name}"
                 }
-                ok = reject
+                reject
         }
         
         logintime
@@ -111,7 +111,7 @@ the changes needed.
                 update reply {
                         Reply-Message := "You have reached your bandwidth limit"
                 }
-                ok = reject
+                reject
         }
 
         
@@ -122,7 +122,7 @@ the changes needed.
                 update reply {
                         Reply-Message := "You have reached your time limit"
                 }
-                ok = reject
+                reject
         }
 
         pap
@@ -149,7 +149,7 @@ I'll start with the part that will help explain the best.
             update reply {
                     Reply-Message := "You have reached your bandwidth limit"
             }
-            ok = reject
+            reject
     }
 
 When I first saw this code, I thought it was setting a variable reject
@@ -177,12 +177,8 @@ exists, then the module noresetBytecounter must have triggered it. So we
 update the reply package that FreeRadius is going to return, and set the
 Reply-Message to an appropriate error message given then module that
 caused the failure. We then send that reject without processing more
-modules with the "ok = reject" line. We could do other things like
-sending an 'ok = return' which would clear the reject and return an ok.
-You can also do a plain "ok" but I'm not 100% sure what that does, it
-would appear to clear the reject and replace it with an ok code and
-continue processing, where as the 'ok=return' doesn't continue
-processing that section.
+modules with the "reject" line. We could do other things like
+sending an 'return' which would clear the reject and return an ok.
 
 Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
@@ -236,6 +232,12 @@ RADIUS has, you understand why it's used by isp's and the like!
 Keywords to assist people in finding this information. Radius,
 FreeRadius, Access-Reject, Reply-Message, CoovaChilli, ChilliSpot,
 Hotspot, sql reply-message reject
+
+<ins>
+The original version of this document had "ok = reject" lines instead of reject
+lines. This happened to work due a bug in Freeradius that has since been fixed.
+The correct line is just a plain reject in the if statements.
+</ins>
 
   [http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html  
  ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html

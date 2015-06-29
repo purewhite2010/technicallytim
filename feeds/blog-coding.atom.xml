@@ -32,20 +32,20 @@ won't show you files you can't access.&lt;/p&gt;
 &lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -en &lt;span class="s2"&gt;&amp;quot;\n\b&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php&lt;span class="nv"&gt;$)&lt;/span&gt;
 
-&lt;span class="k"&gt;for &lt;/span&gt;conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
 &lt;span class="c"&gt;# goto root wp dir as user&lt;/span&gt;
-    &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;$conffile&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;;
+    &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="nb"&gt;pushd&lt;/span&gt; &lt;span class="nv"&gt;$wpdir&lt;/span&gt; &amp;gt; /dev/null &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt;
 
-&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking $wpdir...&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking &lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt;...&amp;quot;&lt;/span&gt;
 
     &lt;span class="c"&gt;## Check we actually have a wordpress install&lt;/span&gt;
 
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;wp-includes/version.php&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; ! -f &lt;span class="nv"&gt;$conffile&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;
-        &lt;span class="k"&gt;then &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$wpdir doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
         &lt;span class="k"&gt;continue&lt;/span&gt;
-&lt;span class="k"&gt;    fi&lt;/span&gt;
+    &lt;span class="k"&gt;fi&lt;/span&gt;
 
     &lt;span class="c"&gt;# Get username for tool&lt;/span&gt;
     &lt;span class="nv"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;stat -c %U &lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;

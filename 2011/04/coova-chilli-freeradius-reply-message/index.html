@@ -53,9 +53,8 @@ here in depth and just the basics on the hotspot site.</p>
 <p>Previously I researched this problem and found very little, it would
 seem since my last search more material has become available that has
 assisted. In particular
-[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html<br />
-][]<br />
-The basic problem is this. Using CoovaChilli, when a login failed for
+<a href="http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html">http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html</a></p>
+<p>The basic problem is this. Using CoovaChilli, when a login failed for
 some reason, we usually didn't get an error message. If your data quota
 had been used up, then maybe you'd get "Your maximum never usage time
 has been reached" which for most people was confusing. An expired
@@ -116,14 +115,14 @@ the changes needed.</p>
 <span class="s">        update reply {</span>
 <span class="s">            Reply-Message := &quot;Login Failed. Please check your Username and Password&quot;</span>
 <span class="s">        }</span>
-<span class="s">        ok = reject</span>
+<span class="s">        reject</span>
 <span class="s">    }</span>
 
     <span class="err">if(reject){</span>
         <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span>
             <span class="na">Reply-Message :</span><span class="o">=</span> <span class="s">&quot;Login Failed. Please check your Username and Password&quot;</span>
 <span class="s">        }</span>
-<span class="s">        ok = reject</span>
+<span class="s">        reject</span>
 <span class="s">    }</span>
 
 
@@ -134,7 +133,7 @@ the changes needed.</p>
 <span class="s">            update reply {</span>
 <span class="s">                    Reply-Message := &quot;Your account has expired, %{User-Name}&quot;</span>
 <span class="s">            }</span>
-<span class="s">            ok = reject</span>
+<span class="s">            reject</span>
 <span class="s">    }</span>
 
     <span class="err">logintime</span>
@@ -146,7 +145,7 @@ the changes needed.</p>
 <span class="s">            update reply {</span>
 <span class="s">                    Reply-Message := &quot;You have reached your bandwidth limit&quot;</span>
 <span class="s">            }</span>
-<span class="s">            ok = reject</span>
+<span class="s">            reject</span>
 <span class="s">    }</span>
 
 
@@ -157,7 +156,7 @@ the changes needed.</p>
 <span class="s">            update reply {</span>
 <span class="s">                    Reply-Message := &quot;You have reached your time limit&quot;</span>
 <span class="s">            }</span>
-<span class="s">            ok = reject</span>
+<span class="s">            reject</span>
 <span class="s">    }</span>
 
     <span class="err">pap</span>
@@ -184,7 +183,7 @@ the changes needed.</p>
         <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span>
                 <span class="na">Reply-Message :</span><span class="o">=</span> <span class="s">&quot;You have reached your bandwidth limit&quot;</span>
 <span class="s">        }</span>
-<span class="s">        ok = reject</span>
+<span class="s">        reject</span>
 <span class="err">}</span>
 </pre></div>
 
@@ -213,12 +212,8 @@ exists, then the module noresetBytecounter must have triggered it. So we
 update the reply package that FreeRadius is going to return, and set the
 Reply-Message to an appropriate error message given then module that
 caused the failure. We then send that reject without processing more
-modules with the "ok = reject" line. We could do other things like
-sending an 'ok = return' which would clear the reject and return an ok.
-You can also do a plain "ok" but I'm not 100% sure what that does, it
-would appear to clear the reject and replace it with an ok code and
-continue processing, where as the 'ok=return' doesn't continue
-processing that section.</p>
+modules with the "reject" line. We could do other things like
+sending an 'return' which would clear the reject and return an ok.</p>
 <p>Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
 piece of code sets a default message for Access-Reject.</p>
@@ -268,24 +263,23 @@ RADIUS has, you understand why it's used by isp's and the like!</p>
 <p>Keywords to assist people in finding this information. Radius,
 FreeRadius, Access-Reject, Reply-Message, CoovaChilli, ChilliSpot,
 Hotspot, sql reply-message reject</p>
+<p><ins>
+The original version of this document had "ok = reject" lines instead of reject
+lines. This happened to work due a bug in Freeradius that has since been fixed.
+The correct line is just a plain reject in the if statements.
+</ins></p>
 <p>[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html<br />
  ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html</p>
     </div><!-- /.entry-content -->
-<div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
-        var disqus_identifier = "2011/04/coova-chilli-freeradius-reply-message/";
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<div class="g-comments"
+    data-href = "http://tim.purewhite.id.au/2011/04/coova-chilli-freeradius-reply-message/"
+    data-width = "650"
+    data-first_party_property = "BLOGGER"
+    data-view_type = "FILTERED_POSTMOD">
+</div>
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </article>
 </section>
       </section>
@@ -326,5 +320,6 @@ Hotspot, sql reply-message reject</p>
     piwikTracker.enableLinkTracking();
     } catch( err ) {}
     </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    <a href="https://github.com/purewhite2010/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
   </body>
 </html>

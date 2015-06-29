@@ -210,7 +210,7 @@ these very easily to do more than just connect the 2 calls.</p>
 Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
 should just work.</p>
 <p>After all those edits, restart asterisk.</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">asterisk</span> <span class="n">restart</span>
+<div class="highlight"><pre>sudo /etc/init.d/asterisk restart
 </pre></div>
 
 
@@ -242,9 +242,9 @@ placed in a way that asterisk can't start reading it before the file is
 all there. For this reason, the mv command is recommended and I'll
 demonstrate. (I first copy the file so I can keep a number of pre setup
 files stored).</p>
-<div class="highlight"><pre><span class="n">cp</span> <span class="n">preset1</span><span class="p">.</span><span class="n">call</span> <span class="n">call123</span><span class="p">.</span><span class="n">call</span>
-<span class="n">sudo</span> <span class="n">chown</span> <span class="n">asterisk</span> <span class="n">call123</span><span class="p">.</span><span class="n">call</span>
-<span class="n">sudo</span> <span class="n">mv</span> <span class="n">call123</span><span class="p">.</span><span class="n">call</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">asterisk</span><span class="o">/</span><span class="n">outgoing</span><span class="o">/</span>
+<div class="highlight"><pre>cp preset1.call call123.call
+sudo chown asterisk call123.call
+sudo mv call123.call /var/spool/asterisk/outgoing/
 </pre></div>
 
 
@@ -271,21 +271,15 @@ some SIP ports. A google will reveal more. Try to limit what you open
 though, I've not given any instructions for securing asterisk in this
 post, that also is for your further reading.</p>
     </div><!-- /.entry-content -->
-<div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
-        var disqus_identifier = "2010/10/asterisk-voip-to-voip-bridge-webcallback/";
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<div class="g-comments"
+    data-href = "http://tim.purewhite.id.au/2010/10/asterisk-voip-to-voip-bridge-webcallback/"
+    data-width = "650"
+    data-first_party_property = "BLOGGER"
+    data-view_type = "FILTERED_POSTMOD">
+</div>
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </article>
 </section>
       </section>
@@ -326,5 +320,6 @@ post, that also is for your further reading.</p>
     piwikTracker.enableLinkTracking();
     } catch( err ) {}
     </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    <a href="https://github.com/purewhite2010/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
   </body>
 </html>

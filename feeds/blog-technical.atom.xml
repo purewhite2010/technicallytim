@@ -259,7 +259,7 @@ being a link local address, or a 6to4, or Teredo tunnel[1]. So we just
 make Transmission bind to a link local address and hey presto, no IPv6
 for Transmission!&lt;/p&gt;
 &lt;p&gt;Simply add the following line to the settings.json file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s"&gt;&amp;quot;bind-address-ipv6&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fe80::&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;bind-address-ipv6&amp;quot;: &amp;quot;fe80::&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -273,11 +273,11 @@ pinging every PoP available to us and find the "closest" one, but for
 now, letter the numbers do the talking.&lt;/p&gt;
 &lt;p&gt;I ping the same machine both via IPv6 and via IPv4. Lets see if you can
 work out which is which.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
-&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;698.592&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;712.159&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;814.473&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;34.163&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+rtt min/avg/max/mdev = 698.592/712.159/814.473/34.163 ms
 
-&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
-&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;76.670&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;79.557&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;87.452&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.866&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+10 packets transmitted, 10 received, 0% packet loss
+rtt min/avg/max/mdev = 76.670/79.557/87.452/2.866 ms
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -291,13 +291,13 @@ running both tunnels in parrallel so that if one dies the other is
 working. Hopefully I'll see better IPv6 improvement now. Still, native
 IPv6 would be better.
 &lt;a href="http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/"&gt;http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/&lt;/a&gt;&lt;/ins&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
-&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;235.587&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;267.187&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;382.010&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;45.090&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+rtt min/avg/max/mdev = 235.587/267.187/382.010/45.090 ms
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="ipv6"></category><category term="ping"></category><category term="sixxs"></category></entry><entry><title>Disk recovery - Which files are damaged?</title><link href="http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="alternate"></link><updated>2011-04-19T09:40:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-19:2011/04/disk-recovery-which-files-are-damaged/</id><summary type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
 damaged hard drive.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;inputdevice&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -n /dev/inputdevice rescued.img rescued.log
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;inputdevice&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -r &lt;span class="m"&gt;1&lt;/span&gt; /dev/inputdevice rescued.img rescued.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -340,10 +340,10 @@ over a network isn't that bad. I'm sure it would have been a lot quicker
 had all the files resided on the local machine on  a nice RAID array.&lt;/p&gt;
 &lt;p&gt;So a simplified example&lt;/p&gt;
 &lt;p&gt;copy all files off rescued image (loop mount) to another location&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &amp;gt; tmpfile
+&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- tmpfile rescue.img rescue.log
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;diff&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rescuedfiles&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;damagedfiles&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &amp;gt; damagedfiles
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -352,27 +352,27 @@ which are the ones with damaged sectors. Also, the ddrescue doesn't
 damage the logfile so you can then reverse it using /dev/zero to restore
 the image to it's original recovery state. This won't work with sparse
 files.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;zero&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- /dev/zero rescue.img rescue.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;ins datetime="2011-08-11T21:54:00+00:00"&gt;Or, if you haven't copied the
 files off, then the way suggested in the ddrescue manual looks like
 this. (After getting your disk image)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# mount -o loop rescued.img /mnt/loop&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# mount -o loop rescued.img /mnt/loop
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;md5sum&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;prefill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+$ find /mnt/loop -type f -print0 | xargs -0 md5sum &amp;gt; prefill.md5
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+$ echo -n &amp;quot;BAD SECTOR &amp;quot; &amp;gt; tmpfile
+$ ddrescue --fill=- tmpfile rescue.img rescue.log
 
-&lt;span class="cp"&gt;## You may need to unmount and remount the loop file to prevent any caching interferring.&lt;/span&gt;
-&lt;span class="cp"&gt;# umount /mnt/loop&lt;/span&gt;
-&lt;span class="cp"&gt;# mount -o loop rescued.img /mnt/loop&lt;/span&gt;
+## You may need to unmount and remount the loop file to prevent any caching interferring.
+# umount /mnt/loop
+# mount -o loop rescued.img /mnt/loop
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;md5sum&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;postfill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+$ find /mnt/loop -type f -print0 | xargs -0 md5sum &amp;gt; postfill.md5
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;diff&lt;/span&gt; &lt;span class="n"&gt;prefill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt; &lt;span class="n"&gt;postfill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+$ diff prefill.md5 postfill.md5
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -386,17 +386,17 @@ sectors, then continue as it is possible.&lt;/p&gt;
 &lt;p&gt;First, check that the sector is actually used. This used to be the dstat
 command, but it has since been renamed to blkstat. So we take a sector
 number from the logfile that couldn't be recovered.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="o"&gt;-|&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;
-&lt;span class="mh"&gt;0x0178F200&lt;/span&gt;  &lt;span class="mh"&gt;0x0000D400&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x017A0000&lt;/span&gt;  &lt;span class="mh"&gt;0x00000200&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x2BC488F400&lt;/span&gt;  &lt;span class="mh"&gt;0x00011600&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x2BEEFF0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC5FB0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC6050A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC60E0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC6180A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC6220A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC62B0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat rescue.log &lt;span class="p"&gt;|&lt;/span&gt;grep -&lt;span class="p"&gt;|&lt;/span&gt;head
+0x0178F200  0x0000D400  -
+0x017A0000  0x00000200  -
+0x2BC488F400  0x00011600  -
+0x2BEEFF0A00  0x00020000  -
+0x5AC5FB0A00  0x00020000  -
+0x5AC6050A00  0x00020000  -
+0x5AC60E0A00  0x00020000  -
+0x5AC6180A00  0x00020000  -
+0x5AC6220A00  0x00020000  -
+0x5AC62B0A00  0x00020000  -
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -409,32 +409,32 @@ viewing.&lt;br /&gt;
 I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
-&lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+368541573
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Or do it the long way&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
-&lt;span class="mi"&gt;188693285376&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
-&lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+188693285376
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+368541573
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Ether way, I now know that the sector number is 368541573. Using blkstat
 (formerly dstat) I can verify that the sector is used or not.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;blkstat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
-&lt;span class="nl"&gt;Sector:&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
-&lt;span class="n"&gt;Allocated&lt;/span&gt;
-&lt;span class="nl"&gt;Cluster:&lt;/span&gt; &lt;span class="mi"&gt;5754738&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 368541573
+Sector: 368541573
+Allocated
+Cluster: 5754738
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now a little warning, if you get a sector that looks like this.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;blkstat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;48249&lt;/span&gt;
-&lt;span class="nl"&gt;Sector:&lt;/span&gt; &lt;span class="mi"&gt;48249&lt;/span&gt;
-&lt;span class="n"&gt;Allocated&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 48249
+Sector: 48249
+Allocated &lt;span class="o"&gt;(&lt;/span&gt;Meta&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -452,29 +452,29 @@ you from even seeing some of the files, so hopefully when you have
 damage to the FAT your 2nd FAT will still be good.&lt;/ins&gt;&lt;/p&gt;
 &lt;p&gt;Our next step is to use ifind to find the inode associated with the
 sector. This can take some time and lots of CPU.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt; &lt;span class="n"&gt;ifind&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
-&lt;span class="mi"&gt;5892375559&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;time &lt;/span&gt;ifind rescued.img -d 368541573
+5892375559
 
-&lt;span class="n"&gt;real&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="n"&gt;m52&lt;/span&gt;&lt;span class="mf"&gt;.314&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
-&lt;span class="n"&gt;user&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;m15&lt;/span&gt;&lt;span class="mf"&gt;.280&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
-&lt;span class="n"&gt;sys&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;m2&lt;/span&gt;&lt;span class="mf"&gt;.170&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+real    2m52.314s
+user    1m15.280s
+sys 0m2.170s
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;This finally gives us the inode associated with that file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;istat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;
-&lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;Entry&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;
-&lt;span class="n"&gt;Allocated&lt;/span&gt;
-&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;Attributes&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Archive&lt;/span&gt;
-&lt;span class="nl"&gt;Size:&lt;/span&gt; &lt;span class="mi"&gt;21346140&lt;/span&gt;
-&lt;span class="nl"&gt;Name:&lt;/span&gt; &lt;span class="n"&gt;MICROS&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;istat rescued.img 5892375559&lt;span class="p"&gt;|&lt;/span&gt;head -12
+Directory Entry: 5892375559
+Allocated
+File Attributes: File, Archive
+Size: 21346140
+Name: MICROS~1
 
-&lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;Entry&lt;/span&gt; &lt;span class="n"&gt;Times&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="nl"&gt;Written:&lt;/span&gt;    &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Aug&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;38&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;
-&lt;span class="nl"&gt;Accessed:&lt;/span&gt;   &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt; &lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;
-&lt;span class="nl"&gt;Created:&lt;/span&gt;    &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Aug&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;
+Directory Entry Times:
+Written:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:38 2010
+Accessed:   Wed Apr &lt;span class="m"&gt;13&lt;/span&gt; 00:00:00 2011
+Created:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:39 2010
 
-&lt;span class="nl"&gt;Sectors:&lt;/span&gt;
+Sectors:
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -487,8 +487,8 @@ than 1 or 2 sectors) you'll want to run this command without the grep,
 and save the contents to a file so you can just grep over that file each
 time as it takes a long time to recursively list all the files in a big
 filesystem.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;fls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rFp&lt;/span&gt; &lt;span class="n"&gt;bunsom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;
-&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Office&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Office&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Chart&lt;/span&gt; &lt;span class="n"&gt;Converter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Contents&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;MacOS&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Chart&lt;/span&gt; &lt;span class="n"&gt;Converter&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fls -rFp bunsom.img &lt;span class="p"&gt;|&lt;/span&gt;grep 5892375559
+r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
 &lt;/pre&gt;&lt;/div&gt;
 
 

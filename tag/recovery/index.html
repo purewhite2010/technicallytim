@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Technically Tim - recoveryTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+      <div class="front-title"><a href="http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/">Disk recovery - Which files are damaged?</a></div>
+<p>
+<small>
+<abbr class="published" title="2011-04-19T09:40:00">
+  Tue 19 April 2011
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/damaged">damaged</a>, 
+    <a href="http://tim.purewhite.id.au/tag/fat32">fat32</a>, 
+    <a href="http://tim.purewhite.id.au/tag/recovery">recovery</a>, 
+    <a href="http://tim.purewhite.id.au/tag/sector">sector</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p><ins datetime="2011-08-11T21:49:04+00:00">First, getting an image of the
+damaged hard drive.</p>
+<div class="highlight"><pre><span class="nv">$ </span>ddrescue -n /dev/inputdevice rescued.img rescued.log
+
+<span class="nv">$ </span>ddrescue -r <span class="m">1</span> /dev/inputdevice rescued.img rescued.log
+</pre></div>
+
+
+<p>The first ddrescue command tries to fly through the disk as quickly as
+possible, skipping over sections when an error occurs. This allows me ...</p> 
+      <div class="read-more"><a href="http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/">read more...</a></div>
+      <hr />
+
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    <a href="https://github.com/purewhite2010/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+  </body>
+</html>

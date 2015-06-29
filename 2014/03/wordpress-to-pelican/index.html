@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wordpress to PelicanTechnically Tim</title>
+
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="http://tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="http://tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="http://tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="http://tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Wordpress to Pelican
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2014-03-29T00:00:00">
+  Sat 29 March 2014
+</abbr> | 
+  tags: 
+    <a href="http://tim.purewhite.id.au/tag/wordpress">wordpress</a>, 
+    <a href="http://tim.purewhite.id.au/tag/pelican">pelican</a>, 
+ -- (<a href="http://tim.purewhite.id.au/2014/03/wordpress-to-pelican/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>It's been awhile since I last blogged. Since then, I've started a full time job
+as a Systems Administrator. This means I have less time for maintaining my own
+servers. So I've finally taken the plunge migrating some of the more static
+sites to static. For example this Technical blog will now be a static site. 
+This doesn't mean it won't get updated, this just means that it's generated with
+a static generator instead of being generated dynamically when someone views the
+page. This results in lower server load, as it doesn't need PHP running, or a 
+database. It results in faster page loads. It results in a more secure server as
+it's just running a webserver and no web application.</p>
+<p>I believe it results in blogs that are more focused on content than on the web
+application that displays the content.</p>
+<p>I've chosen to use <a href="https://github.com/getpelican/pelican">Pelican</a>, mostly
+because I've enjoyed learning Python over the last year, and this gives me 
+another excuse to play with some Python. I'm also more comfortable in Python than
+some of the other options so this allows me to hack away on the code if I want to.</p>
+<p>Regarding the current lack of comments on the blog. I'm still thinking of the best
+way to handle that. I may just put a Google+ comments plugin on, as I really
+don't like Disqus. I may also just not put dynamic comments on and use Github issues
+for discussing posts as some others have done.</p>
+    </div><!-- /.entry-content -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<div class="g-comments"
+    data-href = "http://tim.purewhite.id.au/2014/03/wordpress-to-pelican/"
+    data-width = "650"
+    data-first_party_property = "BLOGGER"
+    data-view_type = "FILTERED_POSTMOD">
+</div>
+
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    <a href="https://github.com/purewhite2010/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+  </body>
+</html>

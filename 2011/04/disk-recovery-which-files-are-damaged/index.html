@@ -49,9 +49,9 @@
 </small>
 </p>      <p><ins datetime="2011-08-11T21:49:04+00:00">First, getting an image of the
 damaged hard drive.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">ddrescue</span> <span class="o">-</span><span class="n">n</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">inputdevice</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="n">rescued</span><span class="p">.</span><span class="n">log</span>
+<div class="highlight"><pre><span class="nv">$ </span>ddrescue -n /dev/inputdevice rescued.img rescued.log
 
-<span class="err">$</span> <span class="n">ddrescue</span> <span class="o">-</span><span class="n">r</span> <span class="mi">1</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">inputdevice</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="n">rescued</span><span class="p">.</span><span class="n">log</span>
+<span class="nv">$ </span>ddrescue -r <span class="m">1</span> /dev/inputdevice rescued.img rescued.log
 </pre></div>
 
 
@@ -94,10 +94,10 @@ over a network isn't that bad. I'm sure it would have been a lot quicker
 had all the files resided on the local machine on  a nice RAID array.</p>
 <p>So a simplified example</p>
 <p>copy all files off rescued image (loop mount) to another location</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">echo</span> <span class="o">-</span><span class="n">n</span> <span class="s">&quot;BAD SECTOR &quot;</span> <span class="o">&gt;</span> <span class="n">tmpfile</span>
-<span class="err">$</span> <span class="n">ddrescue</span> <span class="o">--</span><span class="n">fill</span><span class="o">=-</span> <span class="n">tmpfile</span> <span class="n">rescue</span><span class="p">.</span><span class="n">img</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> -n <span class="s2">&quot;BAD SECTOR &quot;</span> &gt; tmpfile
+<span class="nv">$ </span>ddrescue --fill<span class="o">=</span>- tmpfile rescue.img rescue.log
 
-<span class="err">$</span> <span class="n">diff</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">loop</span><span class="o">/</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">rescuedfiles</span><span class="o">/</span> <span class="o">&gt;</span> <span class="n">damagedfiles</span>
+<span class="nv">$ </span>diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &gt; damagedfiles
 </pre></div>
 
 
@@ -106,27 +106,27 @@ which are the ones with damaged sectors. Also, the ddrescue doesn't
 damage the logfile so you can then reverse it using /dev/zero to restore
 the image to it's original recovery state. This won't work with sparse
 files.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">ddrescue</span> <span class="o">--</span><span class="n">fill</span><span class="o">=-</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">zero</span> <span class="n">rescue</span><span class="p">.</span><span class="n">img</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span>
+<div class="highlight"><pre><span class="nv">$ </span>ddrescue --fill<span class="o">=</span>- /dev/zero rescue.img rescue.log
 </pre></div>
 
 
 <p><ins datetime="2011-08-11T21:54:00+00:00">Or, if you haven't copied the
 files off, then the way suggested in the ddrescue manual looks like
 this. (After getting your disk image)</p>
-<div class="highlight"><pre><span class="cp"># mount -o loop rescued.img /mnt/loop</span>
+<div class="highlight"><pre># mount -o loop rescued.img /mnt/loop
 
-<span class="err">$</span> <span class="n">find</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">loop</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">print0</span> <span class="o">|</span> <span class="n">xargs</span> <span class="o">-</span><span class="mi">0</span> <span class="n">md5sum</span> <span class="o">&gt;</span> <span class="n">prefill</span><span class="p">.</span><span class="n">md5</span>
+$ find /mnt/loop -type f -print0 | xargs -0 md5sum &gt; prefill.md5
 
-<span class="err">$</span> <span class="n">echo</span> <span class="o">-</span><span class="n">n</span> <span class="s">&quot;BAD SECTOR &quot;</span> <span class="o">&gt;</span> <span class="n">tmpfile</span>
-<span class="err">$</span> <span class="n">ddrescue</span> <span class="o">--</span><span class="n">fill</span><span class="o">=-</span> <span class="n">tmpfile</span> <span class="n">rescue</span><span class="p">.</span><span class="n">img</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span>
+$ echo -n &quot;BAD SECTOR &quot; &gt; tmpfile
+$ ddrescue --fill=- tmpfile rescue.img rescue.log
 
-<span class="cp">## You may need to unmount and remount the loop file to prevent any caching interferring.</span>
-<span class="cp"># umount /mnt/loop</span>
-<span class="cp"># mount -o loop rescued.img /mnt/loop</span>
+## You may need to unmount and remount the loop file to prevent any caching interferring.
+# umount /mnt/loop
+# mount -o loop rescued.img /mnt/loop
 
-<span class="err">$</span> <span class="n">find</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">loop</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">print0</span> <span class="o">|</span> <span class="n">xargs</span> <span class="o">-</span><span class="mi">0</span> <span class="n">md5sum</span> <span class="o">&gt;</span> <span class="n">postfill</span><span class="p">.</span><span class="n">md5</span>
+$ find /mnt/loop -type f -print0 | xargs -0 md5sum &gt; postfill.md5
 
-<span class="err">$</span> <span class="n">diff</span> <span class="n">prefill</span><span class="p">.</span><span class="n">md5</span> <span class="n">postfill</span><span class="p">.</span><span class="n">md5</span>
+$ diff prefill.md5 postfill.md5
 </pre></div>
 
 
@@ -140,17 +140,17 @@ sectors, then continue as it is possible.</p>
 <p>First, check that the sector is actually used. This used to be the dstat
 command, but it has since been renamed to blkstat. So we take a sector
 number from the logfile that couldn't be recovered.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">rescue</span><span class="p">.</span><span class="n">log</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-|</span><span class="n">head</span>
-<span class="mh">0x0178F200</span>  <span class="mh">0x0000D400</span>  <span class="o">-</span>
-<span class="mh">0x017A0000</span>  <span class="mh">0x00000200</span>  <span class="o">-</span>
-<span class="mh">0x2BC488F400</span>  <span class="mh">0x00011600</span>  <span class="o">-</span>
-<span class="mh">0x2BEEFF0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
-<span class="mh">0x5AC5FB0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
-<span class="mh">0x5AC6050A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
-<span class="mh">0x5AC60E0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
-<span class="mh">0x5AC6180A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
-<span class="mh">0x5AC6220A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
-<span class="mh">0x5AC62B0A00</span>  <span class="mh">0x00020000</span>  <span class="o">-</span>
+<div class="highlight"><pre><span class="nv">$ </span>cat rescue.log <span class="p">|</span>grep -<span class="p">|</span>head
+0x0178F200  0x0000D400  -
+0x017A0000  0x00000200  -
+0x2BC488F400  0x00011600  -
+0x2BEEFF0A00  0x00020000  -
+0x5AC5FB0A00  0x00020000  -
+0x5AC6050A00  0x00020000  -
+0x5AC60E0A00  0x00020000  -
+0x5AC6180A00  0x00020000  -
+0x5AC6220A00  0x00020000  -
+0x5AC62B0A00  0x00020000  -
 </pre></div>
 
 
@@ -163,32 +163,32 @@ viewing.<br />
 I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;ibase=16; 2BEEFF0A00/200&quot;</span><span class="o">|</span><span class="n">bc</span>
-<span class="mi">368541573</span>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;ibase=16; 2BEEFF0A00/200&quot;</span><span class="p">|</span>bc
+368541573
 </pre></div>
 
 
 <p>Or do it the long way</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;ibase=16; 2BEEFF0A00&quot;</span><span class="o">|</span><span class="n">bc</span>
-<span class="mi">188693285376</span>
-<span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;188693285376/512&quot;</span><span class="o">|</span><span class="n">bc</span>
-<span class="mi">368541573</span>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;ibase=16; 2BEEFF0A00&quot;</span><span class="p">|</span>bc
+188693285376
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;188693285376/512&quot;</span><span class="p">|</span>bc
+368541573
 </pre></div>
 
 
 <p>Ether way, I now know that the sector number is 368541573. Using blkstat
 (formerly dstat) I can verify that the sector is used or not.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">blkstat</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="mi">368541573</span>
-<span class="nl">Sector:</span> <span class="mi">368541573</span>
-<span class="n">Allocated</span>
-<span class="nl">Cluster:</span> <span class="mi">5754738</span>
+<div class="highlight"><pre><span class="nv">$ </span>blkstat rescued.img 368541573
+Sector: 368541573
+Allocated
+Cluster: 5754738
 </pre></div>
 
 
 <p>Now a little warning, if you get a sector that looks like this.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">blkstat</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="mi">48249</span>
-<span class="nl">Sector:</span> <span class="mi">48249</span>
-<span class="n">Allocated</span> <span class="p">(</span><span class="n">Meta</span><span class="p">)</span>
+<div class="highlight"><pre><span class="nv">$ </span>blkstat rescued.img 48249
+Sector: 48249
+Allocated <span class="o">(</span>Meta<span class="o">)</span>
 </pre></div>
 
 
@@ -206,29 +206,29 @@ you from even seeing some of the files, so hopefully when you have
 damage to the FAT your 2nd FAT will still be good.</ins></p>
 <p>Our next step is to use ifind to find the inode associated with the
 sector. This can take some time and lots of CPU.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">time</span> <span class="n">ifind</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="o">-</span><span class="n">d</span> <span class="mi">368541573</span>
-<span class="mi">5892375559</span>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">time </span>ifind rescued.img -d 368541573
+5892375559
 
-<span class="n">real</span>    <span class="mi">2</span><span class="n">m52</span><span class="mf">.314</span><span class="n">s</span>
-<span class="n">user</span>    <span class="mi">1</span><span class="n">m15</span><span class="mf">.280</span><span class="n">s</span>
-<span class="n">sys</span> <span class="mi">0</span><span class="n">m2</span><span class="mf">.170</span><span class="n">s</span>
+real    2m52.314s
+user    1m15.280s
+sys 0m2.170s
 </pre></div>
 
 
 <p>This finally gives us the inode associated with that file.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">istat</span> <span class="n">rescued</span><span class="p">.</span><span class="n">img</span> <span class="mi">5892375559</span><span class="o">|</span><span class="n">head</span> <span class="o">-</span><span class="mi">12</span>
-<span class="n">Directory</span> <span class="n">Entry</span><span class="o">:</span> <span class="mi">5892375559</span>
-<span class="n">Allocated</span>
-<span class="n">File</span> <span class="n">Attributes</span><span class="o">:</span> <span class="n">File</span><span class="p">,</span> <span class="n">Archive</span>
-<span class="nl">Size:</span> <span class="mi">21346140</span>
-<span class="nl">Name:</span> <span class="n">MICROS</span><span class="o">~</span><span class="mi">1</span>
+<div class="highlight"><pre><span class="nv">$ </span>istat rescued.img 5892375559<span class="p">|</span>head -12
+Directory Entry: 5892375559
+Allocated
+File Attributes: File, Archive
+Size: 21346140
+Name: MICROS~1
 
-<span class="n">Directory</span> <span class="n">Entry</span> <span class="n">Times</span><span class="o">:</span>
-<span class="nl">Written:</span>    <span class="n">Wed</span> <span class="n">Aug</span> <span class="mi">25</span> <span class="mi">22</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mi">38</span> <span class="mi">2010</span>
-<span class="nl">Accessed:</span>   <span class="n">Wed</span> <span class="n">Apr</span> <span class="mi">13</span> <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="mi">2011</span>
-<span class="nl">Created:</span>    <span class="n">Wed</span> <span class="n">Aug</span> <span class="mi">25</span> <span class="mi">22</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mi">39</span> <span class="mi">2010</span>
+Directory Entry Times:
+Written:    Wed Aug <span class="m">25</span> 22:16:38 2010
+Accessed:   Wed Apr <span class="m">13</span> 00:00:00 2011
+Created:    Wed Aug <span class="m">25</span> 22:16:39 2010
 
-<span class="nl">Sectors:</span>
+Sectors:
 </pre></div>
 
 
@@ -241,8 +241,8 @@ than 1 or 2 sectors) you'll want to run this command without the grep,
 and save the contents to a file so you can just grep over that file each
 time as it takes a long time to recursively list all the files in a big
 filesystem.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">fls</span> <span class="o">-</span><span class="n">rFp</span> <span class="n">bunsom</span><span class="p">.</span><span class="n">img</span> <span class="o">|</span><span class="n">grep</span> <span class="mi">5892375559</span>
-<span class="n">r</span><span class="o">/</span><span class="n">r</span> <span class="mi">5892375559</span><span class="o">:</span> <span class="n">Microsoft</span> <span class="n">Office</span> <span class="mi">2011</span><span class="o">/</span><span class="n">Office</span><span class="o">/</span><span class="n">Microsoft</span> <span class="n">Chart</span> <span class="n">Converter</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">Microsoft</span> <span class="n">Chart</span> <span class="n">Converter</span>
+<div class="highlight"><pre><span class="nv">$ </span>fls -rFp bunsom.img <span class="p">|</span>grep 5892375559
+r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
 </pre></div>
 
 
@@ -260,21 +260,15 @@ are also in that file.</p>
 file at sector, file belong to sector, sector contents, damaged files,
 fat32, sector explore, sector view</em></p>
     </div><!-- /.entry-content -->
-<div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
-        var disqus_identifier = "2011/04/disk-recovery-which-files-are-damaged/";
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<div class="g-comments"
+    data-href = "http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/"
+    data-width = "650"
+    data-first_party_property = "BLOGGER"
+    data-view_type = "FILTERED_POSTMOD">
+</div>
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </article>
 </section>
       </section>
@@ -315,5 +309,6 @@ fat32, sector explore, sector view</em></p>
     piwikTracker.enableLinkTracking();
     } catch( err ) {}
     </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    <a href="https://github.com/purewhite2010/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
   </body>
 </html>

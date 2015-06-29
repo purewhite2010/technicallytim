@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/all.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2013-05-18T17:18:00+10:00</updated><entry><title>"Windows" is full of bloat</title><link href="http://tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-05-18:2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/all.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2015-02-21T00:00:00+10:00</updated><entry><title>Arduino wireless LiPo monitoring</title><link href="http://tim.purewhite.id.au/2015/02/arduino-lipo-wireless-monitor/" rel="alternate"></link><updated>2015-02-21T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2015-02-21:2015/02/arduino-lipo-wireless-monitor/</id><summary type="html">&lt;p&gt;&lt;img alt="Crashed RC Car" src="http://tim.purewhite.id.au/images/2015/IMG_20150221_150813_edit.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;Over the last few months, I've been getting back into electronics. It's really
+not fair what's available now, that wasn't available when I was a kid!
+Arduino's for a start are a very easy way to get into microcontrollers. And
+with the Arduino scene has come lots of small electronic components for only a
+few dollars each.&lt;/p&gt;
+&lt;p&gt;As part of a bigger project, I'm automating my RC car from my childhood. The
+Taiyo Edge car was an awesome toy as a kid, with it's ability to flip over and
+still keep driving. As a kid, I'd get a top of 10 minutes driving time out of
+the NiCd battery. Now I'm lucky to get 5 minutes. So the first part of my
+project is to put an Arduino onboard, with a LiPo battery, and a NRF24L01 to
+communicate back to my other Arduino for monitoring the battery voltage. Later
+I'll use the the Arduino to control the car as well.i&lt;/p&gt;
+&lt;p&gt;After designign the circuit in Fritzing, I proceeded to solder components to a
+protoboard with the Arduino Nano. I recently purchased a proper soldering
+station, temperature controlled, and I'm really glad I did. I wish I had one as
+a kid. No more waiting for the iron to heat up, it's ready in 10 seconds or
+less. Soon I have the Arduino Nano wirelessly reporting the LiPo's voltage back
+to me, and wire it up to the car. The LiPo I got was a 7.2V 1000mAh pack,
+that's about 1/2 the size of the NiCd that was in the car. Plenty of room for
+it, and even with the lower voltage it drives the car well.&lt;/p&gt;
+&lt;p&gt;We took the car outside for it's first test run on a LiPo, and was pleasently
+surprised with how well it performed, and how long it went for! We had about 20
+minutes driving time before we called it quits, and that was mostly due to the
+rain, and because Nathan had crashed the car into the trampoline cracking the
+shell. The voltage measurements continue to stream back to my computer inside,
+which I monitored via my phone. By the time we stop, I still had plenty of
+voltage to continue driving, and the LiPo hadn't warmed up at all.&lt;/p&gt;
+&lt;p&gt;The next step is to remove the RC circuitry, work out what I can use, and then
+replace it with circuitry that I can control via the Arduino. I also have some
+Ultrasonic sensors for obsticle avoidance.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Receiving Arduino Uno" src="http://tim.purewhite.id.au/images/2015/IMG_20150221_151115_edit.jpg" /&gt;&lt;/p&gt;</summary><category term="arduino"></category><category term="electronics"></category><category term="LiPo"></category><category term="nrf24l01"></category></entry><entry><title>Wordpress to Pelican</title><link href="http://tim.purewhite.id.au/2014/03/wordpress-to-pelican/" rel="alternate"></link><updated>2014-03-29T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2014-03-29:2014/03/wordpress-to-pelican/</id><summary type="html">&lt;p&gt;It's been awhile since I last blogged. Since then, I've started a full time job
+as a Systems Administrator. This means I have less time for maintaining my own
+servers. So I've finally taken the plunge migrating some of the more static
+sites to static. For example this Technical blog will now be a static site. 
+This doesn't mean it won't get updated, this just means that it's generated with
+a static generator instead of being generated dynamically when someone views the
+page. This results in lower server load, as it doesn't need PHP running, or a 
+database. It results in faster page loads. It results in a more secure server as
+it's just running a webserver and no web application.&lt;/p&gt;
+&lt;p&gt;I believe it results in blogs that are more focused on content than on the web
+application that displays the content.&lt;/p&gt;
+&lt;p&gt;I've chosen to use &lt;a href="https://github.com/getpelican/pelican"&gt;Pelican&lt;/a&gt;, mostly
+because I've enjoyed learning Python over the last year, and this gives me 
+another excuse to play with some Python. I'm also more comfortable in Python than
+some of the other options so this allows me to hack away on the code if I want to.&lt;/p&gt;
+&lt;p&gt;Regarding the current lack of comments on the blog. I'm still thinking of the best
+way to handle that. I may just put a Google+ comments plugin on, as I really
+don't like Disqus. I may also just not put dynamic comments on and use Github issues
+for discussing posts as some others have done.&lt;/p&gt;</summary><category term="wordpress"></category><category term="pelican"></category></entry><entry><title>"Windows" is full of bloat</title><link href="http://tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-05-18:2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
 computer, in particular lots of software installs and uninstalls to
 cleanup a slow computer.&lt;/p&gt;
 &lt;p&gt;Now before you jump the gun, I'm not talking about Windows the operating
@@ -57,20 +106,20 @@ won't show you files you can't access.&lt;/p&gt;
 &lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -en &lt;span class="s2"&gt;&amp;quot;\n\b&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php&lt;span class="nv"&gt;$)&lt;/span&gt;
 
-&lt;span class="k"&gt;for &lt;/span&gt;conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
 &lt;span class="c"&gt;# goto root wp dir as user&lt;/span&gt;
-    &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;$conffile&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;;
+    &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="nb"&gt;pushd&lt;/span&gt; &lt;span class="nv"&gt;$wpdir&lt;/span&gt; &amp;gt; /dev/null &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt;
 
-&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking $wpdir...&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking &lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt;...&amp;quot;&lt;/span&gt;
 
     &lt;span class="c"&gt;## Check we actually have a wordpress install&lt;/span&gt;
 
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;wp-includes/version.php&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; ! -f &lt;span class="nv"&gt;$conffile&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;
-        &lt;span class="k"&gt;then &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$wpdir doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
         &lt;span class="k"&gt;continue&lt;/span&gt;
-&lt;span class="k"&gt;    fi&lt;/span&gt;
+    &lt;span class="k"&gt;fi&lt;/span&gt;
 
     &lt;span class="c"&gt;# Get username for tool&lt;/span&gt;
     &lt;span class="nv"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;stat -c %U &lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
@@ -202,7 +251,7 @@ something that sets their preference!&lt;/p&gt;
 &lt;p&gt;Read
 [http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
 some more thoughts on dbus.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;http:&lt;/span&gt;&lt;span class="c1"&gt;//blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Belkin? Rtkit?</title><link href="http://tim.purewhite.id.au/2011/11/belkin-rtkit/" rel="alternate"></link><updated>2011-11-05T12:10:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-11-05:2011/11/belkin-rtkit/</id><summary type="html">&lt;p&gt;While attempting to remotely debug a linux machine today, I was first
 encountering a strange problem. Any process that took more than about
 1/2 second to complete, would freeze. top, ps, lsmod, tail -f, the list
@@ -621,7 +670,7 @@ being a link local address, or a 6to4, or Teredo tunnel[1]. So we just
 make Transmission bind to a link local address and hey presto, no IPv6
 for Transmission!&lt;/p&gt;
 &lt;p&gt;Simply add the following line to the settings.json file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s"&gt;&amp;quot;bind-address-ipv6&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fe80::&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;bind-address-ipv6&amp;quot;: &amp;quot;fe80::&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -635,11 +684,11 @@ pinging every PoP available to us and find the "closest" one, but for
 now, letter the numbers do the talking.&lt;/p&gt;
 &lt;p&gt;I ping the same machine both via IPv6 and via IPv4. Lets see if you can
 work out which is which.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
-&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;698.592&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;712.159&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;814.473&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;34.163&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+rtt min/avg/max/mdev = 698.592/712.159/814.473/34.163 ms
 
-&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
-&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;76.670&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;79.557&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;87.452&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.866&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+10 packets transmitted, 10 received, 0% packet loss
+rtt min/avg/max/mdev = 76.670/79.557/87.452/2.866 ms
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -653,8 +702,8 @@ running both tunnels in parrallel so that if one dies the other is
 working. Hopefully I'll see better IPv6 improvement now. Still, native
 IPv6 would be better.
 &lt;a href="http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/"&gt;http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/&lt;/a&gt;&lt;/ins&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;packets&lt;/span&gt; &lt;span class="n"&gt;transmitted&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
-&lt;span class="n"&gt;rtt&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mdev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;235.587&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;267.187&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;382.010&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;45.090&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+rtt min/avg/max/mdev = 235.587/267.187/382.010/45.090 ms
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="ipv6"></category><category term="ping"></category><category term="sixxs"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="http://tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-02:2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
 easy for students to afford Microsoft products so they don't need to
 pirate them (and steal them). That's fine as long as it works and
@@ -698,9 +747,9 @@ they don't, you start again.&lt;/p&gt;
 scanner, and you don't want to go as far as phpsane, then here is the
 code! &lt;a href="http://tim.purewhite.id.au/code/phpscan2pdf/files"&gt;http://tim.purewhite.id.au/code/phpscan2pdf/files&lt;/a&gt;&lt;/p&gt;</summary><category term="code"></category><category term="pdf"></category><category term="php"></category><category term="scan2pdf"></category><category term="scanner"></category><category term="scanning"></category></entry><entry><title>Disk recovery - Which files are damaged?</title><link href="http://tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="alternate"></link><updated>2011-04-19T09:40:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-19:2011/04/disk-recovery-which-files-are-damaged/</id><summary type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
 damaged hard drive.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;inputdevice&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -n /dev/inputdevice rescued.img rescued.log
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;inputdevice&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -r &lt;span class="m"&gt;1&lt;/span&gt; /dev/inputdevice rescued.img rescued.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -743,10 +792,10 @@ over a network isn't that bad. I'm sure it would have been a lot quicker
 had all the files resided on the local machine on  a nice RAID array.&lt;/p&gt;
 &lt;p&gt;So a simplified example&lt;/p&gt;
 &lt;p&gt;copy all files off rescued image (loop mount) to another location&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &amp;gt; tmpfile
+&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- tmpfile rescue.img rescue.log
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;diff&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rescuedfiles&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;damagedfiles&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &amp;gt; damagedfiles
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -755,27 +804,27 @@ which are the ones with damaged sectors. Also, the ddrescue doesn't
 damage the logfile so you can then reverse it using /dev/zero to restore
 the image to it's original recovery state. This won't work with sparse
 files.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;zero&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- /dev/zero rescue.img rescue.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;ins datetime="2011-08-11T21:54:00+00:00"&gt;Or, if you haven't copied the
 files off, then the way suggested in the ddrescue manual looks like
 this. (After getting your disk image)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# mount -o loop rescued.img /mnt/loop&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# mount -o loop rescued.img /mnt/loop
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;md5sum&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;prefill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+$ find /mnt/loop -type f -print0 | xargs -0 md5sum &amp;gt; prefill.md5
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt; &lt;span class="n"&gt;tmpfile&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+$ echo -n &amp;quot;BAD SECTOR &amp;quot; &amp;gt; tmpfile
+$ ddrescue --fill=- tmpfile rescue.img rescue.log
 
-&lt;span class="cp"&gt;## You may need to unmount and remount the loop file to prevent any caching interferring.&lt;/span&gt;
-&lt;span class="cp"&gt;# umount /mnt/loop&lt;/span&gt;
-&lt;span class="cp"&gt;# mount -o loop rescued.img /mnt/loop&lt;/span&gt;
+## You may need to unmount and remount the loop file to prevent any caching interferring.
+# umount /mnt/loop
+# mount -o loop rescued.img /mnt/loop
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;md5sum&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;postfill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+$ find /mnt/loop -type f -print0 | xargs -0 md5sum &amp;gt; postfill.md5
 
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;diff&lt;/span&gt; &lt;span class="n"&gt;prefill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt; &lt;span class="n"&gt;postfill&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md5&lt;/span&gt;
+$ diff prefill.md5 postfill.md5
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -789,17 +838,17 @@ sectors, then continue as it is possible.&lt;/p&gt;
 &lt;p&gt;First, check that the sector is actually used. This used to be the dstat
 command, but it has since been renamed to blkstat. So we take a sector
 number from the logfile that couldn't be recovered.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;rescue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="o"&gt;-|&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;
-&lt;span class="mh"&gt;0x0178F200&lt;/span&gt;  &lt;span class="mh"&gt;0x0000D400&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x017A0000&lt;/span&gt;  &lt;span class="mh"&gt;0x00000200&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x2BC488F400&lt;/span&gt;  &lt;span class="mh"&gt;0x00011600&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x2BEEFF0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC5FB0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC6050A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC60E0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC6180A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC6220A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
-&lt;span class="mh"&gt;0x5AC62B0A00&lt;/span&gt;  &lt;span class="mh"&gt;0x00020000&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat rescue.log &lt;span class="p"&gt;|&lt;/span&gt;grep -&lt;span class="p"&gt;|&lt;/span&gt;head
+0x0178F200  0x0000D400  -
+0x017A0000  0x00000200  -
+0x2BC488F400  0x00011600  -
+0x2BEEFF0A00  0x00020000  -
+0x5AC5FB0A00  0x00020000  -
+0x5AC6050A00  0x00020000  -
+0x5AC60E0A00  0x00020000  -
+0x5AC6180A00  0x00020000  -
+0x5AC6220A00  0x00020000  -
+0x5AC62B0A00  0x00020000  -
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -812,32 +861,32 @@ viewing.&lt;br /&gt;
 I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
-&lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+368541573
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Or do it the long way&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
-&lt;span class="mi"&gt;188693285376&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;bc&lt;/span&gt;
-&lt;span class="mi"&gt;368541573&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+188693285376
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+368541573
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Ether way, I now know that the sector number is 368541573. Using blkstat
 (formerly dstat) I can verify that the sector is used or not.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;blkstat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
-&lt;span class="nl"&gt;Sector:&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
-&lt;span class="n"&gt;Allocated&lt;/span&gt;
-&lt;span class="nl"&gt;Cluster:&lt;/span&gt; &lt;span class="mi"&gt;5754738&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 368541573
+Sector: 368541573
+Allocated
+Cluster: 5754738
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now a little warning, if you get a sector that looks like this.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;blkstat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;48249&lt;/span&gt;
-&lt;span class="nl"&gt;Sector:&lt;/span&gt; &lt;span class="mi"&gt;48249&lt;/span&gt;
-&lt;span class="n"&gt;Allocated&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 48249
+Sector: 48249
+Allocated &lt;span class="o"&gt;(&lt;/span&gt;Meta&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -855,29 +904,29 @@ you from even seeing some of the files, so hopefully when you have
 damage to the FAT your 2nd FAT will still be good.&lt;/ins&gt;&lt;/p&gt;
 &lt;p&gt;Our next step is to use ifind to find the inode associated with the
 sector. This can take some time and lots of CPU.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt; &lt;span class="n"&gt;ifind&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="mi"&gt;368541573&lt;/span&gt;
-&lt;span class="mi"&gt;5892375559&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;time &lt;/span&gt;ifind rescued.img -d 368541573
+5892375559
 
-&lt;span class="n"&gt;real&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="n"&gt;m52&lt;/span&gt;&lt;span class="mf"&gt;.314&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
-&lt;span class="n"&gt;user&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;m15&lt;/span&gt;&lt;span class="mf"&gt;.280&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
-&lt;span class="n"&gt;sys&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;m2&lt;/span&gt;&lt;span class="mf"&gt;.170&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+real    2m52.314s
+user    1m15.280s
+sys 0m2.170s
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;This finally gives us the inode associated with that file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;istat&lt;/span&gt; &lt;span class="n"&gt;rescued&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;
-&lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;Entry&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;
-&lt;span class="n"&gt;Allocated&lt;/span&gt;
-&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;Attributes&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Archive&lt;/span&gt;
-&lt;span class="nl"&gt;Size:&lt;/span&gt; &lt;span class="mi"&gt;21346140&lt;/span&gt;
-&lt;span class="nl"&gt;Name:&lt;/span&gt; &lt;span class="n"&gt;MICROS&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;istat rescued.img 5892375559&lt;span class="p"&gt;|&lt;/span&gt;head -12
+Directory Entry: 5892375559
+Allocated
+File Attributes: File, Archive
+Size: 21346140
+Name: MICROS~1
 
-&lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;Entry&lt;/span&gt; &lt;span class="n"&gt;Times&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="nl"&gt;Written:&lt;/span&gt;    &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Aug&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;38&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;
-&lt;span class="nl"&gt;Accessed:&lt;/span&gt;   &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt; &lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;
-&lt;span class="nl"&gt;Created:&lt;/span&gt;    &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="n"&gt;Aug&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;
+Directory Entry Times:
+Written:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:38 2010
+Accessed:   Wed Apr &lt;span class="m"&gt;13&lt;/span&gt; 00:00:00 2011
+Created:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:39 2010
 
-&lt;span class="nl"&gt;Sectors:&lt;/span&gt;
+Sectors:
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -890,8 +939,8 @@ than 1 or 2 sectors) you'll want to run this command without the grep,
 and save the contents to a file so you can just grep over that file each
 time as it takes a long time to recursively list all the files in a big
 filesystem.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;fls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rFp&lt;/span&gt; &lt;span class="n"&gt;bunsom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;
-&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;5892375559&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Office&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Office&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Chart&lt;/span&gt; &lt;span class="n"&gt;Converter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Contents&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;MacOS&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Microsoft&lt;/span&gt; &lt;span class="n"&gt;Chart&lt;/span&gt; &lt;span class="n"&gt;Converter&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fls -rFp bunsom.img &lt;span class="p"&gt;|&lt;/span&gt;grep 5892375559
+r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1029,7 +1078,7 @@ libapache2-mod-spamhaus, which does what we need. But unlike email spam,
 it seems comment/wiki spammers aren't in the DNSBL's as much as email
 spammers. Thankfully, libapache2-mod-spamhaus was now dropping about
 half the spamming connections.&lt;/p&gt;
-&lt;p&gt;Some more research turned up &lt;a href="%20http://www.projecthoneypot.org?rf=93412" title="Project Honey Pot"&gt;Project Honey Pot&lt;/a&gt; which is aimed more
+&lt;p&gt;Some more research turned up &lt;a href="http://www.projecthoneypot.org?rf=93412" title="Project Honey Pot"&gt;Project Honey Pot&lt;/a&gt; which is aimed more
 at the comment spammers and address harvesters. A quick check of the ip
 database they maintain revealed that most of the remaining comment
 spammer ips that were hitting my site were in their database!
@@ -1090,9 +1139,8 @@ here in depth and just the basics on the hotspot site.&lt;/p&gt;
 &lt;p&gt;Previously I researched this problem and found very little, it would
 seem since my last search more material has become available that has
 assisted. In particular
-[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
-][]&lt;br /&gt;
-The basic problem is this. Using CoovaChilli, when a login failed for
+&lt;a href="http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html"&gt;http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The basic problem is this. Using CoovaChilli, when a login failed for
 some reason, we usually didn't get an error message. If your data quota
 had been used up, then maybe you'd get "Your maximum never usage time
 has been reached" which for most people was confusing. An expired
@@ -1153,14 +1201,14 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;        update reply {&lt;/span&gt;
 &lt;span class="s"&gt;            Reply-Message := &amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
-&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
     &lt;span class="err"&gt;if(reject){&lt;/span&gt;
         &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
             &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
-&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
@@ -1171,7 +1219,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            update reply {&lt;/span&gt;
 &lt;span class="s"&gt;                    Reply-Message := &amp;quot;Your account has expired, %{User-Name}&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;            }&lt;/span&gt;
-&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
     &lt;span class="err"&gt;logintime&lt;/span&gt;
@@ -1183,7 +1231,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            update reply {&lt;/span&gt;
 &lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;            }&lt;/span&gt;
-&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
@@ -1194,7 +1242,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            update reply {&lt;/span&gt;
 &lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your time limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;            }&lt;/span&gt;
-&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
     &lt;span class="err"&gt;pap&lt;/span&gt;
@@ -1221,7 +1269,7 @@ the changes needed.&lt;/p&gt;
         &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
                 &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
-&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="err"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1250,12 +1298,8 @@ exists, then the module noresetBytecounter must have triggered it. So we
 update the reply package that FreeRadius is going to return, and set the
 Reply-Message to an appropriate error message given then module that
 caused the failure. We then send that reject without processing more
-modules with the "ok = reject" line. We could do other things like
-sending an 'ok = return' which would clear the reject and return an ok.
-You can also do a plain "ok" but I'm not 100% sure what that does, it
-would appear to clear the reject and replace it with an ok code and
-continue processing, where as the 'ok=return' doesn't continue
-processing that section.&lt;/p&gt;
+modules with the "reject" line. We could do other things like
+sending an 'return' which would clear the reject and return an ok.&lt;/p&gt;
 &lt;p&gt;Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
 piece of code sets a default message for Access-Reject.&lt;/p&gt;
@@ -1305,6 +1349,11 @@ RADIUS has, you understand why it's used by isp's and the like!&lt;/p&gt;
 &lt;p&gt;Keywords to assist people in finding this information. Radius,
 FreeRadius, Access-Reject, Reply-Message, CoovaChilli, ChilliSpot,
 Hotspot, sql reply-message reject&lt;/p&gt;
+&lt;p&gt;&lt;ins&gt;
+The original version of this document had "ok = reject" lines instead of reject
+lines. This happened to work due a bug in Freeradius that has since been fixed.
+The correct line is just a plain reject in the if statements.
+&lt;/ins&gt;&lt;/p&gt;
 &lt;p&gt;[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
  ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/p&gt;</summary><category term="Access-Reject"></category><category term="CoovaChili"></category><category term="FreeRadius"></category><category term="Hotspot"></category><category term="Reply-Message"></category></entry><entry><title>Brother HL-2140 Series Test/Information Page</title><link href="http://tim.purewhite.id.au/2011/03/brother-hl-2140-series-testinformation-page/" rel="alternate"></link><updated>2011-03-18T15:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-03-18:2011/03/brother-hl-2140-series-testinformation-page/</id><summary type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
 test or information page, it was good to finally find out how to do it
@@ -1519,7 +1568,7 @@ these very easily to do more than just connect the 2 calls.&lt;/p&gt;
 Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
 should just work.&lt;/p&gt;
 &lt;p&gt;After all those edits, restart asterisk.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asterisk&lt;/span&gt; &lt;span class="n"&gt;restart&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo /etc/init.d/asterisk restart
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1551,9 +1600,9 @@ placed in a way that asterisk can't start reading it before the file is
 all there. For this reason, the mv command is recommended and I'll
 demonstrate. (I first copy the file so I can keep a number of pre setup
 files stored).&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;preset1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;
-&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;chown&lt;/span&gt; &lt;span class="n"&gt;asterisk&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;
-&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;call123&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;spool&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asterisk&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;outgoing&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cp preset1.call call123.call
+sudo chown asterisk call123.call
+sudo mv call123.call /var/spool/asterisk/outgoing/
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1618,8 +1667,8 @@ explaining how to make gearman more command line friendly using xargs.
 of scripting I had myself a number of small shell scripts, a gearmand
 server, and a working cluster.&lt;/p&gt;
 &lt;p&gt;Firstly, I setup some NFS mounts on all the computers involved.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_rip&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_encode&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_rip
+&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_encode
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1634,7 +1683,7 @@ loaded so you can read encrypted DVD's. You can also stop and restart
 the ripping process at any time without loosing what has been ripped
 successfully. NB: It doesn't remove the CSS encryption so you will need
 libdvdcss on all computers doing encoding.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lsdvd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.iso&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.log&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lsdvd /dev/sr0 &amp;gt; /dev/null &amp;amp; ddrescue -r 1 /dev/sr0 &amp;quot;$1.iso&amp;quot; &amp;quot;$1.log&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1674,5 +1723,5 @@ processed a lot quicker.&lt;/p&gt;
 &lt;p&gt;All the files can be found at
 &lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster"&gt;http://tim.purewhite.id.au/code/handbrake-cluster&lt;/a&gt; or checked out with
 bzr.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;bzr&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//tim.purewhite.id.au/code/handbrake-cluster/&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>

@@ -77,8 +77,8 @@ explaining how to make gearman more command line friendly using xargs.
 of scripting I had myself a number of small shell scripts, a gearmand
 server, and a working cluster.</p>
 <p>Firstly, I setup some NFS mounts on all the computers involved.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">DVD_rip</span>
-<span class="err">$</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">DVD_encode</span>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir /mnt/DVD_rip
+<span class="nv">$ </span>mkdir /mnt/DVD_encode
 </pre></div>
 
 
@@ -93,7 +93,7 @@ loaded so you can read encrypted DVD's. You can also stop and restart
 the ripping process at any time without loosing what has been ripped
 successfully. NB: It doesn't remove the CSS encryption so you will need
 libdvdcss on all computers doing encoding.</p>
-<div class="highlight"><pre><span class="n">lsdvd</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sr0</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span> <span class="n">ddrescue</span> <span class="o">-</span><span class="n">r</span> <span class="mi">1</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sr0</span> <span class="s">&quot;$1.iso&quot;</span> <span class="s">&quot;$1.log&quot;</span>
+<div class="highlight"><pre>lsdvd /dev/sr0 &gt; /dev/null &amp; ddrescue -r 1 /dev/sr0 &quot;$1.iso&quot; &quot;$1.log&quot;
 </pre></div>
 
 
@@ -133,24 +133,18 @@ processed a lot quicker.</p>
 <p>All the files can be found at
 <a href="http://tim.purewhite.id.au/code/handbrake-cluster">http://tim.purewhite.id.au/code/handbrake-cluster</a> or checked out with
 bzr.</p>
-<div class="highlight"><pre><span class="n">bzr</span> <span class="n">branch</span> <span class="n">http</span><span class="o">:</span><span class="c1">//tim.purewhite.id.au/code/handbrake-cluster/</span>
+<div class="highlight"><pre>bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
 </pre></div>
     </div><!-- /.entry-content -->
-<div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'technicallytim.disqus.com'; // required: replace example with your forum shortname
-        var disqus_identifier = "2010/09/handbrake-encoding-cluster/";
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<div class="g-comments"
+    data-href = "http://tim.purewhite.id.au/2010/09/handbrake-encoding-cluster/"
+    data-width = "650"
+    data-first_party_property = "BLOGGER"
+    data-view_type = "FILTERED_POSTMOD">
+</div>
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </article>
 </section>
       </section>
@@ -191,5 +185,6 @@ bzr.</p>
     piwikTracker.enableLinkTracking();
     } catch( err ) {}
     </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    <a href="https://github.com/purewhite2010/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
   </body>
 </html>

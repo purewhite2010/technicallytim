@@ -4,9 +4,8 @@ here in depth and just the basics on the hotspot site.&lt;/p&gt;
 &lt;p&gt;Previously I researched this problem and found very little, it would
 seem since my last search more material has become available that has
 assisted. In particular
-[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
-][]&lt;br /&gt;
-The basic problem is this. Using CoovaChilli, when a login failed for
+&lt;a href="http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html"&gt;http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The basic problem is this. Using CoovaChilli, when a login failed for
 some reason, we usually didn't get an error message. If your data quota
 had been used up, then maybe you'd get "Your maximum never usage time
 has been reached" which for most people was confusing. An expired
@@ -67,14 +66,14 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;        update reply {&lt;/span&gt;
 &lt;span class="s"&gt;            Reply-Message := &amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
-&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
     &lt;span class="err"&gt;if(reject){&lt;/span&gt;
         &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
             &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
-&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
@@ -85,7 +84,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            update reply {&lt;/span&gt;
 &lt;span class="s"&gt;                    Reply-Message := &amp;quot;Your account has expired, %{User-Name}&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;            }&lt;/span&gt;
-&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
     &lt;span class="err"&gt;logintime&lt;/span&gt;
@@ -97,7 +96,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            update reply {&lt;/span&gt;
 &lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;            }&lt;/span&gt;
-&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
@@ -108,7 +107,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            update reply {&lt;/span&gt;
 &lt;span class="s"&gt;                    Reply-Message := &amp;quot;You have reached your time limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;            }&lt;/span&gt;
-&lt;span class="s"&gt;            ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
     &lt;span class="err"&gt;pap&lt;/span&gt;
@@ -135,7 +134,7 @@ the changes needed.&lt;/p&gt;
         &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
                 &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
-&lt;span class="s"&gt;        ok = reject&lt;/span&gt;
+&lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="err"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -164,12 +163,8 @@ exists, then the module noresetBytecounter must have triggered it. So we
 update the reply package that FreeRadius is going to return, and set the
 Reply-Message to an appropriate error message given then module that
 caused the failure. We then send that reject without processing more
-modules with the "ok = reject" line. We could do other things like
-sending an 'ok = return' which would clear the reject and return an ok.
-You can also do a plain "ok" but I'm not 100% sure what that does, it
-would appear to clear the reject and replace it with an ok code and
-continue processing, where as the 'ok=return' doesn't continue
-processing that section.&lt;/p&gt;
+modules with the "reject" line. We could do other things like
+sending an 'return' which would clear the reject and return an ok.&lt;/p&gt;
 &lt;p&gt;Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
 piece of code sets a default message for Access-Reject.&lt;/p&gt;
@@ -219,6 +214,11 @@ RADIUS has, you understand why it's used by isp's and the like!&lt;/p&gt;
 &lt;p&gt;Keywords to assist people in finding this information. Radius,
 FreeRadius, Access-Reject, Reply-Message, CoovaChilli, ChilliSpot,
 Hotspot, sql reply-message reject&lt;/p&gt;
+&lt;p&gt;&lt;ins&gt;
+The original version of this document had "ok = reject" lines instead of reject
+lines. This happened to work due a bug in Freeradius that has since been fixed.
+The correct line is just a plain reject in the if statements.
+&lt;/ins&gt;&lt;/p&gt;
 &lt;p&gt;[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
  ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/p&gt;</summary><category term="Access-Reject"></category><category term="CoovaChili"></category><category term="FreeRadius"></category><category term="Hotspot"></category><category term="Reply-Message"></category></entry><entry><title>GRASE Hotspot</title><link href="http://tim.purewhite.id.au/2010/12/grase-hotspot/" rel="alternate"></link><updated>2010-12-14T21:55:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-12-14:2010/12/grase-hotspot/</id><summary type="html">&lt;p&gt;3 years in the making, and finally I am releasing the code for the GRASE
 Hotspot. I've always planned on releasing the code, but had a lot things
@@ -272,8 +272,8 @@ explaining how to make gearman more command line friendly using xargs.
 of scripting I had myself a number of small shell scripts, a gearmand
 server, and a working cluster.&lt;/p&gt;
 &lt;p&gt;Firstly, I setup some NFS mounts on all the computers involved.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_rip&lt;/span&gt;
-&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;DVD_encode&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_rip
+&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_encode
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -288,7 +288,7 @@ loaded so you can read encrypted DVD's. You can also stop and restart
 the ripping process at any time without loosing what has been ripped
 successfully. NB: It doesn't remove the CSS encryption so you will need
 libdvdcss on all computers doing encoding.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lsdvd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;ddrescue&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sr0&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.iso&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$1.log&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lsdvd /dev/sr0 &amp;gt; /dev/null &amp;amp; ddrescue -r 1 /dev/sr0 &amp;quot;$1.iso&amp;quot; &amp;quot;$1.log&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -328,5 +328,5 @@ processed a lot quicker.&lt;/p&gt;
 &lt;p&gt;All the files can be found at
 &lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster"&gt;http://tim.purewhite.id.au/code/handbrake-cluster&lt;/a&gt; or checked out with
 bzr.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;bzr&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//tim.purewhite.id.au/code/handbrake-cluster/&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>

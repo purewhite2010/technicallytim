@@ -956,7 +956,43 @@ found (use the istat tool) to see if any of the other damaged sectors
 are also in that file.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;keywords to assist others finding it: data recovery, damaged sector,
 file at sector, file belong to sector, sector contents, damaged files,
-fat32, sector explore, sector view&lt;/em&gt;&lt;/p&gt;</summary><category term="damaged"></category><category term="fat32"></category><category term="recovery"></category><category term="sector"></category></entry><entry><title>Are mobile Providers Ripping Us Off?</title><link href="http://tim.purewhite.id.au/2011/04/are-mobile-providers-ripping-us-off/" rel="alternate"></link><updated>2011-04-08T18:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-08:2011/04/are-mobile-providers-ripping-us-off/</id><summary type="html">&lt;p&gt;With so many options, so many plans, it's hard to know if we are being
+fat32, sector explore, sector view&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Comments&lt;/h2&gt;
+&lt;p&gt;Leave a comment by adding to the &lt;a href="https://github.com/timwhite/technicallytim/issues/1"&gt;issue on
+Github&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Comment from &lt;a href="https://github.com/amichair"&gt;amichair&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Thanks for the article, it's been very helpful!&lt;/p&gt;
+&lt;p&gt;A few updates that might save time for the next person to need it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;instead of the hex calculations and using bc, one can simply use 'ddrescuelog
+-l- ddrescue.log'. This outputs all the bad ('-') sector numbers in decimal,
+i.e. it does both the division by sector size and conversion to decimal, and in
+addition it outputs all the sectors and not just the first one of each series
+of bad blocks (you mention this in the last paragraph but with no example of
+how to do this). So this one command takes care of a lot of stuff in one fell
+swoop.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;in some larger disks nowadays the sector size is 4096 rather than 512. Thus
+calculating the 'data unit' used in the sleuthkit tools might require an
+additional division by 8 (after division by 512).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;the version of sleuthkit in Ubuntu (up to 13.10, and it looks like it won't
+change by the 14.04 release this week) is a couple years old, and as it turns
+out, does not support ext4. While this is platform-specific (though pretty
+common platform), the important note is that blkstat works ok, but then ifind
+says 'inode not found', which is a bit perplexing considering it is marked as
+'Allocated'. So the filesystem auto-detection fails silently. Only if one
+specifies '-f ext4' explicitly does he find out that ext4 is not supported. I
+had to download and build the latest sleuthkit myself for it to work with ext4
+properly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thanks once again for this great tutorial!&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="damaged"></category><category term="fat32"></category><category term="recovery"></category><category term="sector"></category></entry><entry><title>Are mobile Providers Ripping Us Off?</title><link href="http://tim.purewhite.id.au/2011/04/are-mobile-providers-ripping-us-off/" rel="alternate"></link><updated>2011-04-08T18:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-08:2011/04/are-mobile-providers-ripping-us-off/</id><summary type="html">&lt;p&gt;With so many options, so many plans, it's hard to know if we are being
 ripped off or getting a good deal. Then bring in VoIP, and things get
 even trickier.&lt;/p&gt;
 &lt;p&gt;For the sake of this research, I was looking for a mobile phone plan,

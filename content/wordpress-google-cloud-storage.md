@@ -70,6 +70,17 @@ each ID, in this case the media item ID is 7.**
 wp eval 'do_action('wp_update_attachment_metadata', null, 7);'
 ```
 
+Or a quick bash script to upload all attachments
+```bash
+for i in $(wp-cli.phar db query "SELECT ID FROM wp_posts WHERE
+post_type='attachment';"  ); do echo $i; wp-cli.phar eval
+"do_action('wp_update_attachment_metadata', null, $i);"; done
+```
+
+Edit: Seems some issues with V2 vs V4 signatures. Not sure what changed but I
+made a few more commits, you'll probably want to look at GitHub for the extra
+changes
+
 For reference, those above patches are also here:
 ```diff
 c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001

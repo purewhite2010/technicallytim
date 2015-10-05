@@ -2,7 +2,7 @@ Title: Wordpress Media in Google Cloud Storage
 Date: 2015-10-05
 Author: Tim White
 Category: Blog
-Tags: wordpress,google cloud storage,s3,media
+Tags: wordpress,google cloud storage,s3,media,uploads,google
 Slug: wordpress-google-cloud-storage
 
 One of the big challenges with Wordpress in the cloud, is the media we upload.
@@ -50,24 +50,29 @@ that Amazon's endpoints are dependent on the region you are using. Google
 appears to have a single endpoint, which they presumably route to your closest
 Google datacentre.
 
+I may still try to create a native Google Cloud Storage plugin for wordpress,
+but for now, this is a start!
+
 2 Small Patches
 [here](https://github.com/timwhite/wp-amazon-s3-and-cloudfront/commit/8b55698c8e937a585646d8ecd0682db088c8dc76)
 and
 [here](https://github.com/timwhite/wp-amazon-web-services/commit/56cc81e58894150e5e8e89a3f59e25458d956080)
 and I now have an Amazon S3 plugin uploading to Google instead of Amazon!
 
-And, as a bonus, if you've read this far, and you are applying this to an
+**And, as a bonus, if you've read this far, and you are applying this to an
 existing site. You *can* upload existing media with the S3 plugin. All media
 libraries have an entry in the wp_posts table with post_type set to attachment.
 If you fetch all the ID's for the items you wish to upload, and have the handy
-wp-cli.org tool installed, it's as simple as running the following tool for
-each ID, in this case the media item ID is 7.
-```php
+[wp-cli.org](http://wp-cli.org) tool installed, it's as simple as running the following tool for
+each ID, in this case the media item ID is 7.**
+
+```bash
 wp eval 'do_action('wp_update_attachment_metadata', null, 7);'
 ```
 
 For reference, those above patches are also here:
-```diffc81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
+```diff
+c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
 From: Tim White <tim@whiteitsolutions.com.au>
 Date: Mon, 5 Oct 2015 13:23:28 +1000
 Subject: [PATCH] Changes for using Google Cloud Storage instead of Amazon S3

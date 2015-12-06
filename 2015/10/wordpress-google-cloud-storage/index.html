@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wordpress Media in Google Cloud StorageTechnically Tim</title>
+
+    <link rel="stylesheet" href="//tim.purewhite.id.au/theme/css/main.css">
+    <link rel="stylesheet" href="//tim.purewhite.id.au/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="//tim.purewhite.id.au/">Technically Tim </a></div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="//tim.purewhite.id.au/about.html">About</a></div>
+  <div class="view"><a href="//tim.purewhite.id.au/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+
+      </header>
+      <section>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Wordpress Media in Google Cloud Storage
+      </div>
+
+    <div class="entry-content">
+<p>
+<small>
+<abbr class="published" title="2015-10-05T00:00:00">
+  Mon 05 October 2015
+</abbr> | 
+  tags: 
+    <a href="//tim.purewhite.id.au/tag/wordpress">wordpress</a>, 
+    <a href="//tim.purewhite.id.au/tag/google-cloud-storage">google cloud storage</a>, 
+    <a href="//tim.purewhite.id.au/tag/s3">s3</a>, 
+    <a href="//tim.purewhite.id.au/tag/media">media</a>, 
+    <a href="//tim.purewhite.id.au/tag/uploads">uploads</a>, 
+    <a href="//tim.purewhite.id.au/tag/google">google</a>, 
+ -- (<a href="//tim.purewhite.id.au/2015/10/wordpress-google-cloud-storage/" rel="bookmark">permalink</a>)
+</small>
+</p>      <p>One of the big challenges with Wordpress in the cloud, is the media we upload.
+As soon as we upload media files, the Wordpress instance has data that isn't
+stored in the database. This prevents us for example having a docker Wordpress
+install that we can scale up as required, without some method for syncronising
+the wp-content/uploads directory. <a href="https://wordpress.org/plugins/wp2cloud-wordpress-to-cloud/">WP2Cloud</a>
+solves this with the ClouSE storage engine, that attaches to MySQL. Without the Clouse storage
+engine, the plugin is dead in the water. Which is really sad, because it
+supports Amazon S3, and Google Cloud Storage.</p>
+<p>Then there are a number of different plugins available that try to solve this
+issue, some with Amazon S3 support, others with Google Drive support, and
+others with OpenStack's Object Storage, Swift.</p>
+<p>However, very little properly supports Google Cloud Storage, which is different 
+from Google Drive. Why do I care about Google Cloud Storage? Firstly, it's
+cheaper than Amazon S3. Secondly, I have a number of other business solutions
+with Google, and sometimes keeping things together makes it easier. Lastly,
+because no one seems to be doing, so lets try!</p>
+<p>Initially, I thought I'd have to write an entire plugin myself. Thankfully,
+some plugins are GPLed so I can look at the code and get an idea of what I need
+for a basic plugin. And then, I stumbled upon the Golden Key.
+<a href="https://cloud.google.com/storage/docs/migrating">Migrating from Amazon S3 to Google Cloud Storage</a>.
+Google has done something that I had hoped, but hadn't found in my initial
+searches. They support the Amazon S3 XML API!</p>
+<p>The original <a href="https://wordpress.org/plugins/tantan-s3/">Amazon S3 for WordPress plugin by
+tantan</a> hadn't been updated since
+2009. But it was forked, which was also then forked, and now we have
+<a href="https://wordpress.org/plugins/amazon-s3-and-cloudfront/">WP Offload S3</a> which
+claims to be completely rewritten. Looking at the tantan-s3 code, it may have
+been easier for me to start with that. However, the WP Offload S3 plugin uses
+what I believe are official AWS PHP libraries. It's also a recently updaded
+plugin.</p>
+<p>After about 30 minutes playing around with S3, Google Cloud Storage, and the WP
+Offload S3 plugin (and the associated <a href="https://wordpress.org/plugins/amazon-web-services/">Amazon Web
+Services</a> plugin), I was
+able to get it uploading to Google Cloud Storage, over the S3 API! The main
+battle was getting it to communicate with Google's endpoint, instead of
+Amazon's endpoint. One of the big differences between Amazon and Google, is
+that Amazon's endpoints are dependent on the region you are using. Google
+appears to have a single endpoint, which they presumably route to your closest
+Google datacentre.</p>
+<p>I may still try to create a native Google Cloud Storage plugin for wordpress,
+but for now, this is a start!</p>
+<p>2 Small Patches
+<a href="https://github.com/timwhite/wp-amazon-s3-and-cloudfront/commit/8b55698c8e937a585646d8ecd0682db088c8dc76">here</a>
+and
+<a href="https://github.com/timwhite/wp-amazon-web-services/commit/56cc81e58894150e5e8e89a3f59e25458d956080">here</a>
+and I now have an Amazon S3 plugin uploading to Google instead of Amazon!</p>
+<p><strong>And, as a bonus, if you've read this far, and you are applying this to an
+existing site. You <em>can</em> upload existing media with the S3 plugin. All media
+libraries have an entry in the wp_posts table with post_type set to attachment.
+If you fetch all the ID's for the items you wish to upload, and have the handy
+<a href="http://wp-cli.org">wp-cli.org</a> tool installed, it's as simple as running the following tool for
+each ID, in this case the media item ID is 7.</strong></p>
+<div class="highlight"><pre>wp <span class="nb">eval</span> <span class="s1">&#39;do_action(&#39;</span>wp_update_attachment_metadata<span class="s1">&#39;, null, 7);&#39;</span>
+</pre></div>
+
+
+<p>Or a quick bash script to upload all attachments</p>
+<div class="highlight"><pre><span class="k">for</span> i in <span class="k">$(</span>wp-cli.phar db query <span class="s2">&quot;SELECT ID FROM wp_posts WHERE</span>
+<span class="s2">post_type=&#39;attachment&#39;;&quot;</span>  <span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="nv">$i</span><span class="p">;</span> wp-cli.phar <span class="nb">eval</span>
+<span class="s2">&quot;do_action(&#39;wp_update_attachment_metadata&#39;, null, </span><span class="nv">$i</span><span class="s2">);&quot;</span><span class="p">;</span> <span class="k">done</span>
+</pre></div>
+
+
+<p>Edit: Seems some issues with V2 vs V4 signatures. Not sure what changed but I
+made a few more commits, you'll probably want to look at GitHub for the extra
+changes</p>
+<p>For reference, those above patches are also here:</p>
+<div class="highlight"><pre>c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
+From: Tim White &lt;tim@whiteitsolutions.com.au&gt;
+Date: Mon, 5 Oct 2015 13:23:28 +1000
+Subject: [PATCH] Changes for using Google Cloud Storage instead of Amazon S3
+
+<span class="gd">---</span>
+ vendor/aws/Aws/Common/Client/ClientBuilder.php       | 2 +-
+ vendor/aws/Aws/Common/Resources/public-endpoints.php | 3 +++
+ vendor/aws/Aws/S3/Resources/s3-2006-03-01.php        | 7 ++++++-
+ 3 files changed, 10 insertions(+), 2 deletions(-)
+
+<span class="gh">diff --git a/vendor/aws/Aws/Common/Client/ClientBuilder.php</span>
+b/vendor/aws/Aws/Common/Client/ClientBuilder.php
+<span class="gh">index 34647e9..1e900ac 100644</span>
+<span class="gd">--- a/vendor/aws/Aws/Common/Client/ClientBuilder.php</span>
+<span class="gi">+++ b/vendor/aws/Aws/Common/Client/ClientBuilder.php</span>
+<span class="gu">@@ -446,7 +446,7 @@ private function handleRegion(Collection $config)</span>
+                 &#39;A region is required when using &#39; .
+$description-&gt;getData(&#39;serviceFullName&#39;)
+             );
+         } elseif ($global &amp;&amp; !$region) {
+<span class="gd">-            $config[Options::REGION] = &#39;us-east-1&#39;;</span>
+<span class="gi">+            $config[Options::REGION] = &#39;global&#39;;</span>
+         }
+     }
+
+<span class="gh">diff --git a/vendor/aws/Aws/Common/Resources/public-endpoints.php</span>
+b/vendor/aws/Aws/Common/Resources/public-endpoints.php
+<span class="gh">index d939f1f..122a02c 100644</span>
+<span class="gd">--- a/vendor/aws/Aws/Common/Resources/public-endpoints.php</span>
+<span class="gi">+++ b/vendor/aws/Aws/Common/Resources/public-endpoints.php</span>
+<span class="gu">@@ -54,6 +54,9 @@</span>
+         &#39;us-east-1/s3&#39; =&gt; array(
+             &#39;endpoint&#39; =&gt; &#39;s3.amazonaws.com&#39;
+         ),
+<span class="gi">+        &#39;global/s3&#39; =&gt; array(</span>
+<span class="gi">+            &#39;endpoint&#39; =&gt; &#39;storage.googleapis.com&#39;</span>
+<span class="gi">+        ),</span>
+         &#39;us-west-1/s3&#39; =&gt; array(
+             &#39;endpoint&#39; =&gt; &#39;s3-{region}.amazonaws.com&#39;
+         ),
+<span class="gh">diff --git a/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php</span>
+b/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php
+<span class="gh">index 5699058..d9af677 100644</span>
+<span class="gd">--- a/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php</span>
+<span class="gi">+++ b/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php</span>
+<span class="gu">@@ -21,10 +21,15 @@</span>
+     &#39;serviceAbbreviation&#39; =&gt; &#39;Amazon S3&#39;,
+     &#39;serviceType&#39; =&gt; &#39;rest-xml&#39;,
+     &#39;timestampFormat&#39; =&gt; &#39;rfc822&#39;,
+<span class="gd">-    &#39;globalEndpoint&#39; =&gt; &#39;s3.amazonaws.com&#39;,</span>
+<span class="gi">+    &#39;globalEndpoint&#39; =&gt; &#39;storage.googleapis.com&#39;,</span>
+     &#39;signatureVersion&#39; =&gt; &#39;s3&#39;,
+     &#39;namespace&#39; =&gt; &#39;S3&#39;,
+     &#39;regions&#39; =&gt; array(
+<span class="gi">+        &#39;global&#39; =&gt; array(</span>
+<span class="gi">+            &#39;http&#39; =&gt; true,</span>
+<span class="gi">+            &#39;https&#39; =&gt; true,</span>
+<span class="gi">+            &#39;hostname&#39; =&gt; &#39;storage.googleapis.com&#39;,</span>
+<span class="gi">+        ),</span>
+         &#39;us-east-1&#39; =&gt; array(
+             &#39;http&#39; =&gt; true,
+             &#39;https&#39; =&gt; true,
+</pre></div>
+
+
+<div class="highlight"><pre>From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
+From: Tim White &lt;tim@whiteitsolutions.com.au&gt;
+Date: Mon, 5 Oct 2015 13:12:25 +1000
+Subject: [PATCH] Minor changes to make it work with Google Cloud Storage
+ instead
+
+<span class="gd">---</span>
+ classes/amazon-s3-and-cloudfront.php | 8 ++++----
+ view/domain-setting.php              | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+<span class="gh">diff --git a/classes/amazon-s3-and-cloudfront.php</span>
+b/classes/amazon-s3-and-cloudfront.php
+<span class="gh">index c0553d2..b3f62b2 100644</span>
+<span class="gd">--- a/classes/amazon-s3-and-cloudfront.php</span>
+<span class="gi">+++ b/classes/amazon-s3-and-cloudfront.php</span>
+<span class="gu">@@ -55,7 +55,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {</span>
+    const DEFAULT_ACL = &#39;public-read&#39;;
+    const PRIVATE_ACL = &#39;private&#39;;
+    const DEFAULT_EXPIRES = 900;
+<span class="gd">-   const DEFAULT_REGION = &#39;us-east-1&#39;;</span>
+<span class="gi">+   const DEFAULT_REGION = &#39;global&#39;;</span>
+
+    const SETTINGS_KEY = &#39;tantan_wordpress_s3&#39;;
+
+<span class="gu">@@ -998,7 +998,7 @@ function get_file_prefix( $time = null, $post_id = null ) {</span>
+     * @return string
+     */
+    function get_s3_url_prefix( $region = &#39;&#39;, $expires = null ) {
+<span class="gd">-       $prefix = &#39;s3&#39;;</span>
+<span class="gi">+       $prefix = &#39;storage&#39;;</span>
+
+        if ( &#39;&#39; !== $region ) {
+            $delimiter = &#39;-&#39;;
+<span class="gu">@@ -1046,10 +1046,10 @@ function get_s3_url_domain( $bucket, $region = &#39;&#39;,</span>
+$expires = null, $args = arra
+            $s3_domain = $bucket;
+        }
+        elseif ( &#39;path&#39; === $args[&#39;domain&#39;] || $this-&gt;use_ssl( $args[&#39;ssl&#39;] ) )
+{
+<span class="gd">-           $s3_domain = $prefix . &#39;.amazonaws.com/&#39; . $bucket;</span>
+<span class="gi">+           $s3_domain = $prefix . &#39;.googleapis.com/&#39; . $bucket;</span>
+        }
+        else {
+<span class="gd">-           $s3_domain = $bucket . &#39;.&#39; . $prefix . &#39;.amazonaws.com&#39;;</span>
+<span class="gi">+           $s3_domain = $bucket . &#39;.&#39; . $prefix . &#39;.googleapis.com&#39;;</span>
+        }
+
+        return $s3_domain;
+<span class="gh">diff --git a/view/domain-setting.php b/view/domain-setting.php</span>
+<span class="gh">index 44019c3..266fef4 100644</span>
+<span class="gd">--- a/view/domain-setting.php</span>
+<span class="gi">+++ b/view/domain-setting.php</span>
+<span class="gu">@@ -21,12 +21,12 @@</span>
+            &lt;label class=&quot;subdomain-wrap &lt;?php echo $subdomain_class; // xss
+ok?&gt;&quot;&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;domain&quot; value=&quot;subdomain&quot; &lt;?php
+checked( $domain, &#39;subdomain&#39; ); ?&gt; &lt;?php echo $subdomain_disabled; // xss ok
+?&gt;&gt;
+                &lt;?php _e( &#39;Bucket name as subdomain&#39;,
+&#39;amazon-s3-and-cloudfront&#39; ); ?&gt;
+<span class="gd">-               &lt;p&gt;http://bucket-name.s3.amazon.com/&amp;hellip;&lt;/p&gt;</span>
+<span class="gi">+               &lt;p&gt;http://bucket-name.storage.googleapis.com/&amp;hellip;&lt;/p&gt;</span>
+            &lt;/label&gt;
+            &lt;label&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;domain&quot; value=&quot;path&quot; &lt;?php checked(
+$domain, &#39;path&#39; ); ?&gt;&gt;
+                &lt;?php _e( &#39;Bucket name in path&#39;, &#39;amazon-s3-and-cloudfront&#39; );
+?&gt;
+<span class="gd">-               &lt;p&gt;http://s3.amazon.com/bucket-name/&amp;hellip;&lt;/p&gt;</span>
+<span class="gi">+               &lt;p&gt;http://storage.googleapis.com/bucket-name/&amp;hellip;&lt;/p&gt;</span>
+            &lt;/label&gt;
+            &lt;label&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;domain&quot; value=&quot;virtual-host&quot; &lt;?php
+checked( $domain, &#39;virtual-host&#39; ); ?&gt;&gt;
+</pre></div>
+    </div><!-- /.entry-content -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<div class="g-comments"
+    data-href = "http://tim.purewhite.id.au/2015/10/wordpress-google-cloud-storage/"
+    data-width = "650"
+    data-first_party_property = "BLOGGER"
+    data-view_type = "FILTERED_POSTMOD">
+</div>
+
+  </article>
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    <a href="https://github.com/purewhite2010/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+  </body>
+</html>

@@ -1,5 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/blog.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2015-02-21T00:00:00+10:00</updated><entry><title>Arduino wireless LiPo monitoring</title><link href="http://tim.purewhite.id.au/2015/02/arduino-lipo-wireless-monitor/" rel="alternate"></link><updated>2015-02-21T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2015-02-21:2015/02/arduino-lipo-wireless-monitor/</id><summary type="html">&lt;p&gt;&lt;img alt="Crashed RC Car" src="http://tim.purewhite.id.au/images/2015/IMG_20150221_150813_edit.jpg" /&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2015-10-05T00:00:00+10:00</updated><entry><title>Wordpress Media in Google Cloud Storage</title><link href="//tim.purewhite.id.au/2015/10/wordpress-google-cloud-storage/" rel="alternate"></link><updated>2015-10-05T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2015-10-05:2015/10/wordpress-google-cloud-storage/</id><summary type="html">&lt;p&gt;One of the big challenges with Wordpress in the cloud, is the media we upload.
+As soon as we upload media files, the Wordpress instance has data that isn't
+stored in the database. This prevents us for example having a docker Wordpress
+install that we can scale up as required, without some method for syncronising
+the wp-content/uploads directory. &lt;a href="https://wordpress.org/plugins/wp2cloud-wordpress-to-cloud/"&gt;WP2Cloud&lt;/a&gt;
+solves this with the ClouSE storage engine, that attaches to MySQL. Without the Clouse storage
+engine, the plugin is dead in the water. Which is really sad, because it
+supports Amazon S3, and Google Cloud Storage.&lt;/p&gt;
+&lt;p&gt;Then there are a number of different plugins available that try to solve this
+issue, some with Amazon S3 support, others with Google Drive support, and
+others with OpenStack's Object Storage, Swift.&lt;/p&gt;
+&lt;p&gt;However, very little properly supports Google Cloud Storage, which is different 
+from Google Drive. Why do I care about Google Cloud Storage? Firstly, it's
+cheaper than Amazon S3. Secondly, I have a number of other business solutions
+with Google, and sometimes keeping things together makes it easier. Lastly,
+because no one seems to be doing, so lets try!&lt;/p&gt;
+&lt;p&gt;Initially, I thought I'd have to write an entire plugin myself. Thankfully,
+some plugins are GPLed so I can look at the code and get an idea of what I need
+for a basic plugin. And then, I stumbled upon the Golden Key.
+&lt;a href="https://cloud.google.com/storage/docs/migrating"&gt;Migrating from Amazon S3 to Google Cloud Storage&lt;/a&gt;.
+Google has done something that I had hoped, but hadn't found in my initial
+searches. They support the Amazon S3 XML API!&lt;/p&gt;
+&lt;p&gt;The original &lt;a href="https://wordpress.org/plugins/tantan-s3/"&gt;Amazon S3 for WordPress plugin by
+tantan&lt;/a&gt; hadn't been updated since
+2009. But it was forked, which was also then forked, and now we have
+&lt;a href="https://wordpress.org/plugins/amazon-s3-and-cloudfront/"&gt;WP Offload S3&lt;/a&gt; which
+claims to be completely rewritten. Looking at the tantan-s3 code, it may have
+been easier for me to start with that. However, the WP Offload S3 plugin uses
+what I believe are official AWS PHP libraries. It's also a recently updaded
+plugin.&lt;/p&gt;
+&lt;p&gt;After about 30 minutes playing around with S3, Google Cloud Storage, and the WP
+Offload S3 plugin (and the associated &lt;a href="https://wordpress.org/plugins/amazon-web-services/"&gt;Amazon Web
+Services&lt;/a&gt; plugin), I was
+able to get it uploading to Google Cloud Storage, over the S3 API! The main
+battle was getting it to communicate with Google's endpoint, instead of
+Amazon's endpoint. One of the big differences between Amazon and Google, is
+that Amazon's endpoints are dependent on the region you are using. Google
+appears to have a single endpoint, which they presumably route to your closest
+Google datacentre.&lt;/p&gt;
+&lt;p&gt;I may still try to create a native Google Cloud Storage plugin for wordpress,
+but for now, this is a start!&lt;/p&gt;
+&lt;p&gt;2 Small Patches
+&lt;a href="https://github.com/timwhite/wp-amazon-s3-and-cloudfront/commit/8b55698c8e937a585646d8ecd0682db088c8dc76"&gt;here&lt;/a&gt;
+and
+&lt;a href="https://github.com/timwhite/wp-amazon-web-services/commit/56cc81e58894150e5e8e89a3f59e25458d956080"&gt;here&lt;/a&gt;
+and I now have an Amazon S3 plugin uploading to Google instead of Amazon!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;And, as a bonus, if you've read this far, and you are applying this to an
+existing site. You &lt;em&gt;can&lt;/em&gt; upload existing media with the S3 plugin. All media
+libraries have an entry in the wp_posts table with post_type set to attachment.
+If you fetch all the ID's for the items you wish to upload, and have the handy
+&lt;a href="http://wp-cli.org"&gt;wp-cli.org&lt;/a&gt; tool installed, it's as simple as running the following tool for
+each ID, in this case the media item ID is 7.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wp &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;do_action(&amp;#39;&lt;/span&gt;wp_update_attachment_metadata&lt;span class="s1"&gt;&amp;#39;, null, 7);&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Or a quick bash script to upload all attachments&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="k"&gt;$(&lt;/span&gt;wp-cli.phar db query &lt;span class="s2"&gt;&amp;quot;SELECT ID FROM wp_posts WHERE&lt;/span&gt;
+&lt;span class="s2"&gt;post_type=&amp;#39;attachment&amp;#39;;&amp;quot;&lt;/span&gt;  &lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; wp-cli.phar &lt;span class="nb"&gt;eval&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;do_action(&amp;#39;wp_update_attachment_metadata&amp;#39;, null, &lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="s2"&gt;);&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Edit: Seems some issues with V2 vs V4 signatures. Not sure what changed but I
+made a few more commits, you'll probably want to look at GitHub for the extra
+changes&lt;/p&gt;
+&lt;p&gt;For reference, those above patches are also here:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
+From: Tim White &amp;lt;tim@whiteitsolutions.com.au&amp;gt;
+Date: Mon, 5 Oct 2015 13:23:28 +1000
+Subject: [PATCH] Changes for using Google Cloud Storage instead of Amazon S3
+
+&lt;span class="gd"&gt;---&lt;/span&gt;
+ vendor/aws/Aws/Common/Client/ClientBuilder.php       | 2 +-
+ vendor/aws/Aws/Common/Resources/public-endpoints.php | 3 +++
+ vendor/aws/Aws/S3/Resources/s3-2006-03-01.php        | 7 ++++++-
+ 3 files changed, 10 insertions(+), 2 deletions(-)
+
+&lt;span class="gh"&gt;diff --git a/vendor/aws/Aws/Common/Client/ClientBuilder.php&lt;/span&gt;
+b/vendor/aws/Aws/Common/Client/ClientBuilder.php
+&lt;span class="gh"&gt;index 34647e9..1e900ac 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/vendor/aws/Aws/Common/Client/ClientBuilder.php&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/vendor/aws/Aws/Common/Client/ClientBuilder.php&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -446,7 +446,7 @@ private function handleRegion(Collection $config)&lt;/span&gt;
+                 &amp;#39;A region is required when using &amp;#39; .
+$description-&amp;gt;getData(&amp;#39;serviceFullName&amp;#39;)
+             );
+         } elseif ($global &amp;amp;&amp;amp; !$region) {
+&lt;span class="gd"&gt;-            $config[Options::REGION] = &amp;#39;us-east-1&amp;#39;;&lt;/span&gt;
+&lt;span class="gi"&gt;+            $config[Options::REGION] = &amp;#39;global&amp;#39;;&lt;/span&gt;
+         }
+     }
+
+&lt;span class="gh"&gt;diff --git a/vendor/aws/Aws/Common/Resources/public-endpoints.php&lt;/span&gt;
+b/vendor/aws/Aws/Common/Resources/public-endpoints.php
+&lt;span class="gh"&gt;index d939f1f..122a02c 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/vendor/aws/Aws/Common/Resources/public-endpoints.php&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/vendor/aws/Aws/Common/Resources/public-endpoints.php&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -54,6 +54,9 @@&lt;/span&gt;
+         &amp;#39;us-east-1/s3&amp;#39; =&amp;gt; array(
+             &amp;#39;endpoint&amp;#39; =&amp;gt; &amp;#39;s3.amazonaws.com&amp;#39;
+         ),
+&lt;span class="gi"&gt;+        &amp;#39;global/s3&amp;#39; =&amp;gt; array(&lt;/span&gt;
+&lt;span class="gi"&gt;+            &amp;#39;endpoint&amp;#39; =&amp;gt; &amp;#39;storage.googleapis.com&amp;#39;&lt;/span&gt;
+&lt;span class="gi"&gt;+        ),&lt;/span&gt;
+         &amp;#39;us-west-1/s3&amp;#39; =&amp;gt; array(
+             &amp;#39;endpoint&amp;#39; =&amp;gt; &amp;#39;s3-{region}.amazonaws.com&amp;#39;
+         ),
+&lt;span class="gh"&gt;diff --git a/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php&lt;/span&gt;
+b/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php
+&lt;span class="gh"&gt;index 5699058..d9af677 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -21,10 +21,15 @@&lt;/span&gt;
+     &amp;#39;serviceAbbreviation&amp;#39; =&amp;gt; &amp;#39;Amazon S3&amp;#39;,
+     &amp;#39;serviceType&amp;#39; =&amp;gt; &amp;#39;rest-xml&amp;#39;,
+     &amp;#39;timestampFormat&amp;#39; =&amp;gt; &amp;#39;rfc822&amp;#39;,
+&lt;span class="gd"&gt;-    &amp;#39;globalEndpoint&amp;#39; =&amp;gt; &amp;#39;s3.amazonaws.com&amp;#39;,&lt;/span&gt;
+&lt;span class="gi"&gt;+    &amp;#39;globalEndpoint&amp;#39; =&amp;gt; &amp;#39;storage.googleapis.com&amp;#39;,&lt;/span&gt;
+     &amp;#39;signatureVersion&amp;#39; =&amp;gt; &amp;#39;s3&amp;#39;,
+     &amp;#39;namespace&amp;#39; =&amp;gt; &amp;#39;S3&amp;#39;,
+     &amp;#39;regions&amp;#39; =&amp;gt; array(
+&lt;span class="gi"&gt;+        &amp;#39;global&amp;#39; =&amp;gt; array(&lt;/span&gt;
+&lt;span class="gi"&gt;+            &amp;#39;http&amp;#39; =&amp;gt; true,&lt;/span&gt;
+&lt;span class="gi"&gt;+            &amp;#39;https&amp;#39; =&amp;gt; true,&lt;/span&gt;
+&lt;span class="gi"&gt;+            &amp;#39;hostname&amp;#39; =&amp;gt; &amp;#39;storage.googleapis.com&amp;#39;,&lt;/span&gt;
+&lt;span class="gi"&gt;+        ),&lt;/span&gt;
+         &amp;#39;us-east-1&amp;#39; =&amp;gt; array(
+             &amp;#39;http&amp;#39; =&amp;gt; true,
+             &amp;#39;https&amp;#39; =&amp;gt; true,
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
+From: Tim White &amp;lt;tim@whiteitsolutions.com.au&amp;gt;
+Date: Mon, 5 Oct 2015 13:12:25 +1000
+Subject: [PATCH] Minor changes to make it work with Google Cloud Storage
+ instead
+
+&lt;span class="gd"&gt;---&lt;/span&gt;
+ classes/amazon-s3-and-cloudfront.php | 8 ++++----
+ view/domain-setting.php              | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+&lt;span class="gh"&gt;diff --git a/classes/amazon-s3-and-cloudfront.php&lt;/span&gt;
+b/classes/amazon-s3-and-cloudfront.php
+&lt;span class="gh"&gt;index c0553d2..b3f62b2 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/classes/amazon-s3-and-cloudfront.php&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/classes/amazon-s3-and-cloudfront.php&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -55,7 +55,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {&lt;/span&gt;
+    const DEFAULT_ACL = &amp;#39;public-read&amp;#39;;
+    const PRIVATE_ACL = &amp;#39;private&amp;#39;;
+    const DEFAULT_EXPIRES = 900;
+&lt;span class="gd"&gt;-   const DEFAULT_REGION = &amp;#39;us-east-1&amp;#39;;&lt;/span&gt;
+&lt;span class="gi"&gt;+   const DEFAULT_REGION = &amp;#39;global&amp;#39;;&lt;/span&gt;
+
+    const SETTINGS_KEY = &amp;#39;tantan_wordpress_s3&amp;#39;;
+
+&lt;span class="gu"&gt;@@ -998,7 +998,7 @@ function get_file_prefix( $time = null, $post_id = null ) {&lt;/span&gt;
+     * @return string
+     */
+    function get_s3_url_prefix( $region = &amp;#39;&amp;#39;, $expires = null ) {
+&lt;span class="gd"&gt;-       $prefix = &amp;#39;s3&amp;#39;;&lt;/span&gt;
+&lt;span class="gi"&gt;+       $prefix = &amp;#39;storage&amp;#39;;&lt;/span&gt;
+
+        if ( &amp;#39;&amp;#39; !== $region ) {
+            $delimiter = &amp;#39;-&amp;#39;;
+&lt;span class="gu"&gt;@@ -1046,10 +1046,10 @@ function get_s3_url_domain( $bucket, $region = &amp;#39;&amp;#39;,&lt;/span&gt;
+$expires = null, $args = arra
+            $s3_domain = $bucket;
+        }
+        elseif ( &amp;#39;path&amp;#39; === $args[&amp;#39;domain&amp;#39;] || $this-&amp;gt;use_ssl( $args[&amp;#39;ssl&amp;#39;] ) )
+{
+&lt;span class="gd"&gt;-           $s3_domain = $prefix . &amp;#39;.amazonaws.com/&amp;#39; . $bucket;&lt;/span&gt;
+&lt;span class="gi"&gt;+           $s3_domain = $prefix . &amp;#39;.googleapis.com/&amp;#39; . $bucket;&lt;/span&gt;
+        }
+        else {
+&lt;span class="gd"&gt;-           $s3_domain = $bucket . &amp;#39;.&amp;#39; . $prefix . &amp;#39;.amazonaws.com&amp;#39;;&lt;/span&gt;
+&lt;span class="gi"&gt;+           $s3_domain = $bucket . &amp;#39;.&amp;#39; . $prefix . &amp;#39;.googleapis.com&amp;#39;;&lt;/span&gt;
+        }
+
+        return $s3_domain;
+&lt;span class="gh"&gt;diff --git a/view/domain-setting.php b/view/domain-setting.php&lt;/span&gt;
+&lt;span class="gh"&gt;index 44019c3..266fef4 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/view/domain-setting.php&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/view/domain-setting.php&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -21,12 +21,12 @@&lt;/span&gt;
+            &amp;lt;label class=&amp;quot;subdomain-wrap &amp;lt;?php echo $subdomain_class; // xss
+ok?&amp;gt;&amp;quot;&amp;gt;
+                &amp;lt;input type=&amp;quot;radio&amp;quot; name=&amp;quot;domain&amp;quot; value=&amp;quot;subdomain&amp;quot; &amp;lt;?php
+checked( $domain, &amp;#39;subdomain&amp;#39; ); ?&amp;gt; &amp;lt;?php echo $subdomain_disabled; // xss ok
+?&amp;gt;&amp;gt;
+                &amp;lt;?php _e( &amp;#39;Bucket name as subdomain&amp;#39;,
+&amp;#39;amazon-s3-and-cloudfront&amp;#39; ); ?&amp;gt;
+&lt;span class="gd"&gt;-               &amp;lt;p&amp;gt;http://bucket-name.s3.amazon.com/&amp;amp;hellip;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+               &amp;lt;p&amp;gt;http://bucket-name.storage.googleapis.com/&amp;amp;hellip;&amp;lt;/p&amp;gt;&lt;/span&gt;
+            &amp;lt;/label&amp;gt;
+            &amp;lt;label&amp;gt;
+                &amp;lt;input type=&amp;quot;radio&amp;quot; name=&amp;quot;domain&amp;quot; value=&amp;quot;path&amp;quot; &amp;lt;?php checked(
+$domain, &amp;#39;path&amp;#39; ); ?&amp;gt;&amp;gt;
+                &amp;lt;?php _e( &amp;#39;Bucket name in path&amp;#39;, &amp;#39;amazon-s3-and-cloudfront&amp;#39; );
+?&amp;gt;
+&lt;span class="gd"&gt;-               &amp;lt;p&amp;gt;http://s3.amazon.com/bucket-name/&amp;amp;hellip;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+               &amp;lt;p&amp;gt;http://storage.googleapis.com/bucket-name/&amp;amp;hellip;&amp;lt;/p&amp;gt;&lt;/span&gt;
+            &amp;lt;/label&amp;gt;
+            &amp;lt;label&amp;gt;
+                &amp;lt;input type=&amp;quot;radio&amp;quot; name=&amp;quot;domain&amp;quot; value=&amp;quot;virtual-host&amp;quot; &amp;lt;?php
+checked( $domain, &amp;#39;virtual-host&amp;#39; ); ?&amp;gt;&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="wordpress"></category><category term="google cloud storage"></category><category term="s3"></category><category term="media"></category><category term="uploads"></category><category term="google"></category></entry><entry><title>Arduino wireless LiPo monitoring</title><link href="//tim.purewhite.id.au/2015/02/arduino-lipo-wireless-monitor/" rel="alternate"></link><updated>2015-02-21T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2015-02-21:2015/02/arduino-lipo-wireless-monitor/</id><summary type="html">&lt;p&gt;&lt;img alt="Crashed RC Car" src="//tim.purewhite.id.au/images/2015/IMG_20150221_150813_edit.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;Over the last few months, I've been getting back into electronics. It's really
 not fair what's available now, that wasn't available when I was a kid!
 Arduino's for a start are a very easy way to get into microcontrollers. And
@@ -30,7 +238,7 @@ voltage to continue driving, and the LiPo hadn't warmed up at all.&lt;/p&gt;
 &lt;p&gt;The next step is to remove the RC circuitry, work out what I can use, and then
 replace it with circuitry that I can control via the Arduino. I also have some
 Ultrasonic sensors for obsticle avoidance.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Receiving Arduino Uno" src="http://tim.purewhite.id.au/images/2015/IMG_20150221_151115_edit.jpg" /&gt;&lt;/p&gt;</summary><category term="arduino"></category><category term="electronics"></category><category term="LiPo"></category><category term="nrf24l01"></category></entry><entry><title>Wordpress to Pelican</title><link href="http://tim.purewhite.id.au/2014/03/wordpress-to-pelican/" rel="alternate"></link><updated>2014-03-29T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2014-03-29:2014/03/wordpress-to-pelican/</id><summary type="html">&lt;p&gt;It's been awhile since I last blogged. Since then, I've started a full time job
+&lt;p&gt;&lt;img alt="Receiving Arduino Uno" src="//tim.purewhite.id.au/images/2015/IMG_20150221_151115_edit.jpg" /&gt;&lt;/p&gt;</summary><category term="arduino"></category><category term="electronics"></category><category term="LiPo"></category><category term="nrf24l01"></category></entry><entry><title>Wordpress to Pelican</title><link href="//tim.purewhite.id.au/2014/03/wordpress-to-pelican/" rel="alternate"></link><updated>2014-03-29T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2014-03-29:2014/03/wordpress-to-pelican/</id><summary type="html">&lt;p&gt;It's been awhile since I last blogged. Since then, I've started a full time job
 as a Systems Administrator. This means I have less time for maintaining my own
 servers. So I've finally taken the plunge migrating some of the more static
 sites to static. For example this Technical blog will now be a static site. 
@@ -48,7 +256,7 @@ some of the other options so this allows me to hack away on the code if I want t
 &lt;p&gt;Regarding the current lack of comments on the blog. I'm still thinking of the best
 way to handle that. I may just put a Google+ comments plugin on, as I really
 don't like Disqus. I may also just not put dynamic comments on and use Github issues
-for discussing posts as some others have done.&lt;/p&gt;</summary><category term="wordpress"></category><category term="pelican"></category></entry><entry><title>"Windows" is full of bloat</title><link href="http://tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-05-18:2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
+for discussing posts as some others have done.&lt;/p&gt;</summary><category term="wordpress"></category><category term="pelican"></category></entry><entry><title>"Windows" is full of bloat</title><link href="//tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2013-05-18:2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
 computer, in particular lots of software installs and uninstalls to
 cleanup a slow computer.&lt;/p&gt;
 &lt;p&gt;Now before you jump the gun, I'm not talking about Windows the operating
@@ -73,7 +281,7 @@ bloat, and that let you install and uninstall just that software that
 you asked for without trying to push other software on you? I'll happily
 keep my Linux world, where software does what you ask, and nothing more.&lt;/p&gt;
 &lt;p&gt;And if you live in the Windows world, seriously, I think it's well past
-time to get out, but you can still get out now!&lt;/p&gt;</summary><category term="bloat"></category><category term="windows"></category></entry><entry><title>When did 'Linux' start moving away from it's simplicity?</title><link href="http://tim.purewhite.id.au/2012/05/when-did-linux-start-moving-away-from-its-simplicity/" rel="alternate"></link><updated>2012-05-08T19:46:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2012-05-08:2012/05/when-did-linux-start-moving-away-from-its-simplicity/</id><summary type="html">&lt;p&gt;Today I had the joy of trying to change a users desktop environment from
+time to get out, but you can still get out now!&lt;/p&gt;</summary><category term="bloat"></category><category term="windows"></category></entry><entry><title>When did 'Linux' start moving away from it's simplicity?</title><link href="//tim.purewhite.id.au/2012/05/when-did-linux-start-moving-away-from-its-simplicity/" rel="alternate"></link><updated>2012-05-08T19:46:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2012-05-08:2012/05/when-did-linux-start-moving-away-from-its-simplicity/</id><summary type="html">&lt;p&gt;Today I had the joy of trying to change a users desktop environment from
 Gnome, to Cinnamon, via ssh. At first I thought it would be easy, change
 the default desktop environment in lightdm.conf and restart. Fail. Ok,
 so where is a users desktop environment preference stored? .dmrc, or at
@@ -120,7 +328,7 @@ something that sets their preference!&lt;/p&gt;
 [http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
 some more thoughts on dbus.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Google+ (Google's Social Network)</title><link href="http://tim.purewhite.id.au/2011/07/google-googles-social-network/" rel="alternate"></link><updated>2011-07-15T10:57:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-07-15:2011/07/google-googles-social-network/</id><summary type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Google+ (Google's Social Network)</title><link href="//tim.purewhite.id.au/2011/07/google-googles-social-network/" rel="alternate"></link><updated>2011-07-15T10:57:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-07-15:2011/07/google-googles-social-network/</id><summary type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
 what it is, or you may have none, so hopefully I can answer some of your
 questions and help you get started.&lt;/p&gt;
 &lt;p&gt;Firstly, Google+ is Google's latest entry into social networking.
@@ -184,7 +392,7 @@ you to Google+. Please be patient as I need to manually invite each
 person unless I can work out some way to automate this. I am happy to
 invite people I don't know, however please don't be offended if you
 don't end up in my circles.&lt;/p&gt;
-&lt;p&gt;(Form removed as invites no longer needed)&lt;/p&gt;</summary><category term="facebook"></category><category term="google+"></category><category term="googleplus"></category><category term="invites"></category><category term="social network"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="http://tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-02:2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
+&lt;p&gt;(Form removed as invites no longer needed)&lt;/p&gt;</summary><category term="facebook"></category><category term="google+"></category><category term="googleplus"></category><category term="invites"></category><category term="social network"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="//tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-06-02:2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
 easy for students to afford Microsoft products so they don't need to
 pirate them (and steal them). That's fine as long as it works and
 Microsoft don't steal from us!&lt;/p&gt;
@@ -208,7 +416,7 @@ from trying again and again. You could easily have a few thousand
 dollars in pre-auth as you keep checking the details, sure they are
 correct, you hit submit.&lt;/p&gt;
 &lt;p&gt;Hopefully they can fix it faster than the amount of time I spent on hold
-just to be told they can't do anything!&lt;/p&gt;</summary><category term="digital river"></category><category term="micro$oft"></category><category term="microsoft"></category><category term="steal"></category></entry><entry><title>What it takes to keep things running. (How to reduce comment/wiki spam)</title><link href="http://tim.purewhite.id.au/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/" rel="alternate"></link><updated>2011-04-05T22:13:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-05:2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/</id><summary type="html">&lt;p&gt;I recently pushed out a new version of the &lt;a href="http://hotspot.purewhite.id.au/"&gt;GRASE Hotspot&lt;/a&gt;. I spent
+just to be told they can't do anything!&lt;/p&gt;</summary><category term="digital river"></category><category term="micro$oft"></category><category term="microsoft"></category><category term="steal"></category></entry><entry><title>What it takes to keep things running. (How to reduce comment/wiki spam)</title><link href="//tim.purewhite.id.au/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/" rel="alternate"></link><updated>2011-04-05T22:13:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-04-05:2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/</id><summary type="html">&lt;p&gt;I recently pushed out a new version of the &lt;a href="http://hotspot.purewhite.id.au/"&gt;GRASE Hotspot&lt;/a&gt;. I spent
 lots of time working on rewriting the splash/welcome page, and login
 forms so that they would work even with javascript disabled, and allow
 you to force it into the non javascript version if you are having

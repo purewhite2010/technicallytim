@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="http://tim.purewhite.id.au/" rel="alternate"></link><link href="http://tim.purewhite.id.au/feeds/blog-projectx.atom.xml" rel="self"></link><id>http://tim.purewhite.id.au/</id><updated>2011-08-22T16:53:00+10:00</updated><entry><title>Day 6</title><link href="http://tim.purewhite.id.au/2011/08/day-6/" rel="alternate"></link><updated>2011-08-22T16:53:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-22:2011/08/day-6/</id><summary type="html">&lt;p&gt;So not much has happened over the weekend due to it being very busy.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog-projectx.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2011-08-22T16:53:00+10:00</updated><entry><title>Day 6</title><link href="//tim.purewhite.id.au/2011/08/day-6/" rel="alternate"></link><updated>2011-08-22T16:53:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-08-22:2011/08/day-6/</id><summary type="html">&lt;p&gt;So not much has happened over the weekend due to it being very busy.
 Today the mini-DVI to HDMI adapter arrived, so I could finally "dock"
 the Macbook at my desk. After "docking" it with my monitor, keyboard and
 mouse, it suddenly feels less like a laptop and more like a desktop!
@@ -33,7 +33,7 @@ for me. I've installed enough apps to get me going, and I'm forcing
 myself to learn all the Mac shortcuts. Now I'll use it for all my
 Assignments this week as much as possible, and I think by the end of the
 week, I'll probably be using my Linux machine via VNC on my Mac!&lt;/p&gt;
-&lt;p&gt;&lt;small&gt;&lt;em&gt;Powered by&lt;/em&gt; &lt;a href="http://www.qumana.com/"&gt;Qumana&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;</summary></entry><entry><title>Day 3</title><link href="http://tim.purewhite.id.au/2011/08/day-3/" rel="alternate"></link><updated>2011-08-19T12:15:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-19:2011/08/day-3/</id><summary type="html">&lt;p&gt;I've decided to blog this journey of learning and challenge. I am
+&lt;p&gt;&lt;small&gt;&lt;em&gt;Powered by&lt;/em&gt; &lt;a href="http://www.qumana.com/"&gt;Qumana&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;</summary></entry><entry><title>Day 3</title><link href="//tim.purewhite.id.au/2011/08/day-3/" rel="alternate"></link><updated>2011-08-19T12:15:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-08-19:2011/08/day-3/</id><summary type="html">&lt;p&gt;I've decided to blog this journey of learning and challenge. I am
 developing a mobile app, initially for iOS and eventually for Android. I
 have given myself an initial 60 days to get it done, 60 days from
 getting the equipment.&lt;/p&gt;

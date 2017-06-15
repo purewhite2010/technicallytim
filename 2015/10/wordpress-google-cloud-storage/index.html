@@ -101,12 +101,12 @@ libraries have an entry in the wp_posts table with post_type set to attachment.
 If you fetch all the ID's for the items you wish to upload, and have the handy
 <a href="http://wp-cli.org">wp-cli.org</a> tool installed, it's as simple as running the following tool for
 each ID, in this case the media item ID is 7.</strong></p>
-<div class="highlight"><pre>wp <span class="nb">eval</span> <span class="s1">&#39;do_action(&#39;</span>wp_update_attachment_metadata<span class="s1">&#39;, null, 7);&#39;</span>
+<div class="highlight"><pre><span></span>wp <span class="nb">eval</span> <span class="s1">&#39;do_action(&#39;</span>wp_update_attachment_metadata<span class="s1">&#39;, null, 7);&#39;</span>
 </pre></div>
 
 
 <p>Or a quick bash script to upload all attachments</p>
-<div class="highlight"><pre><span class="k">for</span> i in <span class="k">$(</span>wp-cli.phar db query <span class="s2">&quot;SELECT ID FROM wp_posts WHERE</span>
+<div class="highlight"><pre><span></span><span class="k">for</span> i in <span class="k">$(</span>wp-cli.phar db query <span class="s2">&quot;SELECT ID FROM wp_posts WHERE</span>
 <span class="s2">post_type=&#39;attachment&#39;;&quot;</span>  <span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="nv">$i</span><span class="p">;</span> wp-cli.phar <span class="nb">eval</span>
 <span class="s2">&quot;do_action(&#39;wp_update_attachment_metadata&#39;, null, </span><span class="nv">$i</span><span class="s2">);&quot;</span><span class="p">;</span> <span class="k">done</span>
 </pre></div>
@@ -116,7 +116,7 @@ each ID, in this case the media item ID is 7.</strong></p>
 made a few more commits, you'll probably want to look at GitHub for the extra
 changes</p>
 <p>For reference, those above patches are also here:</p>
-<div class="highlight"><pre>c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
+<div class="highlight"><pre><span></span>c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
 From: Tim White &lt;tim@whiteitsolutions.com.au&gt;
 Date: Mon, 5 Oct 2015 13:23:28 +1000
 Subject: [PATCH] Changes for using Google Cloud Storage instead of Amazon S3
@@ -182,7 +182,7 @@ b/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php
 </pre></div>
 
 
-<div class="highlight"><pre>From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
+<div class="highlight"><pre><span></span>From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
 From: Tim White &lt;tim@whiteitsolutions.com.au&gt;
 Date: Mon, 5 Oct 2015 13:12:25 +1000
 Subject: [PATCH] Minor changes to make it work with Google Cloud Storage

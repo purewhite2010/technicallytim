@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/all.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2015-12-26T06:35:00+10:00</updated><entry><title>NAB Ignores own Security Advice</title><link href="//tim.purewhite.id.au/2015/12/nab-dodgy-security/" rel="alternate"></link><updated>2015-12-26T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2015-12-26:2015/12/nab-dodgy-security/</id><summary type="html">&lt;p&gt;A bank that ignores their own security advice? Yep, that appears to be what NAB
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/all.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2017-06-15T09:55:00+10:00</updated><entry><title>Recursive file count for subdirectories</title><link href="//tim.purewhite.id.au/2017/06/file-count-per-directory/" rel="alternate"></link><updated>2017-06-15T09:55:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2017-06-15:2017/06/file-count-per-directory/</id><summary type="html">&lt;p&gt;Sometimes Google takes awhile to find the thing you are looking for. I currently have the need to find the recursive file count for all the directories in a directory. And then sort them.&lt;/p&gt;
+&lt;p&gt;There are lots of stackoverflow questions and answers to this, but most of them rely on the find command, fancy loops, etc. I found a nice elegant one liner that uses du, cut, sort and uniq. This works perfectly for me, is super quick, and much nicer to use IMHO&lt;/p&gt;
+&lt;p&gt;So here is that answer, so I can easily find it next time, and so hopefully others can find it too!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://stackoverflow.com/a/39622947/682931"&gt;https://stackoverflow.com/a/39622947/682931&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;du -a &lt;span class="p"&gt;|&lt;/span&gt; cut -d/ -f2 &lt;span class="p"&gt;|&lt;/span&gt; sort &lt;span class="p"&gt;|&lt;/span&gt; uniq -c &lt;span class="p"&gt;|&lt;/span&gt; sort -nr
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="du"></category><category term="file count"></category><category term="bash"></category></entry><entry><title>NAB Ignores own Security Advice</title><link href="//tim.purewhite.id.au/2015/12/nab-dodgy-security/" rel="alternate"></link><updated>2015-12-26T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2015-12-26:2015/12/nab-dodgy-security/</id><summary type="html">&lt;p&gt;A bank that ignores their own security advice? Yep, that appears to be what NAB
 is doing.&lt;/p&gt;
 &lt;p&gt;A typical Email or SMS Scam goes something like this.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -111,12 +116,12 @@ libraries have an entry in the wp_posts table with post_type set to attachment.
 If you fetch all the ID's for the items you wish to upload, and have the handy
 &lt;a href="http://wp-cli.org"&gt;wp-cli.org&lt;/a&gt; tool installed, it's as simple as running the following tool for
 each ID, in this case the media item ID is 7.&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wp &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;do_action(&amp;#39;&lt;/span&gt;wp_update_attachment_metadata&lt;span class="s1"&gt;&amp;#39;, null, 7);&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wp &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;do_action(&amp;#39;&lt;/span&gt;wp_update_attachment_metadata&lt;span class="s1"&gt;&amp;#39;, null, 7);&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Or a quick bash script to upload all attachments&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="k"&gt;$(&lt;/span&gt;wp-cli.phar db query &lt;span class="s2"&gt;&amp;quot;SELECT ID FROM wp_posts WHERE&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="k"&gt;$(&lt;/span&gt;wp-cli.phar db query &lt;span class="s2"&gt;&amp;quot;SELECT ID FROM wp_posts WHERE&lt;/span&gt;
 &lt;span class="s2"&gt;post_type=&amp;#39;attachment&amp;#39;;&amp;quot;&lt;/span&gt;  &lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; wp-cli.phar &lt;span class="nb"&gt;eval&lt;/span&gt;
 &lt;span class="s2"&gt;&amp;quot;do_action(&amp;#39;wp_update_attachment_metadata&amp;#39;, null, &lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="s2"&gt;);&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -126,7 +131,7 @@ each ID, in this case the media item ID is 7.&lt;/strong&gt;&lt;/p&gt;
 made a few more commits, you'll probably want to look at GitHub for the extra
 changes&lt;/p&gt;
 &lt;p&gt;For reference, those above patches are also here:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
 From: Tim White &amp;lt;tim@whiteitsolutions.com.au&amp;gt;
 Date: Mon, 5 Oct 2015 13:23:28 +1000
 Subject: [PATCH] Changes for using Google Cloud Storage instead of Amazon S3
@@ -192,7 +197,7 @@ b/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
 From: Tim White &amp;lt;tim@whiteitsolutions.com.au&amp;gt;
 Date: Mon, 5 Oct 2015 13:12:25 +1000
 Subject: [PATCH] Minor changes to make it work with Google Cloud Storage
@@ -366,33 +371,33 @@ just got a whole lot easier (as long as no plugin updates break things)&lt;/p&gt
 wp-cli scripts. It uses sudo, so make sure you know what you are doing.
 You may also have to tweak how locate finds things, as by default it
 won't show you files you can't access.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="c"&gt;# Just find all installs and try and run tools in them&lt;/span&gt;
-&lt;span class="c"&gt;# find wp-config.php files&lt;/span&gt;
+&lt;span class="c1"&gt;# Just find all installs and try and run tools in them&lt;/span&gt;
+&lt;span class="c1"&gt;# find wp-config.php files&lt;/span&gt;
 &lt;span class="nv"&gt;SAVEIFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$IFS&lt;/span&gt;
 &lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -en &lt;span class="s2"&gt;&amp;quot;\n\b&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php&lt;span class="nv"&gt;$)&lt;/span&gt;
+&lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php$&lt;span class="k"&gt;)&lt;/span&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
-&lt;span class="c"&gt;# goto root wp dir as user&lt;/span&gt;
+&lt;span class="c1"&gt;# goto root wp dir as user&lt;/span&gt;
     &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="nb"&gt;pushd&lt;/span&gt; &lt;span class="nv"&gt;$wpdir&lt;/span&gt; &amp;gt; /dev/null &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt;
 
-&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking &lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt;...&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking &lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt;...&amp;quot;&lt;/span&gt;
 
-    &lt;span class="c"&gt;## Check we actually have a wordpress install&lt;/span&gt;
+    &lt;span class="c1"&gt;## Check we actually have a wordpress install&lt;/span&gt;
 
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;wp-includes/version.php&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; ! -f &lt;span class="nv"&gt;$conffile&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
         &lt;span class="k"&gt;continue&lt;/span&gt;
     &lt;span class="k"&gt;fi&lt;/span&gt;
 
-    &lt;span class="c"&gt;# Get username for tool&lt;/span&gt;
+    &lt;span class="c1"&gt;# Get username for tool&lt;/span&gt;
     &lt;span class="nv"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;stat -c %U &lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 
-    &lt;span class="c"&gt;# run tool commands&lt;/span&gt;
+    &lt;span class="c1"&gt;# run tool commands&lt;/span&gt;
     sudo -u &lt;span class="nv"&gt;$username&lt;/span&gt; -- wp plugin update-all
 
     &lt;span class="nb"&gt;popd&lt;/span&gt; &amp;gt; /dev/null
@@ -417,7 +422,7 @@ following checkboxes on the page are now in the wrong spot in the array
 and not matched with the other arrays.&lt;/p&gt;
 &lt;p&gt;So normally when we submit input fields and some items have been left
 blank, they still consume a spot in the array, like so.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(4) {&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;array(4) {&lt;/span&gt;
 &lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
 &lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
 &lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
@@ -433,7 +438,7 @@ blank, they still consume a spot in the array, like so.&lt;/p&gt;
 &lt;p&gt;However, the checkboxes (which have a value on On normally when
 checked), would appear like so (with Item numbers instead of "On" for
 clarity)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(2) {&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;array(2) {&lt;/span&gt;
 &lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
 &lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
 &lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
@@ -451,7 +456,7 @@ I'll find a nice way to have it fallback when javascript is disabled.&lt;/p&gt;
 couldn't get it working well. A bit of fiddling and working on the
 solution in the comments and I came up with the following snippit that
 works nicely for me.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
     &lt;span class="c1"&gt;// do when submit is pressed&lt;/span&gt;
     &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;form&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;submit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 
@@ -519,7 +524,7 @@ something that sets their preference!&lt;/p&gt;
 &lt;p&gt;Read
 [http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
 some more thoughts on dbus.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Belkin? Rtkit?</title><link href="//tim.purewhite.id.au/2011/11/belkin-rtkit/" rel="alternate"></link><updated>2011-11-05T12:10:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-11-05:2011/11/belkin-rtkit/</id><summary type="html">&lt;p&gt;While attempting to remotely debug a linux machine today, I was first
 encountering a strange problem. Any process that took more than about
 1/2 second to complete, would freeze. top, ps, lsmod, tail -f, the list
@@ -553,7 +558,7 @@ present here will be a more up to date config, that is also mostly
 secure compare to a good number of ones on the net (to do with passing
 non PHP files to the php interpreter).&lt;/p&gt;
 &lt;p&gt;Firstly, my Nginx config for this very blog.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;www.tim.purewhite.id.au&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
   &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/(.*)&lt;/span&gt; &lt;span class="s"&gt;http://tim.purewhite.id.au/&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="s"&gt;permanent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
@@ -938,7 +943,7 @@ being a link local address, or a 6to4, or Teredo tunnel[1]. So we just
 make Transmission bind to a link local address and hey presto, no IPv6
 for Transmission!&lt;/p&gt;
 &lt;p&gt;Simply add the following line to the settings.json file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;bind-address-ipv6&amp;quot;: &amp;quot;fe80::&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;quot;bind-address-ipv6&amp;quot;: &amp;quot;fe80::&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -952,7 +957,7 @@ pinging every PoP available to us and find the "closest" one, but for
 now, letter the numbers do the talking.&lt;/p&gt;
 &lt;p&gt;I ping the same machine both via IPv6 and via IPv4. Lets see if you can
 work out which is which.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;10 packets transmitted, 10 received, 0% packet loss
 rtt min/avg/max/mdev = 698.592/712.159/814.473/34.163 ms
 
 10 packets transmitted, 10 received, 0% packet loss
@@ -970,7 +975,7 @@ running both tunnels in parrallel so that if one dies the other is
 working. Hopefully I'll see better IPv6 improvement now. Still, native
 IPv6 would be better.
 &lt;a href="http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/"&gt;http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/&lt;/a&gt;&lt;/ins&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;10 packets transmitted, 10 received, 0% packet loss
 rtt min/avg/max/mdev = 235.587/267.187/382.010/45.090 ms
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="ipv6"></category><category term="ping"></category><category term="sixxs"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="//tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-06-02:2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
 easy for students to afford Microsoft products so they don't need to
@@ -1015,9 +1020,9 @@ they don't, you start again.&lt;/p&gt;
 scanner, and you don't want to go as far as phpsane, then here is the
 code! &lt;a href="http://tim.purewhite.id.au/code/phpscan2pdf/files"&gt;http://tim.purewhite.id.au/code/phpscan2pdf/files&lt;/a&gt;&lt;/p&gt;</summary><category term="code"></category><category term="pdf"></category><category term="php"></category><category term="scan2pdf"></category><category term="scanner"></category><category term="scanning"></category></entry><entry><title>Disk recovery - Which files are damaged?</title><link href="//tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="alternate"></link><updated>2011-04-19T09:40:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-04-19:2011/04/disk-recovery-which-files-are-damaged/</id><summary type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
 damaged hard drive.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -n /dev/inputdevice rescued.img rescued.log
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ddrescue -n /dev/inputdevice rescued.img rescued.log
 
-&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -r &lt;span class="m"&gt;1&lt;/span&gt; /dev/inputdevice rescued.img rescued.log
+$ ddrescue -r &lt;span class="m"&gt;1&lt;/span&gt; /dev/inputdevice rescued.img rescued.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1060,10 +1065,10 @@ over a network isn't that bad. I'm sure it would have been a lot quicker
 had all the files resided on the local machine on  a nice RAID array.&lt;/p&gt;
 &lt;p&gt;So a simplified example&lt;/p&gt;
 &lt;p&gt;copy all files off rescued image (loop mount) to another location&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &amp;gt; tmpfile
-&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- tmpfile rescue.img rescue.log
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &amp;gt; tmpfile
+$ ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- tmpfile rescue.img rescue.log
 
-&lt;span class="nv"&gt;$ &lt;/span&gt;diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &amp;gt; damagedfiles
+$ diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &amp;gt; damagedfiles
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1072,14 +1077,14 @@ which are the ones with damaged sectors. Also, the ddrescue doesn't
 damage the logfile so you can then reverse it using /dev/zero to restore
 the image to it's original recovery state. This won't work with sparse
 files.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- /dev/zero rescue.img rescue.log
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- /dev/zero rescue.img rescue.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;ins datetime="2011-08-11T21:54:00+00:00"&gt;Or, if you haven't copied the
 files off, then the way suggested in the ddrescue manual looks like
 this. (After getting your disk image)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# mount -o loop rescued.img /mnt/loop
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# mount -o loop rescued.img /mnt/loop
 
 $ find /mnt/loop -type f -print0 | xargs -0 md5sum &amp;gt; prefill.md5
 
@@ -1106,7 +1111,7 @@ sectors, then continue as it is possible.&lt;/p&gt;
 &lt;p&gt;First, check that the sector is actually used. This used to be the dstat
 command, but it has since been renamed to blkstat. So we take a sector
 number from the logfile that couldn't be recovered.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat rescue.log &lt;span class="p"&gt;|&lt;/span&gt;grep -&lt;span class="p"&gt;|&lt;/span&gt;head
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat rescue.log &lt;span class="p"&gt;|&lt;/span&gt;grep -&lt;span class="p"&gt;|&lt;/span&gt;head
 0x0178F200  0x0000D400  -
 0x017A0000  0x00000200  -
 0x2BC488F400  0x00011600  -
@@ -1129,31 +1134,31 @@ viewing.&lt;br /&gt;
 I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
-368541573
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+&lt;span class="m"&gt;368541573&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Or do it the long way&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
-188693285376
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
-368541573
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+&lt;span class="m"&gt;188693285376&lt;/span&gt;
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+&lt;span class="m"&gt;368541573&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Ether way, I now know that the sector number is 368541573. Using blkstat
 (formerly dstat) I can verify that the sector is used or not.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 368541573
-Sector: 368541573
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ blkstat rescued.img &lt;span class="m"&gt;368541573&lt;/span&gt;
+Sector: &lt;span class="m"&gt;368541573&lt;/span&gt;
 Allocated
-Cluster: 5754738
+Cluster: &lt;span class="m"&gt;5754738&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now a little warning, if you get a sector that looks like this.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 48249
-Sector: 48249
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ blkstat rescued.img &lt;span class="m"&gt;48249&lt;/span&gt;
+Sector: &lt;span class="m"&gt;48249&lt;/span&gt;
 Allocated &lt;span class="o"&gt;(&lt;/span&gt;Meta&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1172,8 +1177,8 @@ you from even seeing some of the files, so hopefully when you have
 damage to the FAT your 2nd FAT will still be good.&lt;/ins&gt;&lt;/p&gt;
 &lt;p&gt;Our next step is to use ifind to find the inode associated with the
 sector. This can take some time and lots of CPU.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;time &lt;/span&gt;ifind rescued.img -d 368541573
-5892375559
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;time&lt;/span&gt; ifind rescued.img -d &lt;span class="m"&gt;368541573&lt;/span&gt;
+&lt;span class="m"&gt;5892375559&lt;/span&gt;
 
 real    2m52.314s
 user    1m15.280s
@@ -1182,17 +1187,17 @@ sys 0m2.170s
 
 
 &lt;p&gt;This finally gives us the inode associated with that file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;istat rescued.img 5892375559&lt;span class="p"&gt;|&lt;/span&gt;head -12
-Directory Entry: 5892375559
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ istat rescued.img &lt;span class="m"&gt;5892375559&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;head -12
+Directory Entry: &lt;span class="m"&gt;5892375559&lt;/span&gt;
 Allocated
 File Attributes: File, Archive
-Size: 21346140
+Size: &lt;span class="m"&gt;21346140&lt;/span&gt;
 Name: MICROS~1
 
 Directory Entry Times:
-Written:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:38 2010
-Accessed:   Wed Apr &lt;span class="m"&gt;13&lt;/span&gt; 00:00:00 2011
-Created:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:39 2010
+Written:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; &lt;span class="m"&gt;22&lt;/span&gt;:16:38 &lt;span class="m"&gt;2010&lt;/span&gt;
+Accessed:   Wed Apr &lt;span class="m"&gt;13&lt;/span&gt; &lt;span class="m"&gt;00&lt;/span&gt;:00:00 &lt;span class="m"&gt;2011&lt;/span&gt;
+Created:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; &lt;span class="m"&gt;22&lt;/span&gt;:16:39 &lt;span class="m"&gt;2010&lt;/span&gt;
 
 Sectors:
 &lt;/pre&gt;&lt;/div&gt;
@@ -1207,8 +1212,8 @@ than 1 or 2 sectors) you'll want to run this command without the grep,
 and save the contents to a file so you can just grep over that file each
 time as it takes a long time to recursively list all the files in a big
 filesystem.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fls -rFp bunsom.img &lt;span class="p"&gt;|&lt;/span&gt;grep 5892375559
-r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ fls -rFp bunsom.img &lt;span class="p"&gt;|&lt;/span&gt;grep &lt;span class="m"&gt;5892375559&lt;/span&gt;
+r/r &lt;span class="m"&gt;5892375559&lt;/span&gt;: Microsoft Office &lt;span class="m"&gt;2011&lt;/span&gt;/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1457,14 +1462,14 @@ CoovaChilli is just relaying the message it gets from the Radius server.
 So we next turn our attention to FreeRadius.&lt;/p&gt;
 &lt;p&gt;The first place you may be tempted to look is in
 /etc/freeradius/modules/expiration&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;expiration&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;expiration {&lt;/span&gt;
         &lt;span class="c1"&gt;#&lt;/span&gt;
         &lt;span class="c1"&gt;# The Reply-Message which will be sent back in case the&lt;/span&gt;
         &lt;span class="c1"&gt;# account has expired. Dynamic substitution is supported&lt;/span&gt;
         &lt;span class="c1"&gt;#&lt;/span&gt;
         &lt;span class="na"&gt;reply-message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Password Has Expired\r\n&amp;quot; &lt;/span&gt;
 &lt;span class="s"&gt;        #reply-message = &amp;quot;Your account has expired, %{User-Name}\r\n&amp;quot;&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1489,12 +1494,12 @@ understand where all this fits together. This is an exceprt of
 Please don't just copy and paste this, it's to give better understanding
 of where the parts go, as many examples don't give you the context of
 the changes needed.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;authorize&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-    &lt;span class="err"&gt;preprocess&lt;/span&gt;
-    &lt;span class="err"&gt;chap&lt;/span&gt;
-    &lt;span class="err"&gt;mschap&lt;/span&gt;
-    &lt;span class="err"&gt;suffix&lt;/span&gt;
-    &lt;span class="err"&gt;eap&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;authorize {&lt;/span&gt;
+    &lt;span class="na"&gt;preprocess&lt;/span&gt;
+    &lt;span class="na"&gt;chap&lt;/span&gt;
+    &lt;span class="na"&gt;mschap&lt;/span&gt;
+    &lt;span class="na"&gt;suffix&lt;/span&gt;
+    &lt;span class="na"&gt;eap {&lt;/span&gt;
         &lt;span class="na"&gt;ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;return&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    sql{&lt;/span&gt;
@@ -1508,15 +1513,15 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
-    &lt;span class="err"&gt;if(reject){&lt;/span&gt;
-        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="na"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="na"&gt;update reply {&lt;/span&gt;
             &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
 &lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
-    &lt;span class="err"&gt;expiration{&lt;/span&gt;
+    &lt;span class="na"&gt;expiration{&lt;/span&gt;
         &lt;span class="na"&gt;userlock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    if(userlock){&lt;/span&gt;
@@ -1526,9 +1531,9 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
-    &lt;span class="err"&gt;logintime&lt;/span&gt;
+    &lt;span class="na"&gt;logintime&lt;/span&gt;
 
-    &lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+    &lt;span class="na"&gt;noresetBytecounter{&lt;/span&gt;
         &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    if(reject){&lt;/span&gt;
@@ -1539,7 +1544,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
-    &lt;span class="err"&gt;noresetcounter{&lt;/span&gt;
+    &lt;span class="na"&gt;noresetcounter{&lt;/span&gt;
         &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    if(reject){&lt;/span&gt;
@@ -1549,32 +1554,32 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
-    &lt;span class="err"&gt;pap&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;pap&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 
-&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-    &lt;span class="err"&gt;sql&lt;/span&gt;
-    &lt;span class="err"&gt;exec&lt;/span&gt;
-    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+&lt;span class="na"&gt;post-auth {&lt;/span&gt;
+    &lt;span class="na"&gt;sql&lt;/span&gt;
+    &lt;span class="na"&gt;exec&lt;/span&gt;
+    &lt;span class="na"&gt;Post-Auth-Type REJECT {&lt;/span&gt;
+        &lt;span class="na"&gt;update reply { # Fallback error message&lt;/span&gt;
             &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
 &lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;I'll start with the part that will help explain the best.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;noresetBytecounter{&lt;/span&gt;
     &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
-&lt;span class="err"&gt;if(reject){&lt;/span&gt;
-        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="na"&gt;update reply {&lt;/span&gt;
                 &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
 &lt;span class="s"&gt;        reject&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1607,16 +1612,16 @@ sending an 'return' which would clear the reject and return an ok.&lt;/p&gt;
 &lt;p&gt;Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
 piece of code sets a default message for Access-Reject.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-    &lt;span class="err"&gt;sql&lt;/span&gt;
-    &lt;span class="err"&gt;exec&lt;/span&gt;
-    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;post-auth {&lt;/span&gt;
+    &lt;span class="na"&gt;sql&lt;/span&gt;
+    &lt;span class="na"&gt;exec&lt;/span&gt;
+    &lt;span class="na"&gt;Post-Auth-Type REJECT {&lt;/span&gt;
+                &lt;span class="na"&gt;update reply { # Fallback error message&lt;/span&gt;
                     &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;                }&lt;/span&gt;
 &lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1774,7 +1779,7 @@ check you have enough up and down bandwidth for this. My server is
 hosted out on the internet and has enough bandwidth. A big reason for me
 setting this up is lack of a decent internet connection from my home to
 be able to do normal VoIP.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install asterisk
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install asterisk
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1790,7 +1795,7 @@ http://www.voip-info.org/&lt;/p&gt;
 provider. Mine is in the following format. You can see that the username
 is repeated a few times on the mynetfone one. It can be different for
 other providers.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username&lt;/span&gt;
 
 &lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; 888xxxxxxx:secret@sip.pennytel.com/888xxxxxxx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1800,7 +1805,7 @@ other providers.&lt;/p&gt;
 your "trunks" for the VoIP providers. In my situation, I don't want
 incoming calls (as then they need to be routed), so I just have the
 outgoing trunks.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[mynetfone-out]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[mynetfone-out]&lt;/span&gt;
 &lt;span class="na"&gt;disallow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;all&lt;/span&gt;
 &lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;alaw&lt;/span&gt;
 &lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ulaw&lt;/span&gt;
@@ -1844,7 +1849,7 @@ disconnecting calls and monitoring things. (You can do this through the
 asterisk cli, how ever it may be a bit harder).&lt;/p&gt;
 &lt;p&gt;The format of the file you create is as follows.
 /etc/asterisk/manager.d/somename.conf&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[username]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[username]&lt;/span&gt;
 &lt;span class="na"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;password&lt;/span&gt;
 &lt;span class="na"&gt;read&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call,log,verbose,command,agent,user,config&lt;/span&gt;
 &lt;span class="na"&gt;write&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call.log,verbose,command,agent,user,config&lt;/span&gt;
@@ -1860,7 +1865,7 @@ line from the [default] section. There is a section in the [default]
 that should sort out Hangup/Busy detection and the likes, so the
 extensions we are adding can be very simple, however, you can customise
 these very easily to do more than just connect the 2 calls.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[DialOutMyNetFone]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[DialOutMyNetFone]&lt;/span&gt;
 &lt;span class="na"&gt;exten&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; _0X.,1,Dial(SIP/mynetfone-out/${EXTEN})&lt;/span&gt;
 
 &lt;span class="k"&gt;[DialOutPennyTel]&lt;/span&gt;
@@ -1872,16 +1877,16 @@ these very easily to do more than just connect the 2 calls.&lt;/p&gt;
 Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
 should just work.&lt;/p&gt;
 &lt;p&gt;After all those edits, restart asterisk.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo /etc/init.d/asterisk restart
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo /etc/init.d/asterisk restart
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now we create our call file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;Channel:&lt;/span&gt; &lt;span class="err"&gt;SIP/pennytel-out/YOURNUMBER&lt;/span&gt;
-&lt;span class="err"&gt;Context:&lt;/span&gt; &lt;span class="err"&gt;DialOutMyNetFone&lt;/span&gt;
-&lt;span class="err"&gt;Extension:&lt;/span&gt; &lt;span class="err"&gt;WHOTOCALLNUMBER&lt;/span&gt;
-&lt;span class="err"&gt;Priority:&lt;/span&gt; &lt;span class="err"&gt;1&lt;/span&gt;
-&lt;span class="err"&gt;Archive:&lt;/span&gt; &lt;span class="err"&gt;Yes&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;Channel: SIP/pennytel-out/YOURNUMBER&lt;/span&gt;
+&lt;span class="na"&gt;Context: DialOutMyNetFone&lt;/span&gt;
+&lt;span class="na"&gt;Extension: WHOTOCALLNUMBER&lt;/span&gt;
+&lt;span class="na"&gt;Priority: 1&lt;/span&gt;
+&lt;span class="na"&gt;Archive: Yes&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1904,7 +1909,7 @@ placed in a way that asterisk can't start reading it before the file is
 all there. For this reason, the mv command is recommended and I'll
 demonstrate. (I first copy the file so I can keep a number of pre setup
 files stored).&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;cp preset1.call call123.call
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cp preset1.call call123.call
 sudo chown asterisk call123.call
 sudo mv call123.call /var/spool/asterisk/outgoing/
 &lt;/pre&gt;&lt;/div&gt;
@@ -1971,8 +1976,8 @@ explaining how to make gearman more command line friendly using xargs.
 of scripting I had myself a number of small shell scripts, a gearmand
 server, and a working cluster.&lt;/p&gt;
 &lt;p&gt;Firstly, I setup some NFS mounts on all the computers involved.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_rip
-&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_encode
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir /mnt/DVD_rip
+$ mkdir /mnt/DVD_encode
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1987,7 +1992,7 @@ loaded so you can read encrypted DVD's. You can also stop and restart
 the ripping process at any time without loosing what has been ripped
 successfully. NB: It doesn't remove the CSS encryption so you will need
 libdvdcss on all computers doing encoding.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;lsdvd /dev/sr0 &amp;gt; /dev/null &amp;amp; ddrescue -r 1 /dev/sr0 &amp;quot;$1.iso&amp;quot; &amp;quot;$1.log&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;lsdvd /dev/sr0 &amp;gt; /dev/null &amp;amp; ddrescue -r 1 /dev/sr0 &amp;quot;$1.iso&amp;quot; &amp;quot;$1.log&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -2027,5 +2032,5 @@ processed a lot quicker.&lt;/p&gt;
 &lt;p&gt;All the files can be found at
 &lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster"&gt;http://tim.purewhite.id.au/code/handbrake-cluster&lt;/a&gt; or checked out with
 bzr.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>

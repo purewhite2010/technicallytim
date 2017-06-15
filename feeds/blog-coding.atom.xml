@@ -24,33 +24,33 @@ just got a whole lot easier (as long as no plugin updates break things)&lt;/p&gt
 wp-cli scripts. It uses sudo, so make sure you know what you are doing.
 You may also have to tweak how locate finds things, as by default it
 won't show you files you can't access.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="c"&gt;# Just find all installs and try and run tools in them&lt;/span&gt;
-&lt;span class="c"&gt;# find wp-config.php files&lt;/span&gt;
+&lt;span class="c1"&gt;# Just find all installs and try and run tools in them&lt;/span&gt;
+&lt;span class="c1"&gt;# find wp-config.php files&lt;/span&gt;
 &lt;span class="nv"&gt;SAVEIFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$IFS&lt;/span&gt;
 &lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -en &lt;span class="s2"&gt;&amp;quot;\n\b&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php&lt;span class="nv"&gt;$)&lt;/span&gt;
+&lt;span class="nv"&gt;installs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;locate -r wp-config.php$&lt;span class="k"&gt;)&lt;/span&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; conffile in &lt;span class="nv"&gt;$installs&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
-&lt;span class="c"&gt;# goto root wp dir as user&lt;/span&gt;
+&lt;span class="c1"&gt;# goto root wp dir as user&lt;/span&gt;
     &lt;span class="nv"&gt;wpdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="nb"&gt;pushd&lt;/span&gt; &lt;span class="nv"&gt;$wpdir&lt;/span&gt; &amp;gt; /dev/null &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt;
 
-&lt;span class="nb"&gt;    echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking &lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt;...&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Checking &lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt;...&amp;quot;&lt;/span&gt;
 
-    &lt;span class="c"&gt;## Check we actually have a wordpress install&lt;/span&gt;
+    &lt;span class="c1"&gt;## Check we actually have a wordpress install&lt;/span&gt;
 
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;wp-includes/version.php&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; ! -f &lt;span class="nv"&gt;$conffile&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$wpdir&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t appear to be a wordpress install, skipping...&amp;quot;&lt;/span&gt;
         &lt;span class="k"&gt;continue&lt;/span&gt;
     &lt;span class="k"&gt;fi&lt;/span&gt;
 
-    &lt;span class="c"&gt;# Get username for tool&lt;/span&gt;
+    &lt;span class="c1"&gt;# Get username for tool&lt;/span&gt;
     &lt;span class="nv"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;stat -c %U &lt;span class="nv"&gt;$conffile&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 
-    &lt;span class="c"&gt;# run tool commands&lt;/span&gt;
+    &lt;span class="c1"&gt;# run tool commands&lt;/span&gt;
     sudo -u &lt;span class="nv"&gt;$username&lt;/span&gt; -- wp plugin update-all
 
     &lt;span class="nb"&gt;popd&lt;/span&gt; &amp;gt; /dev/null
@@ -75,7 +75,7 @@ following checkboxes on the page are now in the wrong spot in the array
 and not matched with the other arrays.&lt;/p&gt;
 &lt;p&gt;So normally when we submit input fields and some items have been left
 blank, they still consume a spot in the array, like so.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(4) {&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;array(4) {&lt;/span&gt;
 &lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
 &lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
 &lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
@@ -91,7 +91,7 @@ blank, they still consume a spot in the array, like so.&lt;/p&gt;
 &lt;p&gt;However, the checkboxes (which have a value on On normally when
 checked), would appear like so (with Item numbers instead of "On" for
 clarity)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;array(2) {&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;array(2) {&lt;/span&gt;
 &lt;span class="x"&gt;[0]=&amp;gt;&lt;/span&gt;
 &lt;span class="x"&gt;string(6) &amp;quot;Item 1&amp;quot;&lt;/span&gt;
 &lt;span class="x"&gt;[1]=&amp;gt;&lt;/span&gt;
@@ -109,7 +109,7 @@ I'll find a nice way to have it fallback when javascript is disabled.&lt;/p&gt;
 couldn't get it working well. A bit of fiddling and working on the
 solution in the comments and I came up with the following snippit that
 works nicely for me.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
     &lt;span class="c1"&gt;// do when submit is pressed&lt;/span&gt;
     &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;form&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;submit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 

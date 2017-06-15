@@ -112,7 +112,7 @@ check you have enough up and down bandwidth for this. My server is
 hosted out on the internet and has enough bandwidth. A big reason for me
 setting this up is lack of a decent internet connection from my home to
 be able to do normal VoIP.</p>
-<div class="highlight"><pre>sudo apt-get install asterisk
+<div class="highlight"><pre><span></span>sudo apt-get install asterisk
 </pre></div>
 
 
@@ -128,7 +128,7 @@ http://www.voip-info.org/</p>
 provider. Mine is in the following format. You can see that the username
 is repeated a few times on the mynetfone one. It can be different for
 other providers.</p>
-<div class="highlight"><pre><span class="na">register</span> <span class="o">=</span><span class="s">&gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username</span>
+<div class="highlight"><pre><span></span><span class="na">register</span> <span class="o">=</span><span class="s">&gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username</span>
 
 <span class="na">register</span> <span class="o">=</span><span class="s">&gt; 888xxxxxxx:secret@sip.pennytel.com/888xxxxxxx</span>
 </pre></div>
@@ -138,7 +138,7 @@ other providers.</p>
 your "trunks" for the VoIP providers. In my situation, I don't want
 incoming calls (as then they need to be routed), so I just have the
 outgoing trunks.</p>
-<div class="highlight"><pre><span class="k">[mynetfone-out]</span>
+<div class="highlight"><pre><span></span><span class="k">[mynetfone-out]</span>
 <span class="na">disallow</span><span class="o">=</span><span class="s">all</span>
 <span class="na">allow</span><span class="o">=</span><span class="s">alaw</span>
 <span class="na">allow</span><span class="o">=</span><span class="s">ulaw</span>
@@ -182,7 +182,7 @@ disconnecting calls and monitoring things. (You can do this through the
 asterisk cli, how ever it may be a bit harder).</p>
 <p>The format of the file you create is as follows.
 /etc/asterisk/manager.d/somename.conf</p>
-<div class="highlight"><pre><span class="k">[username]</span>
+<div class="highlight"><pre><span></span><span class="k">[username]</span>
 <span class="na">secret</span> <span class="o">=</span> <span class="s">password</span>
 <span class="na">read</span> <span class="o">=</span> <span class="s">system,call,log,verbose,command,agent,user,config</span>
 <span class="na">write</span> <span class="o">=</span> <span class="s">system,call.log,verbose,command,agent,user,config</span>
@@ -198,7 +198,7 @@ line from the [default] section. There is a section in the [default]
 that should sort out Hangup/Busy detection and the likes, so the
 extensions we are adding can be very simple, however, you can customise
 these very easily to do more than just connect the 2 calls.</p>
-<div class="highlight"><pre><span class="k">[DialOutMyNetFone]</span>
+<div class="highlight"><pre><span></span><span class="k">[DialOutMyNetFone]</span>
 <span class="na">exten</span> <span class="o">=</span><span class="s">&gt; _0X.,1,Dial(SIP/mynetfone-out/${EXTEN})</span>
 
 <span class="k">[DialOutPennyTel]</span>
@@ -210,16 +210,16 @@ these very easily to do more than just connect the 2 calls.</p>
 Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
 should just work.</p>
 <p>After all those edits, restart asterisk.</p>
-<div class="highlight"><pre>sudo /etc/init.d/asterisk restart
+<div class="highlight"><pre><span></span>sudo /etc/init.d/asterisk restart
 </pre></div>
 
 
 <p>Now we create our call file.</p>
-<div class="highlight"><pre><span class="err">Channel:</span> <span class="err">SIP/pennytel-out/YOURNUMBER</span>
-<span class="err">Context:</span> <span class="err">DialOutMyNetFone</span>
-<span class="err">Extension:</span> <span class="err">WHOTOCALLNUMBER</span>
-<span class="err">Priority:</span> <span class="err">1</span>
-<span class="err">Archive:</span> <span class="err">Yes</span>
+<div class="highlight"><pre><span></span><span class="na">Channel: SIP/pennytel-out/YOURNUMBER</span>
+<span class="na">Context: DialOutMyNetFone</span>
+<span class="na">Extension: WHOTOCALLNUMBER</span>
+<span class="na">Priority: 1</span>
+<span class="na">Archive: Yes</span>
 </pre></div>
 
 
@@ -242,7 +242,7 @@ placed in a way that asterisk can't start reading it before the file is
 all there. For this reason, the mv command is recommended and I'll
 demonstrate. (I first copy the file so I can keep a number of pre setup
 files stored).</p>
-<div class="highlight"><pre>cp preset1.call call123.call
+<div class="highlight"><pre><span></span>cp preset1.call call123.call
 sudo chown asterisk call123.call
 sudo mv call123.call /var/spool/asterisk/outgoing/
 </pre></div>

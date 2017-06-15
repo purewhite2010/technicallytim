@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Technically Tim - sectorTechnically Tim</title>
+    <title>Recursive file count for subdirectoriesTechnically Tim</title>
 
     <link rel="stylesheet" href="//tim.purewhite.id.au/theme/css/main.css">
     <link rel="stylesheet" href="//tim.purewhite.id.au/theme/css/pygment_trac.css">
@@ -28,32 +28,42 @@
 
       </header>
       <section>
-      <div class="front-title"><a href="//tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/">Disk recovery - Which files are damaged?</a></div>
+<section id="content" class="body">
+  <article>
+      <div class="article-title">
+        Recursive file count for subdirectories
+      </div>
+
+    <div class="entry-content">
 <p>
 <small>
-<abbr class="published" title="2011-04-19T09:40:00">
-  Tue 19 April 2011
+<abbr class="published" title="2017-06-15T09:55:00">
+  Thu 15 June 2017
 </abbr> | 
   tags: 
-    <a href="//tim.purewhite.id.au/tag/damaged">damaged</a>, 
-    <a href="//tim.purewhite.id.au/tag/fat32">fat32</a>, 
-    <a href="//tim.purewhite.id.au/tag/recovery">recovery</a>, 
-    <a href="//tim.purewhite.id.au/tag/sector">sector</a>, 
- -- (<a href="//tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="bookmark">permalink</a>)
+    <a href="//tim.purewhite.id.au/tag/du">du</a>, 
+    <a href="//tim.purewhite.id.au/tag/file-count">file count</a>, 
+    <a href="//tim.purewhite.id.au/tag/bash">bash</a>, 
+ -- (<a href="//tim.purewhite.id.au/2017/06/file-count-per-directory/" rel="bookmark">permalink</a>)
 </small>
-</p>      <p><ins datetime="2011-08-11T21:49:04+00:00">First, getting an image of the
-damaged hard drive.</p>
-<div class="highlight"><pre><span></span>$ ddrescue -n /dev/inputdevice rescued.img rescued.log
-
-$ ddrescue -r <span class="m">1</span> /dev/inputdevice rescued.img rescued.log
+</p>      <p>Sometimes Google takes awhile to find the thing you are looking for. I currently have the need to find the recursive file count for all the directories in a directory. And then sort them.</p>
+<p>There are lots of stackoverflow questions and answers to this, but most of them rely on the find command, fancy loops, etc. I found a nice elegant one liner that uses du, cut, sort and uniq. This works perfectly for me, is super quick, and much nicer to use IMHO</p>
+<p>So here is that answer, so I can easily find it next time, and so hopefully others can find it too!</p>
+<p><a href="https://stackoverflow.com/a/39622947/682931">https://stackoverflow.com/a/39622947/682931</a></p>
+<div class="highlight"><pre><span></span>du -a <span class="p">|</span> cut -d/ -f2 <span class="p">|</span> sort <span class="p">|</span> uniq -c <span class="p">|</span> sort -nr
 </pre></div>
+    </div><!-- /.entry-content -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<div class="g-comments"
+    data-href = "http://tim.purewhite.id.au/2017/06/file-count-per-directory/"
+    data-width = "650"
+    data-first_party_property = "BLOGGER"
+    data-view_type = "FILTERED_POSTMOD">
+</div>
 
-
-<p>The first ddrescue command tries to fly through the disk as quickly as
-possible, skipping over sections when an error occurs. This allows me ...</p> 
-      <div class="read-more"><a href="//tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/">read more...</a></div>
-      <hr />
-
+  </article>
+</section>
       </section>
       <footer>
         <p><small>&copy; Technically Tim &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>

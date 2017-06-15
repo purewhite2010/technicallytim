@@ -72,33 +72,33 @@ just got a whole lot easier (as long as no plugin updates break things)</p>
 wp-cli scripts. It uses sudo, so make sure you know what you are doing.
 You may also have to tweak how locate finds things, as by default it
 won't show you files you can't access.</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 
-<span class="c"># Just find all installs and try and run tools in them</span>
-<span class="c"># find wp-config.php files</span>
+<span class="c1"># Just find all installs and try and run tools in them</span>
+<span class="c1"># find wp-config.php files</span>
 <span class="nv">SAVEIFS</span><span class="o">=</span><span class="nv">$IFS</span>
 <span class="nv">IFS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> -en <span class="s2">&quot;\n\b&quot;</span><span class="k">)</span>
-<span class="nv">installs</span><span class="o">=</span><span class="k">$(</span>locate -r wp-config.php<span class="nv">$)</span>
+<span class="nv">installs</span><span class="o">=</span><span class="k">$(</span>locate -r wp-config.php$<span class="k">)</span>
 
 <span class="k">for</span> conffile in <span class="nv">$installs</span>
 <span class="k">do</span>
-<span class="c"># goto root wp dir as user</span>
+<span class="c1"># goto root wp dir as user</span>
     <span class="nv">wpdir</span><span class="o">=</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="nv">$conffile</span><span class="s2">&quot;</span><span class="k">)</span><span class="p">;</span>
     <span class="nb">pushd</span> <span class="nv">$wpdir</span> &gt; /dev/null <span class="o">||</span> <span class="nb">exit</span>
 
-<span class="nb">    echo</span> <span class="s2">&quot;Checking </span><span class="nv">$wpdir</span><span class="s2">...&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Checking </span><span class="nv">$wpdir</span><span class="s2">...&quot;</span>
 
-    <span class="c">## Check we actually have a wordpress install</span>
+    <span class="c1">## Check we actually have a wordpress install</span>
 
     <span class="k">if</span> <span class="o">[[</span> ! -f <span class="s2">&quot;wp-includes/version.php&quot;</span> <span class="o">||</span> ! -f <span class="nv">$conffile</span> <span class="o">]]</span>
         <span class="k">then</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$wpdir</span><span class="s2"> doesn&#39;t appear to be a wordpress install, skipping...&quot;</span>
         <span class="k">continue</span>
     <span class="k">fi</span>
 
-    <span class="c"># Get username for tool</span>
+    <span class="c1"># Get username for tool</span>
     <span class="nv">username</span><span class="o">=</span><span class="k">$(</span>stat -c %U <span class="nv">$conffile</span><span class="k">)</span>
 
-    <span class="c"># run tool commands</span>
+    <span class="c1"># run tool commands</span>
     sudo -u <span class="nv">$username</span> -- wp plugin update-all
 
     <span class="nb">popd</span> &gt; /dev/null

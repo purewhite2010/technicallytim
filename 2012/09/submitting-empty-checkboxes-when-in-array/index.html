@@ -68,7 +68,7 @@ following checkboxes on the page are now in the wrong spot in the array
 and not matched with the other arrays.</p>
 <p>So normally when we submit input fields and some items have been left
 blank, they still consume a spot in the array, like so.</p>
-<div class="highlight"><pre><span class="x">array(4) {</span>
+<div class="highlight"><pre><span></span><span class="x">array(4) {</span>
 <span class="x">[0]=&gt;</span>
 <span class="x">string(6) &quot;Item 1&quot;</span>
 <span class="x">[1]=&gt;</span>
@@ -84,7 +84,7 @@ blank, they still consume a spot in the array, like so.</p>
 <p>However, the checkboxes (which have a value on On normally when
 checked), would appear like so (with Item numbers instead of "On" for
 clarity)</p>
-<div class="highlight"><pre><span class="x">array(2) {</span>
+<div class="highlight"><pre><span></span><span class="x">array(2) {</span>
 <span class="x">[0]=&gt;</span>
 <span class="x">string(6) &quot;Item 1&quot;</span>
 <span class="x">[1]=&gt;</span>
@@ -102,7 +102,7 @@ I'll find a nice way to have it fallback when javascript is disabled.</p>
 couldn't get it working well. A bit of fiddling and working on the
 solution in the comments and I came up with the following snippit that
 works nicely for me.</p>
-<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<div class="highlight"><pre><span></span><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
     <span class="c1">// do when submit is pressed</span>
     <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">).</span><span class="nx">submit</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 

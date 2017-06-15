@@ -67,14 +67,14 @@ CoovaChilli is just relaying the message it gets from the Radius server.
 So we next turn our attention to FreeRadius.</p>
 <p>The first place you may be tempted to look is in
 /etc/freeradius/modules/expiration</p>
-<div class="highlight"><pre><span class="err">expiration</span> <span class="err">{</span>
+<div class="highlight"><pre><span></span><span class="na">expiration {</span>
         <span class="c1">#</span>
         <span class="c1"># The Reply-Message which will be sent back in case the</span>
         <span class="c1"># account has expired. Dynamic substitution is supported</span>
         <span class="c1">#</span>
         <span class="na">reply-message</span> <span class="o">=</span> <span class="s">&quot;Password Has Expired\r\n&quot; </span>
 <span class="s">        #reply-message = &quot;Your account has expired, %{User-Name}\r\n&quot;</span>
-<span class="err">}</span>
+<span class="na">}</span>
 </pre></div>
 
 
@@ -99,12 +99,12 @@ understand where all this fits together. This is an exceprt of
 Please don't just copy and paste this, it's to give better understanding
 of where the parts go, as many examples don't give you the context of
 the changes needed.</p>
-<div class="highlight"><pre><span class="err">authorize</span> <span class="err">{</span>
-    <span class="err">preprocess</span>
-    <span class="err">chap</span>
-    <span class="err">mschap</span>
-    <span class="err">suffix</span>
-    <span class="err">eap</span> <span class="err">{</span>
+<div class="highlight"><pre><span></span><span class="na">authorize {</span>
+    <span class="na">preprocess</span>
+    <span class="na">chap</span>
+    <span class="na">mschap</span>
+    <span class="na">suffix</span>
+    <span class="na">eap {</span>
         <span class="na">ok</span> <span class="o">=</span> <span class="s">return</span>
 <span class="s">    }</span>
 <span class="s">    sql{</span>
@@ -118,15 +118,15 @@ the changes needed.</p>
 <span class="s">        reject</span>
 <span class="s">    }</span>
 
-    <span class="err">if(reject){</span>
-        <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span>
+    <span class="na">if(reject){</span>
+        <span class="na">update reply {</span>
             <span class="na">Reply-Message :</span><span class="o">=</span> <span class="s">&quot;Login Failed. Please check your Username and Password&quot;</span>
 <span class="s">        }</span>
 <span class="s">        reject</span>
 <span class="s">    }</span>
 
 
-    <span class="err">expiration{</span>
+    <span class="na">expiration{</span>
         <span class="na">userlock</span> <span class="o">=</span> <span class="s">1</span>
 <span class="s">    }</span>
 <span class="s">    if(userlock){</span>
@@ -136,9 +136,9 @@ the changes needed.</p>
 <span class="s">            reject</span>
 <span class="s">    }</span>
 
-    <span class="err">logintime</span>
+    <span class="na">logintime</span>
 
-    <span class="err">noresetBytecounter{</span>
+    <span class="na">noresetBytecounter{</span>
         <span class="na">reject</span> <span class="o">=</span> <span class="s">1</span>
 <span class="s">    }</span>
 <span class="s">    if(reject){</span>
@@ -149,7 +149,7 @@ the changes needed.</p>
 <span class="s">    }</span>
 
 
-    <span class="err">noresetcounter{</span>
+    <span class="na">noresetcounter{</span>
         <span class="na">reject</span> <span class="o">=</span> <span class="s">1</span>
 <span class="s">    }</span>
 <span class="s">    if(reject){</span>
@@ -159,32 +159,32 @@ the changes needed.</p>
 <span class="s">            reject</span>
 <span class="s">    }</span>
 
-    <span class="err">pap</span>
-<span class="err">}</span>
+    <span class="na">pap</span>
+<span class="na">}</span>
 
-<span class="err">post-auth</span> <span class="err">{</span>
-    <span class="err">sql</span>
-    <span class="err">exec</span>
-    <span class="err">Post-Auth-Type</span> <span class="err">REJECT</span> <span class="err">{</span>
-        <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span> <span class="c1"># Fallback error message</span>
+<span class="na">post-auth {</span>
+    <span class="na">sql</span>
+    <span class="na">exec</span>
+    <span class="na">Post-Auth-Type REJECT {</span>
+        <span class="na">update reply { # Fallback error message</span>
             <span class="na">Reply-Message</span> <span class="o">=</span> <span class="s">&quot;Login Failed. Please check your username and password&quot;</span>
 <span class="s">        }</span>
 <span class="s">        attr_filter.access_reject</span>
 <span class="s">    }</span>
-<span class="err">}</span>
+<span class="na">}</span>
 </pre></div>
 
 
 <p>I'll start with the part that will help explain the best.</p>
-<div class="highlight"><pre><span class="err">noresetBytecounter{</span>
+<div class="highlight"><pre><span></span><span class="na">noresetBytecounter{</span>
     <span class="na">reject</span> <span class="o">=</span> <span class="s">1</span>
-<span class="err">}</span>
-<span class="err">if(reject){</span>
-        <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span>
+<span class="na">}</span>
+<span class="na">if(reject){</span>
+        <span class="na">update reply {</span>
                 <span class="na">Reply-Message :</span><span class="o">=</span> <span class="s">&quot;You have reached your bandwidth limit&quot;</span>
 <span class="s">        }</span>
 <span class="s">        reject</span>
-<span class="err">}</span>
+<span class="na">}</span>
 </pre></div>
 
 
@@ -217,16 +217,16 @@ sending an 'return' which would clear the reject and return an ok.</p>
 <p>Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
 piece of code sets a default message for Access-Reject.</p>
-<div class="highlight"><pre><span class="err">post-auth</span> <span class="err">{</span>
-    <span class="err">sql</span>
-    <span class="err">exec</span>
-    <span class="err">Post-Auth-Type</span> <span class="err">REJECT</span> <span class="err">{</span>
-                <span class="err">update</span> <span class="err">reply</span> <span class="err">{</span> <span class="c1"># Fallback error message</span>
+<div class="highlight"><pre><span></span><span class="na">post-auth {</span>
+    <span class="na">sql</span>
+    <span class="na">exec</span>
+    <span class="na">Post-Auth-Type REJECT {</span>
+                <span class="na">update reply { # Fallback error message</span>
                     <span class="na">Reply-Message</span> <span class="o">=</span> <span class="s">&quot;Login Failed. Please check your username and password&quot;</span>
 <span class="s">                }</span>
 <span class="s">        attr_filter.access_reject</span>
 <span class="s">    }</span>
-<span class="err">}</span>
+<span class="na">}</span>
 </pre></div>
 
 

@@ -92,7 +92,7 @@ present here will be a more up to date config, that is also mostly
 secure compare to a good number of ones on the net (to do with passing
 non PHP files to the php interpreter).&lt;/p&gt;
 &lt;p&gt;Firstly, my Nginx config for this very blog.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;www.tim.purewhite.id.au&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
   &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/(.*)&lt;/span&gt; &lt;span class="s"&gt;http://tim.purewhite.id.au/&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="s"&gt;permanent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
@@ -319,7 +319,7 @@ being a link local address, or a 6to4, or Teredo tunnel[1]. So we just
 make Transmission bind to a link local address and hey presto, no IPv6
 for Transmission!&lt;/p&gt;
 &lt;p&gt;Simply add the following line to the settings.json file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;bind-address-ipv6&amp;quot;: &amp;quot;fe80::&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;quot;bind-address-ipv6&amp;quot;: &amp;quot;fe80::&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -333,7 +333,7 @@ pinging every PoP available to us and find the "closest" one, but for
 now, letter the numbers do the talking.&lt;/p&gt;
 &lt;p&gt;I ping the same machine both via IPv6 and via IPv4. Lets see if you can
 work out which is which.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;10 packets transmitted, 10 received, 0% packet loss
 rtt min/avg/max/mdev = 698.592/712.159/814.473/34.163 ms
 
 10 packets transmitted, 10 received, 0% packet loss
@@ -351,13 +351,13 @@ running both tunnels in parrallel so that if one dies the other is
 working. Hopefully I'll see better IPv6 improvement now. Still, native
 IPv6 would be better.
 &lt;a href="http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/"&gt;http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/&lt;/a&gt;&lt;/ins&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;10 packets transmitted, 10 received, 0% packet loss
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;10 packets transmitted, 10 received, 0% packet loss
 rtt min/avg/max/mdev = 235.587/267.187/382.010/45.090 ms
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="ipv6"></category><category term="ping"></category><category term="sixxs"></category></entry><entry><title>Disk recovery - Which files are damaged?</title><link href="//tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="alternate"></link><updated>2011-04-19T09:40:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-04-19:2011/04/disk-recovery-which-files-are-damaged/</id><summary type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
 damaged hard drive.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -n /dev/inputdevice rescued.img rescued.log
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ddrescue -n /dev/inputdevice rescued.img rescued.log
 
-&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue -r &lt;span class="m"&gt;1&lt;/span&gt; /dev/inputdevice rescued.img rescued.log
+$ ddrescue -r &lt;span class="m"&gt;1&lt;/span&gt; /dev/inputdevice rescued.img rescued.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -400,10 +400,10 @@ over a network isn't that bad. I'm sure it would have been a lot quicker
 had all the files resided on the local machine on  a nice RAID array.&lt;/p&gt;
 &lt;p&gt;So a simplified example&lt;/p&gt;
 &lt;p&gt;copy all files off rescued image (loop mount) to another location&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &amp;gt; tmpfile
-&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- tmpfile rescue.img rescue.log
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;BAD SECTOR &amp;quot;&lt;/span&gt; &amp;gt; tmpfile
+$ ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- tmpfile rescue.img rescue.log
 
-&lt;span class="nv"&gt;$ &lt;/span&gt;diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &amp;gt; damagedfiles
+$ diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &amp;gt; damagedfiles
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -412,14 +412,14 @@ which are the ones with damaged sectors. Also, the ddrescue doesn't
 damage the logfile so you can then reverse it using /dev/zero to restore
 the image to it's original recovery state. This won't work with sparse
 files.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- /dev/zero rescue.img rescue.log
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ddrescue --fill&lt;span class="o"&gt;=&lt;/span&gt;- /dev/zero rescue.img rescue.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;ins datetime="2011-08-11T21:54:00+00:00"&gt;Or, if you haven't copied the
 files off, then the way suggested in the ddrescue manual looks like
 this. (After getting your disk image)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# mount -o loop rescued.img /mnt/loop
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# mount -o loop rescued.img /mnt/loop
 
 $ find /mnt/loop -type f -print0 | xargs -0 md5sum &amp;gt; prefill.md5
 
@@ -446,7 +446,7 @@ sectors, then continue as it is possible.&lt;/p&gt;
 &lt;p&gt;First, check that the sector is actually used. This used to be the dstat
 command, but it has since been renamed to blkstat. So we take a sector
 number from the logfile that couldn't be recovered.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat rescue.log &lt;span class="p"&gt;|&lt;/span&gt;grep -&lt;span class="p"&gt;|&lt;/span&gt;head
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat rescue.log &lt;span class="p"&gt;|&lt;/span&gt;grep -&lt;span class="p"&gt;|&lt;/span&gt;head
 0x0178F200  0x0000D400  -
 0x017A0000  0x00000200  -
 0x2BC488F400  0x00011600  -
@@ -469,31 +469,31 @@ viewing.&lt;br /&gt;
 I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
-368541573
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00/200&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+&lt;span class="m"&gt;368541573&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Or do it the long way&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
-188693285376
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
-368541573
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ibase=16; 2BEEFF0A00&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+&lt;span class="m"&gt;188693285376&lt;/span&gt;
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;188693285376/512&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;bc
+&lt;span class="m"&gt;368541573&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Ether way, I now know that the sector number is 368541573. Using blkstat
 (formerly dstat) I can verify that the sector is used or not.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 368541573
-Sector: 368541573
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ blkstat rescued.img &lt;span class="m"&gt;368541573&lt;/span&gt;
+Sector: &lt;span class="m"&gt;368541573&lt;/span&gt;
 Allocated
-Cluster: 5754738
+Cluster: &lt;span class="m"&gt;5754738&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now a little warning, if you get a sector that looks like this.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;blkstat rescued.img 48249
-Sector: 48249
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ blkstat rescued.img &lt;span class="m"&gt;48249&lt;/span&gt;
+Sector: &lt;span class="m"&gt;48249&lt;/span&gt;
 Allocated &lt;span class="o"&gt;(&lt;/span&gt;Meta&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -512,8 +512,8 @@ you from even seeing some of the files, so hopefully when you have
 damage to the FAT your 2nd FAT will still be good.&lt;/ins&gt;&lt;/p&gt;
 &lt;p&gt;Our next step is to use ifind to find the inode associated with the
 sector. This can take some time and lots of CPU.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;time &lt;/span&gt;ifind rescued.img -d 368541573
-5892375559
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;time&lt;/span&gt; ifind rescued.img -d &lt;span class="m"&gt;368541573&lt;/span&gt;
+&lt;span class="m"&gt;5892375559&lt;/span&gt;
 
 real    2m52.314s
 user    1m15.280s
@@ -522,17 +522,17 @@ sys 0m2.170s
 
 
 &lt;p&gt;This finally gives us the inode associated with that file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;istat rescued.img 5892375559&lt;span class="p"&gt;|&lt;/span&gt;head -12
-Directory Entry: 5892375559
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ istat rescued.img &lt;span class="m"&gt;5892375559&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;head -12
+Directory Entry: &lt;span class="m"&gt;5892375559&lt;/span&gt;
 Allocated
 File Attributes: File, Archive
-Size: 21346140
+Size: &lt;span class="m"&gt;21346140&lt;/span&gt;
 Name: MICROS~1
 
 Directory Entry Times:
-Written:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:38 2010
-Accessed:   Wed Apr &lt;span class="m"&gt;13&lt;/span&gt; 00:00:00 2011
-Created:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; 22:16:39 2010
+Written:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; &lt;span class="m"&gt;22&lt;/span&gt;:16:38 &lt;span class="m"&gt;2010&lt;/span&gt;
+Accessed:   Wed Apr &lt;span class="m"&gt;13&lt;/span&gt; &lt;span class="m"&gt;00&lt;/span&gt;:00:00 &lt;span class="m"&gt;2011&lt;/span&gt;
+Created:    Wed Aug &lt;span class="m"&gt;25&lt;/span&gt; &lt;span class="m"&gt;22&lt;/span&gt;:16:39 &lt;span class="m"&gt;2010&lt;/span&gt;
 
 Sectors:
 &lt;/pre&gt;&lt;/div&gt;
@@ -547,8 +547,8 @@ than 1 or 2 sectors) you'll want to run this command without the grep,
 and save the contents to a file so you can just grep over that file each
 time as it takes a long time to recursively list all the files in a big
 filesystem.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fls -rFp bunsom.img &lt;span class="p"&gt;|&lt;/span&gt;grep 5892375559
-r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ fls -rFp bunsom.img &lt;span class="p"&gt;|&lt;/span&gt;grep &lt;span class="m"&gt;5892375559&lt;/span&gt;
+r/r &lt;span class="m"&gt;5892375559&lt;/span&gt;: Microsoft Office &lt;span class="m"&gt;2011&lt;/span&gt;/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
 &lt;/pre&gt;&lt;/div&gt;
 
 

@@ -77,8 +77,8 @@ explaining how to make gearman more command line friendly using xargs.
 of scripting I had myself a number of small shell scripts, a gearmand
 server, and a working cluster.</p>
 <p>Firstly, I setup some NFS mounts on all the computers involved.</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir /mnt/DVD_rip
-<span class="nv">$ </span>mkdir /mnt/DVD_encode
+<div class="highlight"><pre><span></span>$ mkdir /mnt/DVD_rip
+$ mkdir /mnt/DVD_encode
 </pre></div>
 
 
@@ -93,7 +93,7 @@ loaded so you can read encrypted DVD's. You can also stop and restart
 the ripping process at any time without loosing what has been ripped
 successfully. NB: It doesn't remove the CSS encryption so you will need
 libdvdcss on all computers doing encoding.</p>
-<div class="highlight"><pre>lsdvd /dev/sr0 &gt; /dev/null &amp; ddrescue -r 1 /dev/sr0 &quot;$1.iso&quot; &quot;$1.log&quot;
+<div class="highlight"><pre><span></span>lsdvd /dev/sr0 &gt; /dev/null &amp; ddrescue -r 1 /dev/sr0 &quot;$1.iso&quot; &quot;$1.log&quot;
 </pre></div>
 
 
@@ -133,7 +133,7 @@ processed a lot quicker.</p>
 <p>All the files can be found at
 <a href="http://tim.purewhite.id.au/code/handbrake-cluster">http://tim.purewhite.id.au/code/handbrake-cluster</a> or checked out with
 bzr.</p>
-<div class="highlight"><pre>bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
+<div class="highlight"><pre><span></span>bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
 </pre></div>
     </div><!-- /.entry-content -->
 <script src="https://apis.google.com/js/plusone.js">

@@ -49,9 +49,9 @@
 </small>
 </p>      <p><ins datetime="2011-08-11T21:49:04+00:00">First, getting an image of the
 damaged hard drive.</p>
-<div class="highlight"><pre><span class="nv">$ </span>ddrescue -n /dev/inputdevice rescued.img rescued.log
+<div class="highlight"><pre><span></span>$ ddrescue -n /dev/inputdevice rescued.img rescued.log
 
-<span class="nv">$ </span>ddrescue -r <span class="m">1</span> /dev/inputdevice rescued.img rescued.log
+$ ddrescue -r <span class="m">1</span> /dev/inputdevice rescued.img rescued.log
 </pre></div>
 
 
@@ -94,10 +94,10 @@ over a network isn't that bad. I'm sure it would have been a lot quicker
 had all the files resided on the local machine on  a nice RAID array.</p>
 <p>So a simplified example</p>
 <p>copy all files off rescued image (loop mount) to another location</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> -n <span class="s2">&quot;BAD SECTOR &quot;</span> &gt; tmpfile
-<span class="nv">$ </span>ddrescue --fill<span class="o">=</span>- tmpfile rescue.img rescue.log
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> -n <span class="s2">&quot;BAD SECTOR &quot;</span> &gt; tmpfile
+$ ddrescue --fill<span class="o">=</span>- tmpfile rescue.img rescue.log
 
-<span class="nv">$ </span>diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &gt; damagedfiles
+$ diff -r /mnt/loop/ /mnt/server/rescuedfiles/ &gt; damagedfiles
 </pre></div>
 
 
@@ -106,14 +106,14 @@ which are the ones with damaged sectors. Also, the ddrescue doesn't
 damage the logfile so you can then reverse it using /dev/zero to restore
 the image to it's original recovery state. This won't work with sparse
 files.</p>
-<div class="highlight"><pre><span class="nv">$ </span>ddrescue --fill<span class="o">=</span>- /dev/zero rescue.img rescue.log
+<div class="highlight"><pre><span></span>$ ddrescue --fill<span class="o">=</span>- /dev/zero rescue.img rescue.log
 </pre></div>
 
 
 <p><ins datetime="2011-08-11T21:54:00+00:00">Or, if you haven't copied the
 files off, then the way suggested in the ddrescue manual looks like
 this. (After getting your disk image)</p>
-<div class="highlight"><pre># mount -o loop rescued.img /mnt/loop
+<div class="highlight"><pre><span></span># mount -o loop rescued.img /mnt/loop
 
 $ find /mnt/loop -type f -print0 | xargs -0 md5sum &gt; prefill.md5
 
@@ -140,7 +140,7 @@ sectors, then continue as it is possible.</p>
 <p>First, check that the sector is actually used. This used to be the dstat
 command, but it has since been renamed to blkstat. So we take a sector
 number from the logfile that couldn't be recovered.</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat rescue.log <span class="p">|</span>grep -<span class="p">|</span>head
+<div class="highlight"><pre><span></span>$ cat rescue.log <span class="p">|</span>grep -<span class="p">|</span>head
 0x0178F200  0x0000D400  -
 0x017A0000  0x00000200  -
 0x2BC488F400  0x00011600  -
@@ -163,31 +163,31 @@ viewing.<br />
 I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;ibase=16; 2BEEFF0A00/200&quot;</span><span class="p">|</span>bc
-368541573
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s2">&quot;ibase=16; 2BEEFF0A00/200&quot;</span><span class="p">|</span>bc
+<span class="m">368541573</span>
 </pre></div>
 
 
 <p>Or do it the long way</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;ibase=16; 2BEEFF0A00&quot;</span><span class="p">|</span>bc
-188693285376
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;188693285376/512&quot;</span><span class="p">|</span>bc
-368541573
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s2">&quot;ibase=16; 2BEEFF0A00&quot;</span><span class="p">|</span>bc
+<span class="m">188693285376</span>
+$ <span class="nb">echo</span> <span class="s2">&quot;188693285376/512&quot;</span><span class="p">|</span>bc
+<span class="m">368541573</span>
 </pre></div>
 
 
 <p>Ether way, I now know that the sector number is 368541573. Using blkstat
 (formerly dstat) I can verify that the sector is used or not.</p>
-<div class="highlight"><pre><span class="nv">$ </span>blkstat rescued.img 368541573
-Sector: 368541573
+<div class="highlight"><pre><span></span>$ blkstat rescued.img <span class="m">368541573</span>
+Sector: <span class="m">368541573</span>
 Allocated
-Cluster: 5754738
+Cluster: <span class="m">5754738</span>
 </pre></div>
 
 
 <p>Now a little warning, if you get a sector that looks like this.</p>
-<div class="highlight"><pre><span class="nv">$ </span>blkstat rescued.img 48249
-Sector: 48249
+<div class="highlight"><pre><span></span>$ blkstat rescued.img <span class="m">48249</span>
+Sector: <span class="m">48249</span>
 Allocated <span class="o">(</span>Meta<span class="o">)</span>
 </pre></div>
 
@@ -206,8 +206,8 @@ you from even seeing some of the files, so hopefully when you have
 damage to the FAT your 2nd FAT will still be good.</ins></p>
 <p>Our next step is to use ifind to find the inode associated with the
 sector. This can take some time and lots of CPU.</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">time </span>ifind rescued.img -d 368541573
-5892375559
+<div class="highlight"><pre><span></span>$ <span class="nb">time</span> ifind rescued.img -d <span class="m">368541573</span>
+<span class="m">5892375559</span>
 
 real    2m52.314s
 user    1m15.280s
@@ -216,17 +216,17 @@ sys 0m2.170s
 
 
 <p>This finally gives us the inode associated with that file.</p>
-<div class="highlight"><pre><span class="nv">$ </span>istat rescued.img 5892375559<span class="p">|</span>head -12
-Directory Entry: 5892375559
+<div class="highlight"><pre><span></span>$ istat rescued.img <span class="m">5892375559</span><span class="p">|</span>head -12
+Directory Entry: <span class="m">5892375559</span>
 Allocated
 File Attributes: File, Archive
-Size: 21346140
+Size: <span class="m">21346140</span>
 Name: MICROS~1
 
 Directory Entry Times:
-Written:    Wed Aug <span class="m">25</span> 22:16:38 2010
-Accessed:   Wed Apr <span class="m">13</span> 00:00:00 2011
-Created:    Wed Aug <span class="m">25</span> 22:16:39 2010
+Written:    Wed Aug <span class="m">25</span> <span class="m">22</span>:16:38 <span class="m">2010</span>
+Accessed:   Wed Apr <span class="m">13</span> <span class="m">00</span>:00:00 <span class="m">2011</span>
+Created:    Wed Aug <span class="m">25</span> <span class="m">22</span>:16:39 <span class="m">2010</span>
 
 Sectors:
 </pre></div>
@@ -241,8 +241,8 @@ than 1 or 2 sectors) you'll want to run this command without the grep,
 and save the contents to a file so you can just grep over that file each
 time as it takes a long time to recursively list all the files in a big
 filesystem.</p>
-<div class="highlight"><pre><span class="nv">$ </span>fls -rFp bunsom.img <span class="p">|</span>grep 5892375559
-r/r 5892375559: Microsoft Office 2011/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
+<div class="highlight"><pre><span></span>$ fls -rFp bunsom.img <span class="p">|</span>grep <span class="m">5892375559</span>
+r/r <span class="m">5892375559</span>: Microsoft Office <span class="m">2011</span>/Office/Microsoft Chart Converter.app/Contents/MacOS/Microsoft Chart Converter
 </pre></div>
 
 

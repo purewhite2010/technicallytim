@@ -51,12 +51,12 @@ libraries have an entry in the wp_posts table with post_type set to attachment.
 If you fetch all the ID's for the items you wish to upload, and have the handy
 &lt;a href="http://wp-cli.org"&gt;wp-cli.org&lt;/a&gt; tool installed, it's as simple as running the following tool for
 each ID, in this case the media item ID is 7.&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wp &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;do_action(&amp;#39;&lt;/span&gt;wp_update_attachment_metadata&lt;span class="s1"&gt;&amp;#39;, null, 7);&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wp &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;do_action(&amp;#39;&lt;/span&gt;wp_update_attachment_metadata&lt;span class="s1"&gt;&amp;#39;, null, 7);&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Or a quick bash script to upload all attachments&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="k"&gt;$(&lt;/span&gt;wp-cli.phar db query &lt;span class="s2"&gt;&amp;quot;SELECT ID FROM wp_posts WHERE&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="k"&gt;$(&lt;/span&gt;wp-cli.phar db query &lt;span class="s2"&gt;&amp;quot;SELECT ID FROM wp_posts WHERE&lt;/span&gt;
 &lt;span class="s2"&gt;post_type=&amp;#39;attachment&amp;#39;;&amp;quot;&lt;/span&gt;  &lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; wp-cli.phar &lt;span class="nb"&gt;eval&lt;/span&gt;
 &lt;span class="s2"&gt;&amp;quot;do_action(&amp;#39;wp_update_attachment_metadata&amp;#39;, null, &lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="s2"&gt;);&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -66,7 +66,7 @@ each ID, in this case the media item ID is 7.&lt;/strong&gt;&lt;/p&gt;
 made a few more commits, you'll probably want to look at GitHub for the extra
 changes&lt;/p&gt;
 &lt;p&gt;For reference, those above patches are also here:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;c81e58894150e5e8e89a3f59e25458d956080 Mon Sep 17 00:00:00 2001
 From: Tim White &amp;lt;tim@whiteitsolutions.com.au&amp;gt;
 Date: Mon, 5 Oct 2015 13:23:28 +1000
 Subject: [PATCH] Changes for using Google Cloud Storage instead of Amazon S3
@@ -132,7 +132,7 @@ b/vendor/aws/Aws/S3/Resources/s3-2006-03-01.php
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;From 8b55698c8e937a585646d8ecd0682db088c8dc76 Mon Sep 17 00:00:00 2001
 From: Tim White &amp;lt;tim@whiteitsolutions.com.au&amp;gt;
 Date: Mon, 5 Oct 2015 13:12:25 +1000
 Subject: [PATCH] Minor changes to make it work with Google Cloud Storage
@@ -327,7 +327,7 @@ something that sets their preference!&lt;/p&gt;
 &lt;p&gt;Read
 [http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
 some more thoughts on dbus.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Google+ (Google's Social Network)</title><link href="//tim.purewhite.id.au/2011/07/google-googles-social-network/" rel="alternate"></link><updated>2011-07-15T10:57:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-07-15:2011/07/google-googles-social-network/</id><summary type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
 what it is, or you may have none, so hopefully I can answer some of your
 questions and help you get started.&lt;/p&gt;

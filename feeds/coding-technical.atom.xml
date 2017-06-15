@@ -18,14 +18,14 @@ CoovaChilli is just relaying the message it gets from the Radius server.
 So we next turn our attention to FreeRadius.&lt;/p&gt;
 &lt;p&gt;The first place you may be tempted to look is in
 /etc/freeradius/modules/expiration&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;expiration&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;expiration {&lt;/span&gt;
         &lt;span class="c1"&gt;#&lt;/span&gt;
         &lt;span class="c1"&gt;# The Reply-Message which will be sent back in case the&lt;/span&gt;
         &lt;span class="c1"&gt;# account has expired. Dynamic substitution is supported&lt;/span&gt;
         &lt;span class="c1"&gt;#&lt;/span&gt;
         &lt;span class="na"&gt;reply-message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Password Has Expired\r\n&amp;quot; &lt;/span&gt;
 &lt;span class="s"&gt;        #reply-message = &amp;quot;Your account has expired, %{User-Name}\r\n&amp;quot;&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -50,12 +50,12 @@ understand where all this fits together. This is an exceprt of
 Please don't just copy and paste this, it's to give better understanding
 of where the parts go, as many examples don't give you the context of
 the changes needed.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;authorize&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-    &lt;span class="err"&gt;preprocess&lt;/span&gt;
-    &lt;span class="err"&gt;chap&lt;/span&gt;
-    &lt;span class="err"&gt;mschap&lt;/span&gt;
-    &lt;span class="err"&gt;suffix&lt;/span&gt;
-    &lt;span class="err"&gt;eap&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;authorize {&lt;/span&gt;
+    &lt;span class="na"&gt;preprocess&lt;/span&gt;
+    &lt;span class="na"&gt;chap&lt;/span&gt;
+    &lt;span class="na"&gt;mschap&lt;/span&gt;
+    &lt;span class="na"&gt;suffix&lt;/span&gt;
+    &lt;span class="na"&gt;eap {&lt;/span&gt;
         &lt;span class="na"&gt;ok&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;return&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    sql{&lt;/span&gt;
@@ -69,15 +69,15 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
-    &lt;span class="err"&gt;if(reject){&lt;/span&gt;
-        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="na"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="na"&gt;update reply {&lt;/span&gt;
             &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your Username and Password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
 &lt;span class="s"&gt;        reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
-    &lt;span class="err"&gt;expiration{&lt;/span&gt;
+    &lt;span class="na"&gt;expiration{&lt;/span&gt;
         &lt;span class="na"&gt;userlock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    if(userlock){&lt;/span&gt;
@@ -87,9 +87,9 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
-    &lt;span class="err"&gt;logintime&lt;/span&gt;
+    &lt;span class="na"&gt;logintime&lt;/span&gt;
 
-    &lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+    &lt;span class="na"&gt;noresetBytecounter{&lt;/span&gt;
         &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    if(reject){&lt;/span&gt;
@@ -100,7 +100,7 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
 
-    &lt;span class="err"&gt;noresetcounter{&lt;/span&gt;
+    &lt;span class="na"&gt;noresetcounter{&lt;/span&gt;
         &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 &lt;span class="s"&gt;    if(reject){&lt;/span&gt;
@@ -110,32 +110,32 @@ the changes needed.&lt;/p&gt;
 &lt;span class="s"&gt;            reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
 
-    &lt;span class="err"&gt;pap&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="na"&gt;pap&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 
-&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-    &lt;span class="err"&gt;sql&lt;/span&gt;
-    &lt;span class="err"&gt;exec&lt;/span&gt;
-    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+&lt;span class="na"&gt;post-auth {&lt;/span&gt;
+    &lt;span class="na"&gt;sql&lt;/span&gt;
+    &lt;span class="na"&gt;exec&lt;/span&gt;
+    &lt;span class="na"&gt;Post-Auth-Type REJECT {&lt;/span&gt;
+        &lt;span class="na"&gt;update reply { # Fallback error message&lt;/span&gt;
             &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
 &lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;I'll start with the part that will help explain the best.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;noresetBytecounter{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;noresetBytecounter{&lt;/span&gt;
     &lt;span class="na"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
-&lt;span class="err"&gt;if(reject){&lt;/span&gt;
-        &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;if(reject){&lt;/span&gt;
+        &lt;span class="na"&gt;update reply {&lt;/span&gt;
                 &lt;span class="na"&gt;Reply-Message :&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;You have reached your bandwidth limit&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;        }&lt;/span&gt;
 &lt;span class="s"&gt;        reject&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -168,16 +168,16 @@ sending an 'return' which would clear the reject and return an ok.&lt;/p&gt;
 &lt;p&gt;Most of the rest of that big piece of code is similar pieces of code,
 although some have different codes, like userlock. The other important
 piece of code sets a default message for Access-Reject.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;post-auth&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-    &lt;span class="err"&gt;sql&lt;/span&gt;
-    &lt;span class="err"&gt;exec&lt;/span&gt;
-    &lt;span class="err"&gt;Post-Auth-Type&lt;/span&gt; &lt;span class="err"&gt;REJECT&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
-                &lt;span class="err"&gt;update&lt;/span&gt; &lt;span class="err"&gt;reply&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;# Fallback error message&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;post-auth {&lt;/span&gt;
+    &lt;span class="na"&gt;sql&lt;/span&gt;
+    &lt;span class="na"&gt;exec&lt;/span&gt;
+    &lt;span class="na"&gt;Post-Auth-Type REJECT {&lt;/span&gt;
+                &lt;span class="na"&gt;update reply { # Fallback error message&lt;/span&gt;
                     &lt;span class="na"&gt;Reply-Message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Login Failed. Please check your username and password&amp;quot;&lt;/span&gt;
 &lt;span class="s"&gt;                }&lt;/span&gt;
 &lt;span class="s"&gt;        attr_filter.access_reject&lt;/span&gt;
 &lt;span class="s"&gt;    }&lt;/span&gt;
-&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="na"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -272,8 +272,8 @@ explaining how to make gearman more command line friendly using xargs.
 of scripting I had myself a number of small shell scripts, a gearmand
 server, and a working cluster.&lt;/p&gt;
 &lt;p&gt;Firstly, I setup some NFS mounts on all the computers involved.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_rip
-&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir /mnt/DVD_encode
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir /mnt/DVD_rip
+$ mkdir /mnt/DVD_encode
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -288,7 +288,7 @@ loaded so you can read encrypted DVD's. You can also stop and restart
 the ripping process at any time without loosing what has been ripped
 successfully. NB: It doesn't remove the CSS encryption so you will need
 libdvdcss on all computers doing encoding.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;lsdvd /dev/sr0 &amp;gt; /dev/null &amp;amp; ddrescue -r 1 /dev/sr0 &amp;quot;$1.iso&amp;quot; &amp;quot;$1.log&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;lsdvd /dev/sr0 &amp;gt; /dev/null &amp;amp; ddrescue -r 1 /dev/sr0 &amp;quot;$1.iso&amp;quot; &amp;quot;$1.log&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -328,5 +328,5 @@ processed a lot quicker.&lt;/p&gt;
 &lt;p&gt;All the files can be found at
 &lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster"&gt;http://tim.purewhite.id.au/code/handbrake-cluster&lt;/a&gt; or checked out with
 bzr.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>

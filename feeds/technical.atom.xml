@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2011-03-18T15:37:00+10:00</updated><entry><title>Brother HL-2140 Series Test/Information Page</title><link href="//tim.purewhite.id.au/2011/03/brother-hl-2140-series-testinformation-page/" rel="alternate"></link><updated>2011-03-18T15:37:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-03-18:2011/03/brother-hl-2140-series-testinformation-page/</id><summary type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2017-06-15T09:55:00+10:00</updated><entry><title>Recursive file count for subdirectories</title><link href="//tim.purewhite.id.au/2017/06/file-count-per-directory/" rel="alternate"></link><updated>2017-06-15T09:55:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2017-06-15:2017/06/file-count-per-directory/</id><summary type="html">&lt;p&gt;Sometimes Google takes awhile to find the thing you are looking for. I currently have the need to find the recursive file count for all the directories in a directory. And then sort them.&lt;/p&gt;
+&lt;p&gt;There are lots of stackoverflow questions and answers to this, but most of them rely on the find command, fancy loops, etc. I found a nice elegant one liner that uses du, cut, sort and uniq. This works perfectly for me, is super quick, and much nicer to use IMHO&lt;/p&gt;
+&lt;p&gt;So here is that answer, so I can easily find it next time, and so hopefully others can find it too!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://stackoverflow.com/a/39622947/682931"&gt;https://stackoverflow.com/a/39622947/682931&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;du -a &lt;span class="p"&gt;|&lt;/span&gt; cut -d/ -f2 &lt;span class="p"&gt;|&lt;/span&gt; sort &lt;span class="p"&gt;|&lt;/span&gt; uniq -c &lt;span class="p"&gt;|&lt;/span&gt; sort -nr
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="du"></category><category term="file count"></category><category term="bash"></category></entry><entry><title>Brother HL-2140 Series Test/Information Page</title><link href="//tim.purewhite.id.au/2011/03/brother-hl-2140-series-testinformation-page/" rel="alternate"></link><updated>2011-03-18T15:37:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-03-18:2011/03/brother-hl-2140-series-testinformation-page/</id><summary type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
 test or information page, it was good to finally find out how to do it
 again. Of course, if you have the nice windows drivers, hidden in there
 somewhere you can just click "Print Settings" and it will print out the
@@ -85,7 +90,7 @@ check you have enough up and down bandwidth for this. My server is
 hosted out on the internet and has enough bandwidth. A big reason for me
 setting this up is lack of a decent internet connection from my home to
 be able to do normal VoIP.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install asterisk
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install asterisk
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -101,7 +106,7 @@ http://www.voip-info.org/&lt;/p&gt;
 provider. Mine is in the following format. You can see that the username
 is repeated a few times on the mynetfone one. It can be different for
 other providers.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; username@sip01.mynetfone.com.au:password:username@sip01.mynetfone.com.au/username&lt;/span&gt;
 
 &lt;span class="na"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; 888xxxxxxx:secret@sip.pennytel.com/888xxxxxxx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -111,7 +116,7 @@ other providers.&lt;/p&gt;
 your "trunks" for the VoIP providers. In my situation, I don't want
 incoming calls (as then they need to be routed), so I just have the
 outgoing trunks.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[mynetfone-out]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[mynetfone-out]&lt;/span&gt;
 &lt;span class="na"&gt;disallow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;all&lt;/span&gt;
 &lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;alaw&lt;/span&gt;
 &lt;span class="na"&gt;allow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;ulaw&lt;/span&gt;
@@ -155,7 +160,7 @@ disconnecting calls and monitoring things. (You can do this through the
 asterisk cli, how ever it may be a bit harder).&lt;/p&gt;
 &lt;p&gt;The format of the file you create is as follows.
 /etc/asterisk/manager.d/somename.conf&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[username]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[username]&lt;/span&gt;
 &lt;span class="na"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;password&lt;/span&gt;
 &lt;span class="na"&gt;read&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call,log,verbose,command,agent,user,config&lt;/span&gt;
 &lt;span class="na"&gt;write&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;system,call.log,verbose,command,agent,user,config&lt;/span&gt;
@@ -171,7 +176,7 @@ line from the [default] section. There is a section in the [default]
 that should sort out Hangup/Busy detection and the likes, so the
 extensions we are adding can be very simple, however, you can customise
 these very easily to do more than just connect the 2 calls.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[DialOutMyNetFone]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[DialOutMyNetFone]&lt;/span&gt;
 &lt;span class="na"&gt;exten&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;gt; _0X.,1,Dial(SIP/mynetfone-out/${EXTEN})&lt;/span&gt;
 
 &lt;span class="k"&gt;[DialOutPennyTel]&lt;/span&gt;
@@ -183,16 +188,16 @@ these very easily to do more than just connect the 2 calls.&lt;/p&gt;
 Asterisk has autoloading on in /etc/asterisk/modules.conf so the rest
 should just work.&lt;/p&gt;
 &lt;p&gt;After all those edits, restart asterisk.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo /etc/init.d/asterisk restart
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo /etc/init.d/asterisk restart
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now we create our call file.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;Channel:&lt;/span&gt; &lt;span class="err"&gt;SIP/pennytel-out/YOURNUMBER&lt;/span&gt;
-&lt;span class="err"&gt;Context:&lt;/span&gt; &lt;span class="err"&gt;DialOutMyNetFone&lt;/span&gt;
-&lt;span class="err"&gt;Extension:&lt;/span&gt; &lt;span class="err"&gt;WHOTOCALLNUMBER&lt;/span&gt;
-&lt;span class="err"&gt;Priority:&lt;/span&gt; &lt;span class="err"&gt;1&lt;/span&gt;
-&lt;span class="err"&gt;Archive:&lt;/span&gt; &lt;span class="err"&gt;Yes&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;Channel: SIP/pennytel-out/YOURNUMBER&lt;/span&gt;
+&lt;span class="na"&gt;Context: DialOutMyNetFone&lt;/span&gt;
+&lt;span class="na"&gt;Extension: WHOTOCALLNUMBER&lt;/span&gt;
+&lt;span class="na"&gt;Priority: 1&lt;/span&gt;
+&lt;span class="na"&gt;Archive: Yes&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -215,7 +220,7 @@ placed in a way that asterisk can't start reading it before the file is
 all there. For this reason, the mv command is recommended and I'll
 demonstrate. (I first copy the file so I can keep a number of pre setup
 files stored).&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;cp preset1.call call123.call
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cp preset1.call call123.call
 sudo chown asterisk call123.call
 sudo mv call123.call /var/spool/asterisk/outgoing/
 &lt;/pre&gt;&lt;/div&gt;

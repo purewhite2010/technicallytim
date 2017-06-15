@@ -1,4 +1,4 @@
-Title: File count for subdirectories
+Title: Recursive file count for subdirectories
 Date: 2017-06-15 09:55
 Author: Tim White
 Category: Technical
@@ -11,6 +11,7 @@ There are lots of stackoverflow questions and answers to this, but most of them 
 
 So here is that answer, so I can easily find it next time, and so hopefully others can find it too!
 
-https://stackoverflow.com/a/39622947/682931
-   :::bash
-   du -a | cut -d/ -f2 | sort | uniq -c | sort -nr
+<https://stackoverflow.com/a/39622947/682931>
+
+    :::bash
+    du -a | cut -d/ -f2 | sort | uniq -c | sort -nr

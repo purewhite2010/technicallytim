@@ -1,0 +1,3 @@
+[submodule "pelican-sundown"]
+	path = pelican-sundown
+	url = git@github.com:timwhite/pelican-sundown.git

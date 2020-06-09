@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog-technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2015-12-26T06:35:00+10:00</updated><entry><title>NAB Ignores own Security Advice</title><link href="//tim.purewhite.id.au/2015/12/nab-dodgy-security/" rel="alternate"></link><updated>2015-12-26T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2015-12-26:2015/12/nab-dodgy-security/</id><summary type="html">&lt;p&gt;A bank that ignores their own security advice? Yep, that appears to be what NAB
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim - Blog, Technical</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog-technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2015-12-26T06:35:00+10:00</updated><entry><title>NAB Ignores own Security Advice</title><link href="//tim.purewhite.id.au/2015/12/nab-dodgy-security/" rel="alternate"></link><published>2015-12-26T06:35:00+10:00</published><updated>2015-12-26T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2015-12-26:/2015/12/nab-dodgy-security/</id><summary type="html">&lt;p&gt;A bank that ignores their own security advice? Yep, that appears to be what NAB
+is doing.&lt;/p&gt;
+&lt;p&gt;A typical Email or SMS Scam goes something like this.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Your Internet Banking Account has been disabled due to suspicious activity.
+ Please call this number XXXX-XXXX to restore access. Thanks Bank X Security …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;p&gt;A bank that ignores their own security advice? Yep, that appears to be what NAB
 is doing.&lt;/p&gt;
 &lt;p&gt;A typical Email or SMS Scam goes something like this.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -59,7 +64,10 @@ travelling.&lt;/p&gt;
 &lt;li&gt;One of the few places I could find NAB's number, but it's not a NAB website &lt;a href="http://www.computerworld.com.au/article/526453/nab_phishing_email_emerges_/"&gt;http://www.computerworld.com.au/article/526453/nab_phishing_email_emerges_/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Others who have also gotten the SMS and are also confused by NAB's odd behaviour &lt;a href="http://forums.whirlpool.net.au/archive/2160952"&gt;http://forums.whirlpool.net.au/archive/2160952&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;One of the few places on NAB's website they actually list their number &lt;a href="http://www.nab.com.au/personal/banking/credit-cards/manage-your-credit-card/credit-card-assistance/fraudulent-transactions-frequently-asked-questions"&gt;http://www.nab.com.au/personal/banking/credit-cards/manage-your-credit-card/credit-card-assistance/fraudulent-transactions-frequently-asked-questions&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="NAB"></category><category term="Security"></category><category term="Best Practices"></category></entry><entry><title>Belkin? Rtkit?</title><link href="//tim.purewhite.id.au/2011/11/belkin-rtkit/" rel="alternate"></link><updated>2011-11-05T12:10:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-11-05:2011/11/belkin-rtkit/</id><summary type="html">&lt;p&gt;While attempting to remotely debug a linux machine today, I was first
+&lt;/ul&gt;</content><category term="NAB"></category><category term="Security"></category><category term="Best Practices"></category></entry><entry><title>Belkin? Rtkit?</title><link href="//tim.purewhite.id.au/2011/11/belkin-rtkit/" rel="alternate"></link><published>2011-11-05T12:10:00+10:00</published><updated>2011-11-05T12:10:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-11-05:/2011/11/belkin-rtkit/</id><summary type="html">&lt;p&gt;While attempting to remotely debug a linux machine today, I was first
+encountering a strange problem. Any process that took more than about
+1/2 second to complete, would freeze. top, ps, lsmod, tail -f, the list
+goes on. For example, trying to run dmesg and display it's output would …&lt;/p&gt;</summary><content type="html">&lt;p&gt;While attempting to remotely debug a linux machine today, I was first
 encountering a strange problem. Any process that took more than about
 1/2 second to complete, would freeze. top, ps, lsmod, tail -f, the list
 goes on. For example, trying to run dmesg and display it's output would
@@ -81,10 +89,14 @@ got any new firmware for it (and it's firmware is over 1 year old).
 Apparently, someone else had this problem and belkin told them to just
 hard code the ip's in your hosts file for the hosts that are being
 returned wrong! I believe it was also a Belkin modem that would return
-strange results when you did an AAAA request (ipv6).&lt;br /&gt;
+strange results when you did an AAAA request (ipv6).&lt;br&gt;
 So if you have a Belkin, maybe force your computer to use your ISP's
 DNS servers directly, rather than the routers. (Or take it back to the
-shop, because after all, it is faulty)&lt;/p&gt;</summary><category term="backwards ip"></category><category term="belkin"></category><category term="reverse ip"></category><category term="rtkit"></category></entry><entry><title>Nginx, PHP-FPM, Wordpress, Super Cache</title><link href="//tim.purewhite.id.au/2011/10/nginx-php-fpm-wordpress-super-cache/" rel="alternate"></link><updated>2011-10-24T11:37:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-10-24:2011/10/nginx-php-fpm-wordpress-super-cache/</id><summary type="html">&lt;p&gt;So recently I've been exploring the alternative world of Nginx instead
+shop, because after all, it is faulty)&lt;/p&gt;</content><category term="backwards ip"></category><category term="belkin"></category><category term="reverse ip"></category><category term="rtkit"></category></entry><entry><title>Nginx, PHP-FPM, Wordpress, Super Cache</title><link href="//tim.purewhite.id.au/2011/10/nginx-php-fpm-wordpress-super-cache/" rel="alternate"></link><published>2011-10-24T11:37:00+10:00</published><updated>2011-10-24T11:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-10-24:/2011/10/nginx-php-fpm-wordpress-super-cache/</id><summary type="html">&lt;p&gt;So recently I've been exploring the alternative world of Nginx instead
+of Apache, and PHP-FPM instead of mod_php. There are plenty of
+tutorials on the net for getting all of this setup, however not that
+many are up to date anymore for the Super Cache stuff. Hopefully what I
+present …&lt;/p&gt;</summary><content type="html">&lt;p&gt;So recently I've been exploring the alternative world of Nginx instead
 of Apache, and PHP-FPM instead of mod_php. There are plenty of
 tutorials on the net for getting all of this setup, however not that
 many are up to date anymore for the Super Cache stuff. Hopefully what I
@@ -207,7 +219,10 @@ owned by the user, not by www-data or what ever the web user is. This is
 SO much better than Apache and mod_php, and easier than suExec with
 mod_php.&lt;/p&gt;
 &lt;p&gt;Once I have more of my domains moved to Nginx, I'll do a report on
-memory and cpu usage.&lt;/p&gt;</summary><category term="Nginx"></category><category term="php-fpm"></category><category term="secure"></category><category term="supercache"></category><category term="try_files"></category><category term="wordpress"></category></entry><entry><title>Munin cgi graph timing out</title><link href="//tim.purewhite.id.au/2011/09/munin-cgi-graph-timing-out/" rel="alternate"></link><updated>2011-09-01T11:50:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-09-01:2011/09/munin-cgi-graph-timing-out/</id><summary type="html">&lt;p&gt;A problem that has given lots of people problems, caused me issues
+memory and cpu usage.&lt;/p&gt;</content><category term="Nginx"></category><category term="php-fpm"></category><category term="secure"></category><category term="supercache"></category><category term="try_files"></category><category term="wordpress"></category></entry><entry><title>Munin cgi graph timing out</title><link href="//tim.purewhite.id.au/2011/09/munin-cgi-graph-timing-out/" rel="alternate"></link><published>2011-09-01T11:50:00+10:00</published><updated>2011-09-01T11:50:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-09-01:/2011/09/munin-cgi-graph-timing-out/</id><summary type="html">&lt;p&gt;A problem that has given lots of people problems, caused me issues
+yesterday. I have munin using munin-cgi-graph to create the graphs on
+demand due to me not often viewing the graphs. A few days ago I had a
+server issue that caused apache to lock up (I think a …&lt;/p&gt;</summary><content type="html">&lt;p&gt;A problem that has given lots of people problems, caused me issues
 yesterday. I have munin using munin-cgi-graph to create the graphs on
 demand due to me not often viewing the graphs. A few days ago I had a
 server issue that caused apache to lock up (I think a process ran away
@@ -229,7 +244,11 @@ maximum so no more munin-graph processes get started ever!&lt;/p&gt;
 &lt;p&gt;There are 2 solutions. The first is simple, reboot. The second is also
 simple, clear the semaphore flags manually. &lt;code&gt;ipcs&lt;/code&gt; is the command to
 show the flags and &lt;code&gt;ipcrm&lt;/code&gt; is the command for removing the semaphores.
-Check the man pages for information on the correct syntax.&lt;/p&gt;</summary><category term="ipcrm"></category><category term="ipcs"></category><category term="munin"></category><category term="munin-cgi-graph"></category><category term="semaphore"></category><category term="timeout"></category></entry><entry><title>Gmail account hacked :(</title><link href="//tim.purewhite.id.au/2011/08/gmail-account-hacked/" rel="alternate"></link><updated>2011-08-04T11:28:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-08-04:2011/08/gmail-account-hacked/</id><summary type="html">&lt;p&gt;For someone that prides himself on security, it is rather embarrassing
+Check the man pages for information on the correct syntax.&lt;/p&gt;</content><category term="ipcrm"></category><category term="ipcs"></category><category term="munin"></category><category term="munin-cgi-graph"></category><category term="semaphore"></category><category term="timeout"></category></entry><entry><title>Gmail account hacked :(</title><link href="//tim.purewhite.id.au/2011/08/gmail-account-hacked/" rel="alternate"></link><published>2011-08-04T11:28:00+10:00</published><updated>2011-08-04T11:28:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-08-04:/2011/08/gmail-account-hacked/</id><summary type="html">&lt;p&gt;For someone that prides himself on security, it is rather embarrassing
+to get hacked. I currently don't know how they got in, or exactly what
+they have done. I have changed my passwords and security questions
+though.&lt;/p&gt;
+&lt;p&gt;So far, I know that my account was accessed from Poland (194.181 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;For someone that prides himself on security, it is rather embarrassing
 to get hacked. I currently don't know how they got in, or exactly what
 they have done. I have changed my passwords and security questions
 though.&lt;/p&gt;
@@ -249,12 +268,15 @@ one along time ago.&lt;/p&gt;
 &lt;p&gt;So 2 morals to this story. Even security conscience people can get
 hacked. And backup your data from the cloud if you wish to avoid loosing
 anything. I'm now in the process of setting up version controlled
-backups of my gmail data.&lt;/p&gt;</summary><category term="gmail"></category><category term="hacked"></category></entry><entry><title>Mt Gox Passwords Leaked</title><link href="//tim.purewhite.id.au/2011/06/mt-gox-passwords-leaked/" rel="alternate"></link><updated>2011-06-20T14:37:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-06-20:2011/06/mt-gox-passwords-leaked/</id><summary type="html">&lt;p&gt;For the second time in a week, I've heard of a websites user database
+backups of my gmail data.&lt;/p&gt;</content><category term="gmail"></category><category term="hacked"></category></entry><entry><title>Mt Gox Passwords Leaked</title><link href="//tim.purewhite.id.au/2011/06/mt-gox-passwords-leaked/" rel="alternate"></link><published>2011-06-20T14:37:00+10:00</published><updated>2011-06-20T14:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-20:/2011/06/mt-gox-passwords-leaked/</id><summary type="html">&lt;p&gt;For the second time in a week, I've heard of a websites user database
 being leaked. In the first case it was from a site I've never used. The
-second though was a site I signed up to a few months back.&lt;br /&gt;
+second though was a site I signed up to a few months back.&lt;br&gt;
+One of the biggest problems with this leaked …&lt;/p&gt;</summary><content type="html">&lt;p&gt;For the second time in a week, I've heard of a websites user database
+being leaked. In the first case it was from a site I've never used. The
+second though was a site I signed up to a few months back.&lt;br&gt;
 One of the biggest problems with this leaked database is that the
 hashing function used isn't that strong when the hacker has rainbow
-tables to use to crack the database.&lt;br /&gt;
+tables to use to crack the database.&lt;br&gt;
 The first side effect of this for me was to go and change some of my
 passwords as a precautionary measure. The second side effect, and the
 more annoying one, is that I used a private email address for this
@@ -269,7 +291,7 @@ storage from a company that accepts Bitcoins as payments. And they
 haven't bothered to try and keep the email addresses slightly private,
 1500 other people also have my address, and I have theirs, as no Bcc was
 used. (Of course, spam filtering will quickly filter that particular
-email out).&lt;br /&gt;
+email out).&lt;br&gt;
 Interested to see how bad the compromise was, and if it'll affect me,
 I've also downloaded the user database now. A quick look shows that my
 password is hashed with the less secure method and a quick bit of code
@@ -280,7 +302,7 @@ Gox password, still only has a password that can be used for one site,
 Mt Gox. If they had enough time and power, then maybe they could work
 backwards and eventually find the password I used to generate my pwdhash
 passwords, but by the time they did this, I'd have changed all those
-passwords anyway.&lt;br /&gt;
+passwords anyway.&lt;br&gt;
 Having only been using pwdhashing for a little while now, it was good
 to discover that it has already protected me from an attack. A number of
 user who had simple passwords that have been cracked already, have also
@@ -293,7 +315,11 @@ signed up. Working from knowing when you signed up shows how many people
 signed up after you. It seems to have had exponential growth in the last
 few weeks, which is good for Bitcoin in general, but bad once you
 realise how this will look to all those new users. Looking at my
-position in the database, I can see I was a very early adopter.&lt;/p&gt;</summary><category term="bitcoin"></category><category term="crack"></category><category term="database"></category><category term="leaked"></category><category term="mt gox"></category><category term="password"></category></entry><entry><title>Drupal Upgrades</title><link href="//tim.purewhite.id.au/2011/06/drupal-upgrades/" rel="alternate"></link><updated>2011-06-10T16:42:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-06-10:2011/06/drupal-upgrades/</id><summary type="html">&lt;p&gt;Drupal upgrades have not been easy, and they should be easy. You look at
+position in the database, I can see I was a very early adopter.&lt;/p&gt;</content><category term="bitcoin"></category><category term="crack"></category><category term="database"></category><category term="leaked"></category><category term="mt gox"></category><category term="password"></category></entry><entry><title>Drupal Upgrades</title><link href="//tim.purewhite.id.au/2011/06/drupal-upgrades/" rel="alternate"></link><published>2011-06-10T16:42:00+10:00</published><updated>2011-06-10T16:42:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-10:/2011/06/drupal-upgrades/</id><summary type="html">&lt;p&gt;Drupal upgrades have not been easy, and they should be easy. You look at
+wordpress, one click and the upgrade is done! Plugins, themes and core
+can all be upgraded from in the browser.&lt;/p&gt;
+&lt;p&gt;Drupal upgrades are traditionally backup, move all files out, extract
+new fresh files, move selected files …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Drupal upgrades have not been easy, and they should be easy. You look at
 wordpress, one click and the upgrade is done! Plugins, themes and core
 can all be upgraded from in the browser.&lt;/p&gt;
 &lt;p&gt;Drupal upgrades are traditionally backup, move all files out, extract
@@ -303,7 +329,11 @@ you to backup, and then inplace upgrade the Drupal core files! No nasty
 moving things around that is almost guaranteed to break something
 because you forgot to move something back.&lt;/p&gt;
 &lt;p&gt;I still look forward to the day when Drupal upgrades are as easy as
-Wordpress. Until then, I have a good enough method!&lt;/p&gt;</summary><category term="drupal"></category><category term="upgrades"></category></entry><entry><title>Disable IPv6 in Transmission BT</title><link href="//tim.purewhite.id.au/2011/06/disable-ipv6-in-transmission-bt/" rel="alternate"></link><updated>2011-06-10T15:59:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-06-10:2011/06/disable-ipv6-in-transmission-bt/</id><summary type="html">&lt;p&gt;After finally getting my IPv6 working nicely, it was time to prevent
+Wordpress. Until then, I have a good enough method!&lt;/p&gt;</content><category term="drupal"></category><category term="upgrades"></category></entry><entry><title>Disable IPv6 in Transmission BT</title><link href="//tim.purewhite.id.au/2011/06/disable-ipv6-in-transmission-bt/" rel="alternate"></link><published>2011-06-10T15:59:00+10:00</published><updated>2011-06-10T15:59:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-10:/2011/06/disable-ipv6-in-transmission-bt/</id><summary type="html">&lt;p&gt;After finally getting my IPv6 working nicely, it was time to prevent
+Transmission from using IPv6 as  I don't want lots of torrent traffic
+going through the tunnel when it's faster through IPv4 (until a time I
+can get Native IPv6). Apparently this is an "invalid" feature request
+according to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;After finally getting my IPv6 working nicely, it was time to prevent
 Transmission from using IPv6 as  I don't want lots of torrent traffic
 going through the tunnel when it's faster through IPv4 (until a time I
 can get Native IPv6). Apparently this is an "invalid" feature request
@@ -325,7 +355,10 @@ for Transmission!&lt;/p&gt;
 
 &lt;p&gt;[1] You'd think given that they already prevent Teredo tunnels from
 being used, that the feature request would actually make sense for those
-wishing to disable IPv6 due to TUNNEL's!&lt;/p&gt;</summary><category term="ipv6"></category><category term="torrent"></category><category term="transmission"></category><category term="tunnel"></category></entry><entry><title>Why we need native IPv6</title><link href="//tim.purewhite.id.au/2011/06/why-we-need-native-ipv6/" rel="alternate"></link><updated>2011-06-10T12:12:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-06-10:2011/06/why-we-need-native-ipv6/</id><summary type="html">&lt;p&gt;We need native IPv6, or at least a decent PoP in Australia!&lt;/p&gt;
+wishing to disable IPv6 due to TUNNEL's!&lt;/p&gt;</content><category term="ipv6"></category><category term="torrent"></category><category term="transmission"></category><category term="tunnel"></category></entry><entry><title>Why we need native IPv6</title><link href="//tim.purewhite.id.au/2011/06/why-we-need-native-ipv6/" rel="alternate"></link><published>2011-06-10T12:12:00+10:00</published><updated>2011-06-10T12:12:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-10:/2011/06/why-we-need-native-ipv6/</id><summary type="html">&lt;p&gt;We need native IPv6, or at least a decent PoP in Australia!&lt;/p&gt;
+&lt;p&gt;Currently our home network is IPv6 enabled via a Sixxs tunnel. If we
+lived in NZ then our PoP would be in NZ. Unfortunately we can't use the
+NZ PoP, so instead we use the London PoP! Eventually …&lt;/p&gt;</summary><content type="html">&lt;p&gt;We need native IPv6, or at least a decent PoP in Australia!&lt;/p&gt;
 &lt;p&gt;Currently our home network is IPv6 enabled via a Sixxs tunnel. If we
 lived in NZ then our PoP would be in NZ. Unfortunately we can't use the
 NZ PoP, so instead we use the London PoP! Eventually I'll get around to
@@ -353,7 +386,16 @@ IPv6 would be better.
 &lt;a href="http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/"&gt;http://michael-wheeler.org/2009/03/24/australian-ipv6-tunnel-broker/&lt;/a&gt;&lt;/ins&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;10 packets transmitted, 10 received, 0% packet loss
 rtt min/avg/max/mdev = 235.587/267.187/382.010/45.090 ms
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="ipv6"></category><category term="ping"></category><category term="sixxs"></category></entry><entry><title>Disk recovery - Which files are damaged?</title><link href="//tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="alternate"></link><updated>2011-04-19T09:40:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-04-19:2011/04/disk-recovery-which-files-are-damaged/</id><summary type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
+&lt;/pre&gt;&lt;/div&gt;</content><category term="ipv6"></category><category term="ping"></category><category term="sixxs"></category></entry><entry><title>Disk recovery - Which files are damaged?</title><link href="//tim.purewhite.id.au/2011/04/disk-recovery-which-files-are-damaged/" rel="alternate"></link><published>2011-04-19T09:40:00+10:00</published><updated>2011-04-19T09:40:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-19:/2011/04/disk-recovery-which-files-are-damaged/</id><summary type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
+damaged hard drive.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ddrescue -n /dev/inputdevice rescued.img rescued.log
+
+$ ddrescue -r &lt;span class="m"&gt;1&lt;/span&gt; /dev/inputdevice rescued.img rescued.log
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first ddrescue command tries to fly through the disk as quickly as
+possible, skipping over sections when an error occurs. This allows me …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;ins datetime="2011-08-11T21:49:04+00:00"&gt;First, getting an image of the
 damaged hard drive.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ddrescue -n /dev/inputdevice rescued.img rescued.log
 
@@ -465,7 +507,7 @@ bytes in this case, but you will need to verify it for your drive. If in
 doubt, do the conversion, open a hexeditor, jump to that location, use
 the previous ddrescue command to fill in the badsectors with some known
 next, and confirm that the known text is at the address you are
-viewing.&lt;br /&gt;
+viewing.&lt;br&gt;
 I've picked sector 0x2BEEFF0A00 to analyise. So I convert it to decimal
 and dived by 512 (the sector size). I can do this all at once if I know
 that 512 in hex is 200.&lt;/p&gt;
@@ -600,7 +642,11 @@ properly.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Thanks once again for this great tutorial!&lt;/p&gt;
-&lt;/blockquote&gt;</summary><category term="damaged"></category><category term="fat32"></category><category term="recovery"></category><category term="sector"></category></entry><entry><title>Are mobile Providers Ripping Us Off?</title><link href="//tim.purewhite.id.au/2011/04/are-mobile-providers-ripping-us-off/" rel="alternate"></link><updated>2011-04-08T18:17:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-04-08:2011/04/are-mobile-providers-ripping-us-off/</id><summary type="html">&lt;p&gt;With so many options, so many plans, it's hard to know if we are being
+&lt;/blockquote&gt;</content><category term="damaged"></category><category term="fat32"></category><category term="recovery"></category><category term="sector"></category></entry><entry><title>Are mobile Providers Ripping Us Off?</title><link href="//tim.purewhite.id.au/2011/04/are-mobile-providers-ripping-us-off/" rel="alternate"></link><published>2011-04-08T18:17:00+10:00</published><updated>2011-04-08T18:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-08:/2011/04/are-mobile-providers-ripping-us-off/</id><summary type="html">&lt;p&gt;With so many options, so many plans, it's hard to know if we are being
+ripped off or getting a good deal. Then bring in VoIP, and things get
+even trickier.&lt;/p&gt;
+&lt;p&gt;For the sake of this research, I was looking for a mobile phone plan,
+prepaid or post paid, that …&lt;/p&gt;</summary><content type="html">&lt;p&gt;With so many options, so many plans, it's hard to know if we are being
 ripped off or getting a good deal. Then bring in VoIP, and things get
 even trickier.&lt;/p&gt;
 &lt;p&gt;For the sake of this research, I was looking for a mobile phone plan,
@@ -620,7 +666,7 @@ make much of a difference, but if you make short calls, then per minute
 billing could end up costing you lots. For example, if all my calls are
 less than 30 seconds long, and I'm on per minute billing, then I'm
 always paying for a minute, even though I've used less than half of
-that!&lt;br /&gt;
+that!&lt;br&gt;
 Using that, I figured that splitting my calls in to 3 categories would
 allow me to best see the cost difference between per second, per 30
 second, and per minute billing. Calls less than 30 seconds, Calls more
@@ -657,7 +703,7 @@ however, that the numbers I'm about to quote assume that you ether use
 &lt;em&gt;all&lt;/em&gt; the cap credit on a call, or on sms's, and don't take into account
 flagfalls (which would be charged for each call).&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;A plan with a $0.99 per minute call rate, costs $0.06 per minute in
-real dollars.&lt;/em&gt;&lt;br /&gt;
+real dollars.&lt;/em&gt;&lt;br&gt;
 &lt;em&gt;The same plan with $0.28 sms rate, costs $0.02 per sms in real
 dollars.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;When I first saw these numbers, I was shocked. So for comparison, I
@@ -694,8 +740,8 @@ depending on how good the 3G is where you live).  If you don't call
 mobiles much, or SMS, and get good 3G in your area, then a Data only
 plan with VoIP might be a better choice, as long as you are sure you
 don't need normal mobile voice service.&lt;/p&gt;
-&lt;p&gt;&lt;a href="//tim.purewhite.id.au/images/2011/04/Phone-Comparison.png"&gt;&lt;img alt="Phone Comparison" src="//tim.purewhite.id.au/images/2011/04/Phone-Comparison-300x126.png" /&gt;&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href="//tim.purewhite.id.au/images/2011/04/Phone-Comparison.png"&gt;&lt;img alt="Phone Comparison" src="//tim.purewhite.id.au/images/2011/04/Phone-Comparison-300x126.png"&gt;&lt;/a&gt; &lt;/p&gt;
 &lt;p&gt;NB: Yes, I have taken into account Free calls between phones on the same
 carriers, however I only used calls between me and my wife as fitting
 into this category, as they are the only calls we can guarantee to be on
-the same network.&lt;/p&gt;</summary><category term="Cap Plan"></category><category term="Comparison"></category><category term="Exetel"></category><category term="iinet"></category><category term="Mobile"></category><category term="Optus"></category><category term="Pennytel"></category><category term="Phone"></category><category term="Post Paid"></category><category term="Pre Paid"></category><category term="Provider"></category><category term="Telstra"></category><category term="Virgin"></category><category term="voip"></category></entry></feed>
+the same network.&lt;/p&gt;</content><category term="Cap Plan"></category><category term="Comparison"></category><category term="Exetel"></category><category term="iinet"></category><category term="Mobile"></category><category term="Optus"></category><category term="Pennytel"></category><category term="Phone"></category><category term="Post Paid"></category><category term="Pre Paid"></category><category term="Provider"></category><category term="Telstra"></category><category term="Virgin"></category><category term="voip"></category></entry></feed>

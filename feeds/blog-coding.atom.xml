@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog-coding.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2013-04-25T14:00:00+10:00</updated><entry><title>Wordpress Server Maintenance</title><link href="//tim.purewhite.id.au/2013/04/wordpress-server-maintenance/" rel="alternate"></link><updated>2013-04-25T14:00:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2013-04-25:2013/04/wordpress-server-maintenance/</id><summary type="html">&lt;p&gt;Wow. Somehow I missed when this amazing tool was released. &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt;.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim - Blog, Coding</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog-coding.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2013-04-25T14:00:00+10:00</updated><entry><title>Wordpress Server Maintenance</title><link href="//tim.purewhite.id.au/2013/04/wordpress-server-maintenance/" rel="alternate"></link><published>2013-04-25T14:00:00+10:00</published><updated>2013-04-25T14:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-04-25:/2013/04/wordpress-server-maintenance/</id><summary type="html">&lt;p&gt;Wow. Somehow I missed when this amazing tool was released. &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt;.
+Just wow.&lt;/p&gt;
+&lt;p&gt;I have a bunch of scripts I use to keep all the Wordpress installs up to
+date on my server, it finds all the installs, then it downloads the
+latest version, checks each install for the installed …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Wow. Somehow I missed when this amazing tool was released. &lt;a href="http://wp-cli.org/" title="wp-cli"&gt;wp-cli&lt;/a&gt;.
 Just wow.&lt;/p&gt;
 &lt;p&gt;I have a bunch of scripts I use to keep all the Wordpress installs up to
 date on my server, it finds all the installs, then it downloads the
@@ -55,7 +59,10 @@ won't show you files you can't access.&lt;/p&gt;
 
     &lt;span class="nb"&gt;popd&lt;/span&gt; &amp;gt; /dev/null
 &lt;span class="k"&gt;done&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="security"></category><category term="updates"></category><category term="wordpress"></category><category term="wp-cli"></category></entry><entry><title>Submitting Empty Checkboxes when in Array</title><link href="//tim.purewhite.id.au/2012/09/submitting-empty-checkboxes-when-in-array/" rel="alternate"></link><updated>2012-09-11T15:20:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2012-09-11:2012/09/submitting-empty-checkboxes-when-in-array/</id><summary type="html">&lt;p&gt;In HTML, we often use a nice feature for POSTing a form, or submitting a
+&lt;/pre&gt;&lt;/div&gt;</content><category term="security"></category><category term="updates"></category><category term="wordpress"></category><category term="wp-cli"></category></entry><entry><title>Submitting Empty Checkboxes when in Array</title><link href="//tim.purewhite.id.au/2012/09/submitting-empty-checkboxes-when-in-array/" rel="alternate"></link><published>2012-09-11T15:20:00+10:00</published><updated>2012-09-11T15:20:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2012-09-11:/2012/09/submitting-empty-checkboxes-when-in-array/</id><summary type="html">&lt;p&gt;In HTML, we often use a nice feature for POSTing a form, or submitting a
+form, where we have lots of items the "same". In the Grase Hotspot
+project, we have groups for example, and we can dynamically add and
+delete groups, but need a complete form for each group …&lt;/p&gt;</summary><content type="html">&lt;p&gt;In HTML, we often use a nice feature for POSTing a form, or submitting a
 form, where we have lots of items the "same". In the Grase Hotspot
 project, we have groups for example, and we can dynamically add and
 delete groups, but need a complete form for each group with it's
@@ -131,4 +138,4 @@ works nicely for me.&lt;/p&gt;
 set the "extra" inputs to the value of "Off", but leaving them as an
 empty value. This is because in my code I run the incoming arrays
 through array_filter which removes all the empty ones (and maintains
-the array indexes so the order and position is still there).&lt;/p&gt;</summary><category term="array"></category><category term="checkboxes"></category><category term="empty"></category><category term="HTML"></category><category term="submit"></category></entry></feed>
+the array indexes so the order and position is still there).&lt;/p&gt;</content><category term="array"></category><category term="checkboxes"></category><category term="empty"></category><category term="HTML"></category><category term="submit"></category></entry></feed>

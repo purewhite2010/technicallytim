@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2015-10-05T00:00:00+10:00</updated><entry><title>Wordpress Media in Google Cloud Storage</title><link href="//tim.purewhite.id.au/2015/10/wordpress-google-cloud-storage/" rel="alternate"></link><updated>2015-10-05T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2015-10-05:2015/10/wordpress-google-cloud-storage/</id><summary type="html">&lt;p&gt;One of the big challenges with Wordpress in the cloud, is the media we upload.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim - Blog</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/blog.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2015-10-05T00:00:00+10:00</updated><entry><title>Wordpress Media in Google Cloud Storage</title><link href="//tim.purewhite.id.au/2015/10/wordpress-google-cloud-storage/" rel="alternate"></link><published>2015-10-05T00:00:00+10:00</published><updated>2015-10-05T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2015-10-05:/2015/10/wordpress-google-cloud-storage/</id><summary type="html">&lt;p&gt;One of the big challenges with Wordpress in the cloud, is the media we upload.
+As soon as we upload media files, the Wordpress instance has data that isn't
+stored in the database. This prevents us for example having a docker Wordpress
+install that we can scale up as required …&lt;/p&gt;</summary><content type="html">&lt;p&gt;One of the big challenges with Wordpress in the cloud, is the media we upload.
 As soon as we upload media files, the Wordpress instance has data that isn't
 stored in the database. This prevents us for example having a docker Wordpress
 install that we can scale up as required, without some method for syncronising
@@ -207,7 +210,11 @@ $domain, &amp;#39;path&amp;#39; ); ?&amp;gt;&amp;gt;
             &amp;lt;label&amp;gt;
                 &amp;lt;input type=&amp;quot;radio&amp;quot; name=&amp;quot;domain&amp;quot; value=&amp;quot;virtual-host&amp;quot; &amp;lt;?php
 checked( $domain, &amp;#39;virtual-host&amp;#39; ); ?&amp;gt;&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="wordpress"></category><category term="google cloud storage"></category><category term="s3"></category><category term="media"></category><category term="uploads"></category><category term="google"></category></entry><entry><title>Arduino wireless LiPo monitoring</title><link href="//tim.purewhite.id.au/2015/02/arduino-lipo-wireless-monitor/" rel="alternate"></link><updated>2015-02-21T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2015-02-21:2015/02/arduino-lipo-wireless-monitor/</id><summary type="html">&lt;p&gt;&lt;img alt="Crashed RC Car" src="//tim.purewhite.id.au/images/2015/IMG_20150221_150813_edit.jpg" /&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="wordpress"></category><category term="google cloud storage"></category><category term="s3"></category><category term="media"></category><category term="uploads"></category><category term="google"></category></entry><entry><title>Arduino wireless LiPo monitoring</title><link href="//tim.purewhite.id.au/2015/02/arduino-lipo-wireless-monitor/" rel="alternate"></link><published>2015-02-21T00:00:00+10:00</published><updated>2015-02-21T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2015-02-21:/2015/02/arduino-lipo-wireless-monitor/</id><summary type="html">&lt;p&gt;&lt;img alt="Crashed RC Car" src="//tim.purewhite.id.au/images/2015/IMG_20150221_150813_edit.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Over the last few months, I've been getting back into electronics. It's really
+not fair what's available now, that wasn't available when I was a kid!
+Arduino's for a start are a very easy way to get into microcontrollers. And
+with the Arduino scene has come lots of small electronic …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="Crashed RC Car" src="//tim.purewhite.id.au/images/2015/IMG_20150221_150813_edit.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;Over the last few months, I've been getting back into electronics. It's really
 not fair what's available now, that wasn't available when I was a kid!
 Arduino's for a start are a very easy way to get into microcontrollers. And
@@ -238,7 +245,10 @@ voltage to continue driving, and the LiPo hadn't warmed up at all.&lt;/p&gt;
 &lt;p&gt;The next step is to remove the RC circuitry, work out what I can use, and then
 replace it with circuitry that I can control via the Arduino. I also have some
 Ultrasonic sensors for obsticle avoidance.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Receiving Arduino Uno" src="//tim.purewhite.id.au/images/2015/IMG_20150221_151115_edit.jpg" /&gt;&lt;/p&gt;</summary><category term="arduino"></category><category term="electronics"></category><category term="LiPo"></category><category term="nrf24l01"></category></entry><entry><title>Wordpress to Pelican</title><link href="//tim.purewhite.id.au/2014/03/wordpress-to-pelican/" rel="alternate"></link><updated>2014-03-29T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2014-03-29:2014/03/wordpress-to-pelican/</id><summary type="html">&lt;p&gt;It's been awhile since I last blogged. Since then, I've started a full time job
+&lt;p&gt;&lt;img alt="Receiving Arduino Uno" src="//tim.purewhite.id.au/images/2015/IMG_20150221_151115_edit.jpg"&gt;&lt;/p&gt;</content><category term="arduino"></category><category term="electronics"></category><category term="LiPo"></category><category term="nrf24l01"></category></entry><entry><title>Wordpress to Pelican</title><link href="//tim.purewhite.id.au/2014/03/wordpress-to-pelican/" rel="alternate"></link><published>2014-03-29T00:00:00+10:00</published><updated>2014-03-29T00:00:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2014-03-29:/2014/03/wordpress-to-pelican/</id><summary type="html">&lt;p&gt;It's been awhile since I last blogged. Since then, I've started a full time job
+as a Systems Administrator. This means I have less time for maintaining my own
+servers. So I've finally taken the plunge migrating some of the more static
+sites to static. For example this Technical blog …&lt;/p&gt;</summary><content type="html">&lt;p&gt;It's been awhile since I last blogged. Since then, I've started a full time job
 as a Systems Administrator. This means I have less time for maintaining my own
 servers. So I've finally taken the plunge migrating some of the more static
 sites to static. For example this Technical blog will now be a static site. 
@@ -256,7 +266,11 @@ some of the other options so this allows me to hack away on the code if I want t
 &lt;p&gt;Regarding the current lack of comments on the blog. I'm still thinking of the best
 way to handle that. I may just put a Google+ comments plugin on, as I really
 don't like Disqus. I may also just not put dynamic comments on and use Github issues
-for discussing posts as some others have done.&lt;/p&gt;</summary><category term="wordpress"></category><category term="pelican"></category></entry><entry><title>"Windows" is full of bloat</title><link href="//tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2013-05-18:2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
+for discussing posts as some others have done.&lt;/p&gt;</content><category term="wordpress"></category><category term="pelican"></category></entry><entry><title>"Windows" is full of bloat</title><link href="//tim.purewhite.id.au/2013/05/windows-is-full-of-bloat/" rel="alternate"></link><published>2013-05-18T17:18:00+10:00</published><updated>2013-05-18T17:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2013-05-18:/2013/05/windows-is-full-of-bloat/</id><summary type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
+computer, in particular lots of software installs and uninstalls to
+cleanup a slow computer.&lt;/p&gt;
+&lt;p&gt;Now before you jump the gun, I'm not talking about Windows the operating
+system being full of bloat, although it may be …&lt;/p&gt;</summary><content type="html">&lt;p&gt;It's been some time since I've had to do some work on a Windows
 computer, in particular lots of software installs and uninstalls to
 cleanup a slow computer.&lt;/p&gt;
 &lt;p&gt;Now before you jump the gun, I'm not talking about Windows the operating
@@ -281,7 +295,10 @@ bloat, and that let you install and uninstall just that software that
 you asked for without trying to push other software on you? I'll happily
 keep my Linux world, where software does what you ask, and nothing more.&lt;/p&gt;
 &lt;p&gt;And if you live in the Windows world, seriously, I think it's well past
-time to get out, but you can still get out now!&lt;/p&gt;</summary><category term="bloat"></category><category term="windows"></category></entry><entry><title>When did 'Linux' start moving away from it's simplicity?</title><link href="//tim.purewhite.id.au/2012/05/when-did-linux-start-moving-away-from-its-simplicity/" rel="alternate"></link><updated>2012-05-08T19:46:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2012-05-08:2012/05/when-did-linux-start-moving-away-from-its-simplicity/</id><summary type="html">&lt;p&gt;Today I had the joy of trying to change a users desktop environment from
+time to get out, but you can still get out now!&lt;/p&gt;</content><category term="bloat"></category><category term="windows"></category></entry><entry><title>When did 'Linux' start moving away from it's simplicity?</title><link href="//tim.purewhite.id.au/2012/05/when-did-linux-start-moving-away-from-its-simplicity/" rel="alternate"></link><published>2012-05-08T19:46:00+10:00</published><updated>2012-05-08T19:46:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2012-05-08:/2012/05/when-did-linux-start-moving-away-from-its-simplicity/</id><summary type="html">&lt;p&gt;Today I had the joy of trying to change a users desktop environment from
+Gnome, to Cinnamon, via ssh. At first I thought it would be easy, change
+the default desktop environment in lightdm.conf and restart. Fail. Ok,
+so where is a users desktop environment preference stored? .dmrc, or …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Today I had the joy of trying to change a users desktop environment from
 Gnome, to Cinnamon, via ssh. At first I thought it would be easy, change
 the default desktop environment in lightdm.conf and restart. Fail. Ok,
 so where is a users desktop environment preference stored? .dmrc, or at
@@ -289,7 +306,7 @@ least I thought so. I even logged in with a brand new user and confirmed
 that it saved the users desktop preference in \~/.dmrc. Except, if I
 changed .dmrc for a user, it just got overwritten with the old contents
 at their next automatic login. (Remember, ssh, so can't use the gui to
-change what was selected in the lightdm login screen).&lt;br /&gt;
+change what was selected in the lightdm login screen).&lt;br&gt;
 Wha?!!? Surely not a dconf/gconf setting somewhere. Search search
 search. Still no luck. Eventually I discover a service called
 "AccountsService" or something along that name. It stores the users
@@ -309,13 +326,13 @@ usermod and userdel commands. I can't find a "homepage" for it, the
 homepage listed is it's source code repo.
 (&lt;a href="http://cgit.freedesktop.org/accountsservice/"&gt;http://cgit.freedesktop.org/accountsservice/&lt;/a&gt;)  (NB: Some more digging
 finds this &lt;a href="http://www.freedesktop.org/wiki/Software/AccountsService"&gt;http://www.freedesktop.org/wiki/Software/AccountsService&lt;/a&gt; as
-the homepage)&lt;br /&gt;
+the homepage)&lt;br&gt;
 I personally don't mind D-Bus, it services its purposes, but here is an
 instance where it looks like someone has gone to the trouble of writing
 a piece of code, to complicate some that use to be a simple stat/open of
 a file, that the user was in total control of.&lt;/p&gt;
 &lt;p&gt;For the record, lightdm will work without AccountsService, and I believe
-then it will honor \~/.dmrc&lt;br /&gt;
+then it will honor \~/.dmrc&lt;br&gt;
 Also, accountsservice isn't in Debian stable, but is in Debian testing,
 and gdm3 and gnome depend on it. (So in other words Gnome3 depends on
 it)&lt;/p&gt;
@@ -328,7 +345,11 @@ something that sets their preference!&lt;/p&gt;
 [http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html][]for
 some more thoughts on dbus.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;http://blog.ngas.ch/archives/2011/12/13/the_destructive_desktop__mdash_linux_in_trouble/index.html%20
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Google+ (Google's Social Network)</title><link href="//tim.purewhite.id.au/2011/07/google-googles-social-network/" rel="alternate"></link><updated>2011-07-15T10:57:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-07-15:2011/07/google-googles-social-network/</id><summary type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
+&lt;/pre&gt;&lt;/div&gt;</content><category term="accountservice"></category><category term="accountsservice"></category><category term="dbus"></category><category term="Gnome3"></category><category term="Linux"></category><category term="simplicity"></category><category term="unix"></category></entry><entry><title>Google+ (Google's Social Network)</title><link href="//tim.purewhite.id.au/2011/07/google-googles-social-network/" rel="alternate"></link><published>2011-07-15T10:57:00+10:00</published><updated>2011-07-15T10:57:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-07-15:/2011/07/google-googles-social-network/</id><summary type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
+what it is, or you may have none, so hopefully I can answer some of your
+questions and help you get started.&lt;/p&gt;
+&lt;p&gt;Firstly, Google+ is Google's latest entry into social networking.
+Already it looks much better …&lt;/p&gt;</summary><content type="html">&lt;p&gt;By now you should have heard about Google+. You may have some idea of
 what it is, or you may have none, so hopefully I can answer some of your
 questions and help you get started.&lt;/p&gt;
 &lt;p&gt;Firstly, Google+ is Google's latest entry into social networking.
@@ -346,7 +367,7 @@ having a dodgy day but only want your friends to know, and not your
 boss, just post it to your friends circle and make sure you boss is in
 your work circle. Want to share some good news with family and few close
 friends, post it to your family circle and then add the extra friends in
-as well!&lt;br /&gt;
+as well!&lt;br&gt;
 Circles make it very simple to control who see's what on your Google+
 profile. Given the security scares of facebook stalkers and the like,
 it's good to know you have total control over who see's what.&lt;/p&gt;
@@ -384,7 +405,7 @@ about Google+" which will hopefully take you to the signin page to
 create your profile. If that fails, the second email will have a link to
 "View or Comment on Blah Blahs Post". This link will also hopefully take
 you to a page where you can fill out your public profile and then sign
-in to Google+.&lt;br /&gt;
+in to Google+.&lt;br&gt;
 Both methods work at different times, so if it doesn't work for you
 immediately, please wait an hour and try again.&lt;/p&gt;
 &lt;p&gt;I promise to not do anything with your email address other than invite
@@ -392,7 +413,11 @@ you to Google+. Please be patient as I need to manually invite each
 person unless I can work out some way to automate this. I am happy to
 invite people I don't know, however please don't be offended if you
 don't end up in my circles.&lt;/p&gt;
-&lt;p&gt;(Form removed as invites no longer needed)&lt;/p&gt;</summary><category term="facebook"></category><category term="google+"></category><category term="googleplus"></category><category term="invites"></category><category term="social network"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="//tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-06-02:2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
+&lt;p&gt;(Form removed as invites no longer needed)&lt;/p&gt;</content><category term="facebook"></category><category term="google+"></category><category term="googleplus"></category><category term="invites"></category><category term="social network"></category></entry><entry><title>"The Ultimate Steal" is right</title><link href="//tim.purewhite.id.au/2011/06/the-ultimate-steal-is-right/" rel="alternate"></link><published>2011-06-02T14:17:00+10:00</published><updated>2011-06-02T14:17:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-06-02:/2011/06/the-ultimate-steal-is-right/</id><summary type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
+easy for students to afford Microsoft products so they don't need to
+pirate them (and steal them). That's fine as long as it works and
+Microsoft don't steal from us!&lt;/p&gt;
+&lt;p&gt;Twice I've now attempted to place an order with …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Microsoft's student "Its not stealing" campaign is supposed to make it
 easy for students to afford Microsoft products so they don't need to
 pirate them (and steal them). That's fine as long as it works and
 Microsoft don't steal from us!&lt;/p&gt;
@@ -416,7 +441,10 @@ from trying again and again. You could easily have a few thousand
 dollars in pre-auth as you keep checking the details, sure they are
 correct, you hit submit.&lt;/p&gt;
 &lt;p&gt;Hopefully they can fix it faster than the amount of time I spent on hold
-just to be told they can't do anything!&lt;/p&gt;</summary><category term="digital river"></category><category term="micro$oft"></category><category term="microsoft"></category><category term="steal"></category></entry><entry><title>What it takes to keep things running. (How to reduce comment/wiki spam)</title><link href="//tim.purewhite.id.au/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/" rel="alternate"></link><updated>2011-04-05T22:13:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-04-05:2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/</id><summary type="html">&lt;p&gt;I recently pushed out a new version of the &lt;a href="http://hotspot.purewhite.id.au/"&gt;GRASE Hotspot&lt;/a&gt;. I spent
+just to be told they can't do anything!&lt;/p&gt;</content><category term="digital river"></category><category term="micro$oft"></category><category term="microsoft"></category><category term="steal"></category></entry><entry><title>What it takes to keep things running. (How to reduce comment/wiki spam)</title><link href="//tim.purewhite.id.au/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/" rel="alternate"></link><published>2011-04-05T22:13:00+10:00</published><updated>2011-04-05T22:13:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-05:/2011/04/what-it-takes-to-keep-things-running-how-to-reduce-commentwiki-spam/</id><summary type="html">&lt;p&gt;I recently pushed out a new version of the &lt;a href="http://hotspot.purewhite.id.au/"&gt;GRASE Hotspot&lt;/a&gt;. I spent
+lots of time working on rewriting the splash/welcome page, and login
+forms so that they would work even with javascript disabled, and allow
+you to force it into the non javascript version if you are having …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently pushed out a new version of the &lt;a href="http://hotspot.purewhite.id.au/"&gt;GRASE Hotspot&lt;/a&gt;. I spent
 lots of time working on rewriting the splash/welcome page, and login
 forms so that they would work even with javascript disabled, and allow
 you to force it into the non javascript version if you are having
@@ -474,7 +502,7 @@ as well as lowercase, and decent length, at least 8 characters long. Now
 use that password for one place, and only one place, maybe your email
 account. Now find another one, just as strong, use that for your next
 account, maybe facebook. Reusing passwords is a big No No, as an
-important CEO recently discovered.&lt;br /&gt;
+important CEO recently discovered.&lt;br&gt;
 I can hear you already, moaning and groaning. It's so hard to remember
 one really strong password, how can you remember more than one? Well
 this is the easy part. You use a formula. I've started using
@@ -496,4 +524,4 @@ the page and use it offline). I found a little python script that does
 it for me, which I have on my server and my machine, so I can create my
 pwdhash's even when I don't have a browser handy. Of course, there is
 nothing preventing you having multiple master passwords ether, just to
-make it even more secure!&lt;/p&gt;</summary><category term="password"></category><category term="project honey pot"></category><category term="pwdhash"></category><category term="security"></category><category term="spam"></category></entry></feed>
+make it even more secure!&lt;/p&gt;</content><category term="password"></category><category term="project honey pot"></category><category term="pwdhash"></category><category term="security"></category><category term="spam"></category></entry></feed>

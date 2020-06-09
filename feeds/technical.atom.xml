@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2017-06-15T09:55:00+10:00</updated><entry><title>Recursive file count for subdirectories</title><link href="//tim.purewhite.id.au/2017/06/file-count-per-directory/" rel="alternate"></link><updated>2017-06-15T09:55:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2017-06-15:2017/06/file-count-per-directory/</id><summary type="html">&lt;p&gt;Sometimes Google takes awhile to find the thing you are looking for. I currently have the need to find the recursive file count for all the directories in a directory. And then sort them.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim - Technical</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2017-06-15T09:55:00+10:00</updated><entry><title>Recursive file count for subdirectories</title><link href="//tim.purewhite.id.au/2017/06/file-count-per-directory/" rel="alternate"></link><published>2017-06-15T09:55:00+10:00</published><updated>2017-06-15T09:55:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2017-06-15:/2017/06/file-count-per-directory/</id><summary type="html">&lt;p&gt;Sometimes Google takes awhile to find the thing you are looking for. I currently have the need to find the recursive file count for all the directories in a directory. And then sort them.&lt;/p&gt;
+&lt;p&gt;There are lots of stackoverflow questions and answers to this, but most of them rely on …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Sometimes Google takes awhile to find the thing you are looking for. I currently have the need to find the recursive file count for all the directories in a directory. And then sort them.&lt;/p&gt;
 &lt;p&gt;There are lots of stackoverflow questions and answers to this, but most of them rely on the find command, fancy loops, etc. I found a nice elegant one liner that uses du, cut, sort and uniq. This works perfectly for me, is super quick, and much nicer to use IMHO&lt;/p&gt;
 &lt;p&gt;So here is that answer, so I can easily find it next time, and so hopefully others can find it too!&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://stackoverflow.com/a/39622947/682931"&gt;https://stackoverflow.com/a/39622947/682931&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;du -a &lt;span class="p"&gt;|&lt;/span&gt; cut -d/ -f2 &lt;span class="p"&gt;|&lt;/span&gt; sort &lt;span class="p"&gt;|&lt;/span&gt; uniq -c &lt;span class="p"&gt;|&lt;/span&gt; sort -nr
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="du"></category><category term="file count"></category><category term="bash"></category></entry><entry><title>Brother HL-2140 Series Test/Information Page</title><link href="//tim.purewhite.id.au/2011/03/brother-hl-2140-series-testinformation-page/" rel="alternate"></link><updated>2011-03-18T15:37:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-03-18:2011/03/brother-hl-2140-series-testinformation-page/</id><summary type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
+&lt;/pre&gt;&lt;/div&gt;</content><category term="du"></category><category term="file count"></category><category term="bash"></category></entry><entry><title>Brother HL-2140 Series Test/Information Page</title><link href="//tim.purewhite.id.au/2011/03/brother-hl-2140-series-testinformation-page/" rel="alternate"></link><published>2011-03-18T15:37:00+10:00</published><updated>2011-03-18T15:37:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-03-18:/2011/03/brother-hl-2140-series-testinformation-page/</id><summary type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
+test or information page, it was good to finally find out how to do it
+again. Of course, if you have the nice windows drivers, hidden in there
+somewhere you can just click "Print Settings" and …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Having many years ago had Brother printers that made it easy to print a
 test or information page, it was good to finally find out how to do it
 again. Of course, if you have the nice windows drivers, hidden in there
 somewhere you can just click "Print Settings" and it will print out the
 toner life, number of pages printed, etc etc. If you are using another
-OS though, you won't always have that nice button.&lt;br /&gt;
+OS though, you won't always have that nice button.&lt;br&gt;
 Thankfully the trick is fairly simple. If your printer is on but
 sleeping (The large "Go" button, the blue light one is dimmed) then just
 press the button once to wake it up. Once awake, press the big blue
@@ -29,7 +33,11 @@ ever you change the toner, so you can get a good idea of how many pages
 you are getting out of each toner!&lt;/p&gt;
 &lt;p&gt;NB: This may or may not work on other Brother printers. It should work
 for all the HL-2140 range (including the HL-2142 which is just the
-HL-2140 branded exclusively for office works so no one can price match).&lt;/p&gt;</summary><category term="brother"></category><category term="hl2140"></category><category term="Printer"></category></entry><entry><title>Asterisk Voip to Voip "Bridge" (Webcallback)</title><link href="//tim.purewhite.id.au/2010/10/asterisk-voip-to-voip-bridge-webcallback/" rel="alternate"></link><updated>2010-10-29T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2010-10-29:2010/10/asterisk-voip-to-voip-bridge-webcallback/</id><summary type="html">&lt;p&gt;Call it what you like. Sip to Sip, VoIP to VoIP, VoIP Bridge, Callback,
+HL-2140 branded exclusively for office works so no one can price match).&lt;/p&gt;</content><category term="brother"></category><category term="hl2140"></category><category term="Printer"></category></entry><entry><title>Asterisk Voip to Voip "Bridge" (Webcallback)</title><link href="//tim.purewhite.id.au/2010/10/asterisk-voip-to-voip-bridge-webcallback/" rel="alternate"></link><published>2010-10-29T06:35:00+10:00</published><updated>2010-10-29T06:35:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-29:/2010/10/asterisk-voip-to-voip-bridge-webcallback/</id><summary type="html">&lt;p&gt;Call it what you like. Sip to Sip, VoIP to VoIP, VoIP Bridge, Callback,
+Webcallback. The idea is to have a server somewhere call two SIP(VoIP)
+devices and connect the 2 calls together.&lt;/p&gt;
+&lt;p&gt;What's the point of it? Maybe you are stuck somewhere with a phone that
+only accepts …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Call it what you like. Sip to Sip, VoIP to VoIP, VoIP Bridge, Callback,
 Webcallback. The idea is to have a server somewhere call two SIP(VoIP)
 devices and connect the 2 calls together.&lt;/p&gt;
 &lt;p&gt;What's the point of it? Maybe you are stuck somewhere with a phone that
@@ -67,7 +75,7 @@ and found it daunting, so gave up. PennyTel Webcallback essentially
 delivered what I needed so I left it alone until now. I now have
 Asterisk setup as a simple VoIP system that allows me to make 2 calls
 (using multiple VoIP providers if I want) and join them together.&lt;/p&gt;
-&lt;p&gt;Why is it better than PennyTel Webcallback?&lt;br /&gt;
+&lt;p&gt;Why is it better than PennyTel Webcallback?&lt;br&gt;
 For me it's better because it can work out cheaper for me. PennyTel
 callback is \$0.16 total (\$0.08 per each call to landline). However, if
 I'm calling someone who is a MyNetFone customer, if  I was to call their
@@ -170,7 +178,7 @@ asterisk cli, how ever it may be a bit harder).&lt;/p&gt;
 &lt;p&gt;This username and password isn't related to your VPS at all, it's what
 you'll use when logging in with Astman or other tools.&lt;/p&gt;
 &lt;p&gt;Now we get to the bit we've been waiting for, setting it up to connect 2
-calls.&lt;br /&gt;
+calls.&lt;br&gt;
 Edit /etc/asterisk/extensions.conf. Comment out the include =&gt; demo
 line from the [default] section. There is a section in the [default]
 that should sort out Hangup/Busy detection and the likes, so the
@@ -247,7 +255,10 @@ asterisk user), or something similar.&lt;/p&gt;
 &lt;p&gt;Last things. Check your firewall. You'll need to open some RTP ports and
 some SIP ports. A google will reveal more. Try to limit what you open
 though, I've not given any instructions for securing asterisk in this
-post, that also is for your further reading.&lt;/p&gt;</summary><category term="asterisk"></category><category term="bridge"></category><category term="callback"></category><category term="sip"></category><category term="sip to sip"></category><category term="voip"></category><category term="voip to voip"></category><category term="webcallback"></category></entry><entry><title>Internet Reception</title><link href="//tim.purewhite.id.au/2010/10/internet-reception/" rel="alternate"></link><updated>2010-10-27T10:32:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2010-10-27:2010/10/internet-reception/</id><summary type="html">&lt;p&gt;&lt;a href="//tim.purewhite.id.au/images/2010/10/IMAG0061.jpg"&gt;&lt;img alt="Modem Reception" src="//tim.purewhite.id.au/images/2010/10/IMAG0061-179x300.jpg" /&gt;&lt;/a&gt; So we finally got our modem a few weeks back. A 3G9WB, also
+post, that also is for your further reading.&lt;/p&gt;</content><category term="asterisk"></category><category term="bridge"></category><category term="callback"></category><category term="sip"></category><category term="sip to sip"></category><category term="voip"></category><category term="voip to voip"></category><category term="webcallback"></category></entry><entry><title>Internet Reception</title><link href="//tim.purewhite.id.au/2010/10/internet-reception/" rel="alternate"></link><published>2010-10-27T10:32:00+10:00</published><updated>2010-10-27T10:32:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-10-27:/2010/10/internet-reception/</id><summary type="html">&lt;p&gt;&lt;a href="//tim.purewhite.id.au/images/2010/10/IMAG0061.jpg"&gt;&lt;img alt="Modem Reception" src="//tim.purewhite.id.au/images/2010/10/IMAG0061-179x300.jpg"&gt;&lt;/a&gt; So we finally got our modem a few weeks back. A 3G9WB, also
+known as a 3G9WT (Telstra Branding) or a 7.2 Home Gateway. Really, it's
+just a Netcomm router with a Sierra mobile module inside.&lt;/p&gt;
+&lt;p&gt;It's unlocked, but we still can only get Telstra NextG, although with a …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="//tim.purewhite.id.au/images/2010/10/IMAG0061.jpg"&gt;&lt;img alt="Modem Reception" src="//tim.purewhite.id.au/images/2010/10/IMAG0061-179x300.jpg"&gt;&lt;/a&gt; So we finally got our modem a few weeks back. A 3G9WB, also
 known as a 3G9WT (Telstra Branding) or a 7.2 Home Gateway. Really, it's
 just a Netcomm router with a Sierra mobile module inside.&lt;/p&gt;
 &lt;p&gt;It's unlocked, but we still can only get Telstra NextG, although with a
@@ -264,4 +275,4 @@ louvers. Still only a low signal, but success! The download was finished
 in 3minutes! I might actually be able to upload my assignment quickly
 with the modem here (when the submission link is fixed up).&lt;/p&gt;
 &lt;p&gt;So, until we get an external antenna, we'll just have to use an external
-modem! :-P&lt;/p&gt;</summary><category term="3g9wb"></category><category term="modem"></category><category term="nextg"></category></entry></feed>
+modem! :-P&lt;/p&gt;</content><category term="3g9wb"></category><category term="modem"></category><category term="nextg"></category></entry></feed>

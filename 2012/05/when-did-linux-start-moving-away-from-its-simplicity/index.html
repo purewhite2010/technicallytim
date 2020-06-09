@@ -20,7 +20,6 @@
         <div class="sub-title"></div>
 
 <p>
-    <div class="view"><a href="//tim.purewhite.id.au/about.html">About</a></div>
   <div class="view"><a href="//tim.purewhite.id.au/archives.html">Archives</a></div>
 </p>
 
@@ -37,7 +36,7 @@
     <div class="entry-content">
 <p>
 <small>
-<abbr class="published" title="2012-05-08T19:46:00">
+<abbr class="published" title="2012-05-08T19:46:00+10:00">
   Tue 08 May 2012
 </abbr> | 
   tags: 
@@ -58,7 +57,7 @@ least I thought so. I even logged in with a brand new user and confirmed
 that it saved the users desktop preference in \~/.dmrc. Except, if I
 changed .dmrc for a user, it just got overwritten with the old contents
 at their next automatic login. (Remember, ssh, so can't use the gui to
-change what was selected in the lightdm login screen).<br />
+change what was selected in the lightdm login screen).<br>
 Wha?!!? Surely not a dconf/gconf setting somewhere. Search search
 search. Still no luck. Eventually I discover a service called
 "AccountsService" or something along that name. It stores the users
@@ -78,13 +77,13 @@ usermod and userdel commands. I can't find a "homepage" for it, the
 homepage listed is it's source code repo.
 (<a href="http://cgit.freedesktop.org/accountsservice/">http://cgit.freedesktop.org/accountsservice/</a>)  (NB: Some more digging
 finds this <a href="http://www.freedesktop.org/wiki/Software/AccountsService">http://www.freedesktop.org/wiki/Software/AccountsService</a> as
-the homepage)<br />
+the homepage)<br>
 I personally don't mind D-Bus, it services its purposes, but here is an
 instance where it looks like someone has gone to the trouble of writing
 a piece of code, to complicate some that use to be a simple stat/open of
 a file, that the user was in total control of.</p>
 <p>For the record, lightdm will work without AccountsService, and I believe
-then it will honor \~/.dmrc<br />
+then it will honor \~/.dmrc<br>
 Also, accountsservice isn't in Debian stable, but is in Debian testing,
 and gdm3 and gnome depend on it. (So in other words Gnome3 depends on
 it)</p>
@@ -139,7 +138,7 @@ some more thoughts on dbus.</p>
       }
     </script>
     <script type="text/javascript">
-        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.purewhite.id.au/" : "http://piwik.purewhite.id.au/");
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.whiteitsolutions.com.au/" : "http://piwik.whiteitsolutions.com.au/");
     document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
     </script><script type="text/javascript">
     try {
@@ -147,7 +146,7 @@ some more thoughts on dbus.</p>
     piwikTracker.trackPageView();
     piwikTracker.enableLinkTracking();
     } catch( err ) {}
-    </script><noscript><p><img src="http://piwik.purewhite.id.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+    </script><noscript><p><img src="http://piwik.whiteitsolutions.com.au/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
     <a href="https://github.com/timwhite/technicallytim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
   </body>
 </html>

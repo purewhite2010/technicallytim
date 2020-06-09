@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/coding-technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2011-04-03T01:45:00+10:00</updated><entry><title>Coova Chilli &amp; FreeRadius Reply-Message</title><link href="//tim.purewhite.id.au/2011/04/coova-chilli-freeradius-reply-message/" rel="alternate"></link><updated>2011-04-03T01:45:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2011-04-03:2011/04/coova-chilli-freeradius-reply-message/</id><summary type="html">&lt;p&gt;I was going to post this on the Grase Hotspot site, but will post it
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Technically Tim - Coding, Technical</title><link href="//tim.purewhite.id.au/" rel="alternate"></link><link href="//tim.purewhite.id.au/feeds/coding-technical.atom.xml" rel="self"></link><id>//tim.purewhite.id.au/</id><updated>2011-04-03T01:45:00+10:00</updated><entry><title>Coova Chilli &amp; FreeRadius Reply-Message</title><link href="//tim.purewhite.id.au/2011/04/coova-chilli-freeradius-reply-message/" rel="alternate"></link><published>2011-04-03T01:45:00+10:00</published><updated>2011-04-03T01:45:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2011-04-03:/2011/04/coova-chilli-freeradius-reply-message/</id><summary type="html">&lt;p&gt;I was going to post this on the Grase Hotspot site, but will post it
+here in depth and just the basics on the hotspot site.&lt;/p&gt;
+&lt;p&gt;Previously I researched this problem and found very little, it would
+seem since my last search more material has become available that has
+assisted …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I was going to post this on the Grase Hotspot site, but will post it
 here in depth and just the basics on the hotspot site.&lt;/p&gt;
 &lt;p&gt;Previously I researched this problem and found very little, it would
 seem since my last search more material has become available that has
@@ -219,8 +223,11 @@ The original version of this document had "ok = reject" lines instead of reject
 lines. This happened to work due a bug in Freeradius that has since been fixed.
 The correct line is just a plain reject in the if statements.
 &lt;/ins&gt;&lt;/p&gt;
-&lt;p&gt;[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br /&gt;
- ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/p&gt;</summary><category term="Access-Reject"></category><category term="CoovaChili"></category><category term="FreeRadius"></category><category term="Hotspot"></category><category term="Reply-Message"></category></entry><entry><title>GRASE Hotspot</title><link href="//tim.purewhite.id.au/2010/12/grase-hotspot/" rel="alternate"></link><updated>2010-12-14T21:55:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2010-12-14:2010/12/grase-hotspot/</id><summary type="html">&lt;p&gt;3 years in the making, and finally I am releasing the code for the GRASE
+&lt;p&gt;[http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;br&gt;
+ ]: http://freeradius.1045715.n5.nabble.com/RESOLVED-customize-Post-Auth-Type-REJECT-td2779460.html&lt;/p&gt;</content><category term="Access-Reject"></category><category term="CoovaChili"></category><category term="FreeRadius"></category><category term="Hotspot"></category><category term="Reply-Message"></category></entry><entry><title>GRASE Hotspot</title><link href="//tim.purewhite.id.au/2010/12/grase-hotspot/" rel="alternate"></link><published>2010-12-14T21:55:00+10:00</published><updated>2010-12-14T21:55:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-12-14:/2010/12/grase-hotspot/</id><summary type="html">&lt;p&gt;3 years in the making, and finally I am releasing the code for the GRASE
+Hotspot. I've always planned on releasing the code, but had a lot things
+I wanted done before the code was released, in particular making it easy
+to install, and modular, as well as more secure …&lt;/p&gt;</summary><content type="html">&lt;p&gt;3 years in the making, and finally I am releasing the code for the GRASE
 Hotspot. I've always planned on releasing the code, but had a lot things
 I wanted done before the code was released, in particular making it easy
 to install, and modular, as well as more secure than it previously was
@@ -249,7 +256,10 @@ setup the apt repository. Then head over to
 idea of some of the other packages that can be installed to get started.
 More information will appear over time at the main wiki page.&lt;/p&gt;
 &lt;p&gt;Some old screenshots (will be updated soon) and support forums are over
-at &lt;a href="http://sf.net/projects/grase/"&gt;SourceForge.&lt;/a&gt;&lt;/p&gt;</summary><category term="CoovaChilli"></category><category term="FreeRadius"></category><category term="GRASE"></category><category term="GRASE Hotspot"></category><category term="Hotspot"></category></entry><entry><title>Handbrake Encoding Cluster</title><link href="//tim.purewhite.id.au/2010/09/handbrake-encoding-cluster/" rel="alternate"></link><updated>2010-09-09T18:18:00+10:00</updated><author><name>Tim White</name></author><id>tag://tim.purewhite.id.au,2010-09-09:2010/09/handbrake-encoding-cluster/</id><summary type="html">&lt;p&gt;Recently I've been given the task of putting a DVD collection on to the
+at &lt;a href="http://sf.net/projects/grase/"&gt;SourceForge.&lt;/a&gt;&lt;/p&gt;</content><category term="CoovaChilli"></category><category term="FreeRadius"></category><category term="GRASE"></category><category term="GRASE Hotspot"></category><category term="Hotspot"></category></entry><entry><title>Handbrake Encoding Cluster</title><link href="//tim.purewhite.id.au/2010/09/handbrake-encoding-cluster/" rel="alternate"></link><published>2010-09-09T18:18:00+10:00</published><updated>2010-09-09T18:18:00+10:00</updated><author><name>Tim White</name></author><id>tag:tim.purewhite.id.au,2010-09-09:/2010/09/handbrake-encoding-cluster/</id><summary type="html">&lt;p&gt;Recently I've been given the task of putting a DVD collection on to the
+computer (for backup purposes, so that the originals can be locked away
+and not damaged by little hands). Having used &lt;a href="http://handbrake.fr"&gt;Handbrake&lt;/a&gt; before to
+convert DVD's to H.264 videos, I figured I'd be able to use …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Recently I've been given the task of putting a DVD collection on to the
 computer (for backup purposes, so that the originals can be locked away
 and not damaged by little hands). Having used &lt;a href="http://handbrake.fr"&gt;Handbrake&lt;/a&gt; before to
 convert DVD's to H.264 videos, I figured I'd be able to use it again.
@@ -263,7 +273,7 @@ all). However, it did provide me with a transcode bash script that
 assisted with getting the HandbrakeCLI options right, in particular
 splitting TV episodes into individual episodes.&lt;/p&gt;
 &lt;p&gt;I continued looking for ways to do this, knowing I'd previously used
-some clustering script many years ago, and finally found &lt;a href="http://gearman.org/"&gt;gearman&lt;/a&gt;.&lt;br /&gt;
+some clustering script many years ago, and finally found &lt;a href="http://gearman.org/"&gt;gearman&lt;/a&gt;.&lt;br&gt;
 At first glace, gearman seems to be perfect, except digging deeper you
 discover it's designed to be called from within applications and not so
 much as a command line "queue". Thankfully I discovered a &lt;a href="http://stefaanlippens.net/gearman_setting_worker_process_arguments_through_xargs"&gt;post&lt;/a&gt;
@@ -316,7 +326,7 @@ select the English audio, and all the subtitles). I also added logging
 so that it would update a cluster log when it started and stopped
 encoding (with timestamps), and to log the progress output to one
 logfile, and the verbose information to another logfile (so I could
-easily tail the logfile to get the current progress).&lt;br /&gt;
+easily tail the logfile to get the current progress).&lt;br&gt;
 Initially for doing TV episodes, this script would select all the
 titles and encode each one to it's own file. I changed it to just select
 the 4 I wanted, and then later changed it so I could select individual
@@ -329,4 +339,4 @@ processed a lot quicker.&lt;/p&gt;
 &lt;a href="http://tim.purewhite.id.au/code/handbrake-cluster"&gt;http://tim.purewhite.id.au/code/handbrake-cluster&lt;/a&gt; or checked out with
 bzr.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bzr branch http://tim.purewhite.id.au/code/handbrake-cluster/
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;</content><category term="bzr"></category><category term="cluster"></category><category term="code"></category><category term="distributed"></category><category term="encode"></category><category term="encoding"></category><category term="gearman"></category><category term="handbrake"></category><category term="handbrakecli"></category><category term="script"></category><category term="transcode"></category></entry></feed>

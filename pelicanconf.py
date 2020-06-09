@@ -11,7 +11,7 @@ PLUGIN_PATH = '/home/tim/pelican-plugins/'
 
 AUTHOR = u'Tim White'
 SITENAME = u'Technically Tim'
-SITEURL = ''
+SITEURL = 'https://tim.purewhite.id.au'
 
 ARTICLE_URL = '{date:%Y}/{date:%m}/{slug}/'
 ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{slug}/index.html'
@@ -38,9 +38,12 @@ DEFAULT_LANG = u'en'
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
-
+FEED_ATOM = None
+FEED_RSS = None
+AUTHOR_FEED_ATOM = None
+AUTHOR_FEED_RSS = None
 # Blogroll
-LINKS =  (('Old Blog', 'http://weirdo.purewhite.id.au/'),
+LINKS =  (
           ('Family Blog', 'http://purewhite.id.au'),)
 
 # Social widget
@@ -51,9 +54,11 @@ DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
-PIWIK_URL = 'piwik.purewhite.id.au'
+PIWIK_URL = 'piwik.whiteitsolutions.com.au'
 PIWIK_SITE_ID = 4 
 
 
-#STATIC_PATHS = ['images', 'extra/CNAME']
-#EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+STATIC_PATHS = ['images', 'extra/CNAME']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+
+DISPLAY_PAGES_ON_MENU = True
